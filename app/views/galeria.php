@@ -31,21 +31,19 @@
 
         <section class="fotos_galeria">
             <article class="site">
-                <?php foreach ($pg_galeria as $galeria_pg): ?>
-                    <div class="lado_a_lado_galeria">
 
+                <div class="lado_a_lado_galeria">
+                    <?php foreach ($pg_galeria as $galeria_pg): ?>
                         <div class="galeria_pd">
-                            <a href="#"><img src="<?php echo BASE_URL . 'uploads/' . $galeria_pg['foto_galeria']; ?>" alt="<?php echo htmlspecialchars($galeria_pg['alt_foto_galeria']); ?>"></a>
+                            <a href="#"><img src="<?php echo BASE_URL . 'uploads/' . $galeria_pg['foto_galeria']; ?>" alt="<?php echo htmlspecialchars($galeria_pg['alt_foto_galeria']); ?>" class="img_pg_galeria"></a>
                             <h3><?php echo htmlspecialchars($galeria_pg['nome_galeria'], ENT_QUOTES, 'UTF-8'); ?></h3>
                         </div>
 
-                        <div class="galeria_pd">
-                        <a href="#"><img src="<?php echo BASE_URL . 'uploads/' . $galeria_pg['foto_galeria']; ?>" alt="<?php echo htmlspecialchars($galeria_pg['alt_foto_galeria']); ?>"></a>
-                        <h3><?php echo htmlspecialchars($galeria_pg['nome_galeria'], ENT_QUOTES, 'UTF-8'); ?></h3>
-                        </div>
 
-                    </div>
-                <?php endforeach; ?>
+
+
+                    <?php endforeach; ?>
+                </div>
 
             </article>
         </section>

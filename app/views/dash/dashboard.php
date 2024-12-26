@@ -148,34 +148,33 @@
                         <li class="nav-item"> <a href="#" class="nav-link"> <i class="bi bi-gear"></i>
 
                                 <p>
-                                    Gestão de Serviços
+                                    Gestão de fotos (HOME)
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/home/ben_vindo" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Fotos (Ben vindo)</p>
-                                    </a> </li>
-
-                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/home/sobre_ceo" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Fotos (sobre home)</p>
-                                    </a> </li>
-
-                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/home/qualidade" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Fotos (qualidade)</p>
+                                        <p>Fotos (Ben vindo HOME)</p>
                                     </a> </li>
 
                                 <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/home/destaque" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Destaques</p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/produtos/listar" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Produtos</p>
+                                        <p>Fotos (Destaques HOME)</p>
                                     </a> </li>
 
-                                    <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/home/carrosel" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Carrosel(Home)</p>
+
+                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/home/qualidade" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Fotos (qualidade HOME)</p>
                                     </a> </li>
 
+                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/home/sobre_ceo" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Fotos (sobre HOME)</p>
+                                    </a> </li>
+
+                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/home/carrosel" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Carrosel (Home)</p>
+                                    </a> </li>
+
+                                    
                             </ul>
                         </li>
 
@@ -234,18 +233,18 @@
 
 
 
-                        <li class="nav-header">SITE</li>
+                        <li class="nav-header">SITE (FOTOS)</li>
 
-                        <li class="nav-item"> <a href="./docs/introduction.html" class="nav-link"> <i class="bi bi-chat-square-dots"></i>
+                        <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/produtos/listar" class="nav-link"> <i class="bi bi-cart-dash"></i>
 
 
-                                <p>Depoimentos</p>
+                                <p>Produtos</p>
                             </a> </li>
 
 
 
 
-                        <li class="nav-item"> <a href="./docs/layout.html" class="nav-link"> <i class="bi bi-card-image"></i>
+                        <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/produtos/banner_produto" class="nav-link"> <i class="bi bi-card-image"></i>
                                 <p>Banners</p>
                             </a> </li>
                         <li class="nav-item"> <a href="./docs/color-mode.html" class="nav-link"> <i class="bi bi-envelope"></i>
@@ -253,7 +252,7 @@
                             </a> </li>
 
 
-                        <li class="nav-item"> <a href="./docs/browser-support.html" class="nav-link"> <i class="bi bi-aspect-ratio"></i>
+                        <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/galeria/galeria_pg_galeria" class="nav-link"> <i class="bi bi-aspect-ratio"></i>
                                 <p>Galeria</p>
                             </a> </li>
                         <li class="nav-item"> <a href="./docs/how-to-contribute.html" class="nav-link"> <i class="bi bi-bookmarks"></i>

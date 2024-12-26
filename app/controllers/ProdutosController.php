@@ -4,6 +4,7 @@ class ProdutosController extends Controller
 {
 
     private $produtoModel;
+    private $banner_produto;
 
     public function __construct()
     {
@@ -14,6 +15,7 @@ class ProdutosController extends Controller
 
         // Cria uma instância do modelo Produto e atribui à propriedade $produtoModel
         $this->produtoModel = new Produto();
+        $this->banner_produto = new Banner();
     }
 
 
@@ -110,6 +112,31 @@ class ProdutosController extends Controller
         $this->carregarViews('dash/dashboard', $dados);
     }
 
+
+    public function banner_produto()
+    {
+
+
+
+
+
+
+        if (!isset($_SESSION['userTipo'])  || $_SESSION['userTipo'] !== 'Funcionario') {
+
+            header('Location:' . BASE_URL);
+            exit;
+        }
+
+        $dados = array();
+        $dados['listarServico'] = $this->banner_produto->getBanner();
+
+        $dados['conteudo'] = 'dash/banners/banners';
+
+
+
+        $this->carregarViews('dash/dashboard', $dados);
+    }
+
     public function editar($id)
     {
         // Verifica se o usuário está logado e tem permissão para editar
@@ -134,6 +161,33 @@ class ProdutosController extends Controller
     
         // Carrega a view de edição
         $this->carregarViews('dash/servico/editar', $dados);
+    }
+
+
+    public function editarB($id)
+    {
+        // Verifica se o usuário está logado e tem permissão para editar
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+    
+        // Obtém os dados do produto para edição
+        $banner_produto = $this->banner_produto->getbannerPorId($id);
+    
+        if (!$banner_produto) {
+            // Se o produto não for encontrado, redireciona para a lista de produtos
+            header('Location: ' . BASE_URL . 'produtos/home');
+            exit();
+        }
+    
+        // Prepara os dados para a view
+        $dados = array();
+        $dados['banner_produto'] = $banner_produto;
+        $dados['titulo'] = 'Editar Produto - Ki Oficina';
+    
+        // Carrega a view de edição
+        $this->carregarViews('dash/banners/editarB', $dados);
     }
 
     public function atualizar()
