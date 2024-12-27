@@ -19,7 +19,7 @@
 
     <main>
 
-        <section class="banner_contato">
+        <section class="banner_contato" style="background-image: url('<?php echo BASE_URL . 'uploads/' . $banner[0]['foto_banner']; ?>');">
             <article class="site">
                 <div>
                     <h2>Criar conta</h2>

@@ -5,6 +5,12 @@ class EntrarController extends Controller
     public function index()
     {
         $dados = array();
+
+        $banner_entrar = new Banner();
+
+        $entrar_banner = $banner_entrar->getBanner_entrar();
+
+        $dados['banner'] =  $entrar_banner ;
         // Carrega a view de login
         $this->carregarViews('entrar', $dados);
     }

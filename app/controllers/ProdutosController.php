@@ -293,7 +293,7 @@ class ProdutosController extends Controller
             ];
     
             if ($this->banner_produto->atualizarProduto_banner($id, $dados)) {
-                $_SESSION['mensagem'] = "Produto atualizado com sucesso!";
+                $_SESSION['mensagem'] = "Banner atualizado com sucesso!";
                 header('Location: ' . BASE_URL . 'dashboard');
             } else {
                 $_SESSION['erro'] = "Erro ao atualizar o produto.";

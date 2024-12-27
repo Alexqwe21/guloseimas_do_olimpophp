@@ -15,6 +15,7 @@ class GaleriaController extends Controller
         }
 
         // Cria uma instância do modelo Galeria
+
         $this->galeriaModel = new Galeria();
         $this->galeriaqualidade = new Galeria();
         $this->sobrehome = new Galeria();
@@ -25,13 +26,18 @@ class GaleriaController extends Controller
     {
         $dados = array();
 
+        $galeria_banner = new  Banner();
+
         // Obtém os dados da galeria
         $galeria_pg = $this->galeriaModel->getGaleria_pg_galeria();
-
+        $banner_galeria = $galeria_banner->getBanner_galeria();
         $dados['pg_galeria'] = $galeria_pg;
+        $dados['banner'] = $banner_galeria;
 
         // Carrega a view de listagem da galeria
         $this->carregarViews('galeria', $dados);
+
+        
     }
 
     public function editarG($id)

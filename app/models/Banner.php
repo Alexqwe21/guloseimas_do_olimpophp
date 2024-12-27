@@ -36,6 +36,78 @@ class Banner extends Model
     }
 
 
+    public function getBanner_galeria()
+    {
+
+
+
+        $sql = "SELECT * FROM tbl_banner WHERE id_banner = 3  AND status_banner ='Ativo'";
+
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function getBanner_contato()
+    {
+
+
+
+        $sql = "SELECT * FROM tbl_banner WHERE id_banner = 4  AND status_banner ='Ativo'";
+
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function getBanner_login()
+    {
+
+
+
+        $sql = "SELECT * FROM tbl_banner WHERE id_banner = 5  AND status_banner ='Ativo'";
+
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function getBanner_entrar()
+    {
+
+
+
+        $sql = "SELECT * FROM tbl_banner WHERE id_banner = 6  AND status_banner ='Ativo'";
+
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function getBanner_criar_conta()
+    {
+
+
+
+        $sql = "SELECT * FROM tbl_banner WHERE id_banner = 7  AND status_banner ='Ativo'";
+
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
+
     public function getbannerPorId($id)
     {
         $sql = "SELECT * FROM tbl_banner WHERE status_banner ='Ativo' AND id_banner = :id";

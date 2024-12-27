@@ -8,7 +8,10 @@ class CriarcontaController extends Controller
 
         // Obter os estados do banco de dados
         $estadoModel = new Estado();
+        $banner_criar_conta = new Banner();
+        $criar_conta_banner = $banner_criar_conta->getBanner_criar_conta();
         $Estado = $estadoModel->getEstado();
+        $dados['banner'] =   $criar_conta_banner;
         $dados['Estado'] = $Estado;
 
         // Carregar a view com os estados

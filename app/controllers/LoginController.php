@@ -6,9 +6,14 @@ class LoginController extends Controller
     {
         // Variável para armazenar os dados que serão passados para as views
         $dados = array();
+        $banner_login = new Banner();
+        $login_banner = $banner_login->getBanner_login();
+
+        $dados['banner'] =  $login_banner;
 
         // Carrega a view de login
         $this->carregarViews('login', $dados);
+
     }
 
     public function login()

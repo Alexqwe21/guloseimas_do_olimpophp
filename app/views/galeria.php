@@ -21,7 +21,7 @@
 
     <main>
 
-        <section class="banner_galeria">
+        <section class="banner_galeria"style="background-image: url('<?php echo BASE_URL . 'uploads/' . $banner[0] ['foto_banner']; ?>');">
             <article class="site">
                 <div>
                     <h2>Galleria</h2>
