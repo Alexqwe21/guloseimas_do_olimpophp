@@ -245,6 +245,63 @@ class ProdutosController extends Controller
             exit();
         }
     }
+
+
+
+    public function atualizarBanner_produto()
+    {
+        // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id_banner'];
+    
+            // Verifica se uma nova imagem foi enviada
+            $novoCaminhoImagem = $_POST['foto_produto_antiga']; // Caminho antigo por padrão
+            if (!empty($_FILES['foto_banner']['name'])) {
+                // Diretório de upload
+                $diretorioUploads = __DIR__ . '/../../public/uploads/banner/';
+    
+                // Certifica-se de que o diretório existe
+                if (!is_dir($diretorioUploads)) {
+                    mkdir($diretorioUploads, 0755, true);
+                }
+    
+                // Gera um nome único para a imagem
+                $nomeArquivo = uniqid() . '_' . $_FILES['foto_banner']['name'];
+                $caminhoCompleto = $diretorioUploads . $nomeArquivo;
+    
+                // Move a imagem para o diretório
+                if (move_uploaded_file($_FILES['foto_banner']['tmp_name'], $caminhoCompleto)) {
+                    // Atualiza o caminho da imagem para salvar no banco
+                    $novoCaminhoImagem = 'banner/' . $nomeArquivo;
+                } else {
+                    $_SESSION['erro'] = "Erro ao fazer upload da imagem.";
+                    header('Location: ' . BASE_URL . 'produtos/editarB/' . $id);
+                    exit();
+                }
+            }
+    
+            // Atualiza os dados do produto
+            $dados = [
+                'nome_banner' => $_POST['nome_banner'],
+                'foto_banner' => $novoCaminhoImagem,
+                'alt_foto_banner'=> $_POST['alt_foto_banner']
+            ];
+    
+            if ($this->banner_produto->atualizarProduto_banner($id, $dados)) {
+                $_SESSION['mensagem'] = "Produto atualizado com sucesso!";
+                header('Location: ' . BASE_URL . 'dashboard');
+            } else {
+                $_SESSION['erro'] = "Erro ao atualizar o produto.";
+                header('Location: ' . BASE_URL . 'produtos/editarB/' . $id);
+            }
+            exit();
+        }
+    }
     
     
     

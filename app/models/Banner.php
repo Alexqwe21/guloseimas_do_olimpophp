@@ -45,6 +45,39 @@ class Banner extends Model
         return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna um array com os dados ou false
     }
 
+    public function atualizarProduto_banner($id, $dados)
+    {
+        // Definindo a query SQL
+        $sql = "UPDATE tbl_banner SET nome_banner = :nome_banner , foto_banner = :foto_banner , alt_foto_banner = :alt_foto_banner WHERE id_banner = :id";
+        
+        // Depuração: Exibe a query e os dados antes da execução
+        echo '<pre>';
+        echo 'Query SQL antes da execução: ';
+        var_dump($sql); // Exibe a query SQL
+        echo 'Dados a serem vinculados: ';
+        var_dump($dados); // Exibe os dados sendo passados para o banco
+        echo '</pre>';
+        
+        // Prepara a query
+        $stmt = $this->db->prepare($sql);
+        
+        // Vincula os parâmetros
+        $stmt->bindValue(':nome_banner', $dados['nome_banner']);
+        $stmt->bindValue(':alt_foto_banner', $dados['alt_foto_banner']);
+        $stmt->bindValue(':foto_banner', $dados['foto_banner']);
+        $stmt->bindValue(':id', $id);
+        
+        // Executa a query
+        if (!$stmt->execute()) {
+            echo '<pre>';
+            echo 'Erro ao executar a query: ';
+            print_r($stmt->errorInfo()); // Exibe os erros da execução
+            echo '</pre>';
+            return false;
+        }
+        return true;
+    }
+
 
 
 
