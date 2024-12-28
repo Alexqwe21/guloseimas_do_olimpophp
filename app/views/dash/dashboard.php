@@ -264,8 +264,8 @@
                         <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/galeria/galeria_pg_galeria" class="nav-link"> <i class="bi bi-aspect-ratio"></i>
                                 <p>Galeria</p>
                             </a> </li>
-                        <li class="nav-item"> <a href="./docs/how-to-contribute.html" class="nav-link"> <i class="bi bi-bookmarks"></i>
-                                <p>Marcas</p>
+                        <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/info_produtos/info_produtos" class="nav-link"> <i class="bi bi-bag"></i>
+                                <p>Informações produtos</p>
                             </a> </li>
                         <!-- <li class="nav-item"> <a href="./docs/faq.html" class="nav-link"> <i class="nav-icon bi bi-question-circle-fill"></i>
                                 <p>FAQ</p>

@@ -62,6 +62,22 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_info_p
     }
 
 
+
+
+
+
+    public function getServicoPorid($id)
+    {
+        $sql = "SELECT * 
+FROM tbl_info_produtos AS ip
+INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_info_produtos = 'Ativo' AND id_produto= :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC); // Certifique-se de que isso retorna um array ou um objeto
+    }
+
+
     //###################################################
 
     // BACK-END - DASHBORAD
