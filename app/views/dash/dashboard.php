@@ -197,6 +197,10 @@
                                         <p>Fotos ( carrosel sobre )</p>
                                     </a> </li>
 
+                                    <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/sobre/servicos" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Fotos (especialidades )</p>
+                                    </a> </li>
+
                             </ul>
                         </li>
 

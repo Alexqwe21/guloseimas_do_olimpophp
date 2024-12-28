@@ -8,6 +8,10 @@ private $minha_historia;
 
 private $carrosel_sobre;
 
+
+private $servicos;
+
+
 public function __construct()
 {
     // Inicializa a sessão se ainda não estiver iniciada
@@ -19,6 +23,7 @@ public function __construct()
     $this->quem_sou_eu = new Galeria();
     $this->minha_historia = new Galeria();
     $this->carrosel_sobre = new Galeria();
+    $this->servicos = new Servicos();
 }
 
     public function index()
@@ -121,6 +126,31 @@ public function __construct()
         $dados['carrosel_sobre'] = $this->carrosel_sobre->getGaleriasobre();
 
         $dados['conteudo'] = 'dash/sobre/carrosel_sobre';
+
+
+
+        $this->carregarViews('dash/dashboard', $dados);
+    }
+
+
+    public function servicos()
+    {
+
+
+
+
+
+
+        if (!isset($_SESSION['userTipo'])  || $_SESSION['userTipo'] !== 'Funcionario') {
+
+            header('Location:' . BASE_URL);
+            exit;
+        }
+
+        $dados = array();
+        $dados['servicos'] = $this->servicos->getServicos();
+
+        $dados['conteudo'] = 'dash/sobre/servicos';
 
 
 
