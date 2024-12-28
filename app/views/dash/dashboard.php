@@ -180,16 +180,21 @@
 
                         <li class="nav-item"> <a href="#" class="nav-link"> <i class="bi bi-people"></i>
                                 <p>
-                                    Gestão de Clientes
+                                    Gestão de Fotos(SOBRE)
                                     <span class="nav-badge badge text-bg-secondary me-3"></span> <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="./layout/unfixed-sidebar.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Clientes</p>
+                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/sobre/quem_sou_eu" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Fotos ( quem sou eu )</p>
                                     </a> </li>
-                                <li class="nav-item"> <a href="./layout/fixed-sidebar.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Veiculos</p>
+                                   
+                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/sobre/minha_historia" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Fotos ( minha historia )</p>
+                                    </a> </li>
+
+                                    <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/sobre/carrosel_sobre" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                        <p>Fotos ( carrosel sobre )</p>
                                     </a> </li>
 
                             </ul>
