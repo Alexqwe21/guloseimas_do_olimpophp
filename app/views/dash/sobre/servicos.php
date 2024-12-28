@@ -41,7 +41,7 @@
           <?php echo ($linha['status_servico'] == 'Ativo') ? 'Ativo' : 'Inativo'; ?>
         </td>
         <td>
-          <a href="<?php echo BASE_URL . 'galeria/editarG/' . $linha['id_servico']; ?>">
+          <a href="<?php echo BASE_URL . 'sobre/editarS/' . $linha['id_servico']; ?>">
             <button><i class="bi bi-pencil-fill"></i></button>
           </a>
           <button><i class="bi bi-trash-fill"></i></button>

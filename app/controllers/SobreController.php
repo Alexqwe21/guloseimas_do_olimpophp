@@ -156,4 +156,113 @@ public function __construct()
 
         $this->carregarViews('dash/dashboard', $dados);
     }
+
+
+    public function editarS($id)
+    {
+        // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+
+        // Valida o ID
+        if (!is_numeric($id)) {
+            header('Location: ' . BASE_URL . 'ben_vindo');
+            exit();
+        }
+
+        // Obtém os dados da foto para edição
+        $foto = $this->servicos->getServicoPorId($id);
+
+
+
+        if (!$foto) {
+            // Se a foto não for encontrada, redireciona para a lista da galeria
+            header('Location: ' . BASE_URL . 'ben_vindo');
+            exit();
+        }
+
+
+
+
+
+        // Prepara os dados para a view
+        $dados = array();
+        $dados['foto'] = $foto;
+        $dados['titulo'] = 'Editar Foto - Guloseimas do Olimpo';
+
+        // Carrega a view de edição
+        $this->carregarViews('dash/sobre/editarS', $dados);
+    }
+
+
+    public function atualizarImagem_servico()
+    {
+        // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id_servico'];
+
+            // Recebe os campos do formulário
+            $alt_foto_servico = $_POST['alt_foto_servico'];
+            $caminhoAntigoImagem = $_POST['foto_servico_antiga']; // Caminho da imagem antiga
+            $nome_servico = $_POST['nome_servico'];
+            $descricao_servico = $_POST['descricao_servico'];
+
+
+            // Define o caminho padrão como a imagem antiga
+            $novoCaminhoImagem = $caminhoAntigoImagem;
+
+            // Verifica se uma nova imagem foi enviada
+            if (!empty($_FILES['foto_servico']['name'])) {
+                $diretorioUploads = __DIR__ . '/../../public/uploads/servico/';
+
+                // Certifica-se de que o diretório existe
+                if (!is_dir($diretorioUploads)) {
+                    mkdir($diretorioUploads, 0755, true);
+                }
+
+                // Gera um nome único para a nova imagem
+                $nomeArquivo = uniqid() . '_' . $_FILES['foto_servico']['name'];
+                $caminhoCompleto = $diretorioUploads . $nomeArquivo;
+
+                // Move a imagem para o diretório
+                if (move_uploaded_file($_FILES['foto_servico']['tmp_name'], $caminhoCompleto)) {
+                    $novoCaminhoImagem = 'servico/' . $nomeArquivo;
+
+                    // Remove a imagem antiga, se existir
+                    if (!empty($caminhoAntigoImagem) && file_exists(__DIR__ . '/../../public/uploads/' . $caminhoAntigoImagem)) {
+                        unlink(__DIR__ . '/../../public/uploads/' . $caminhoAntigoImagem);
+                    }
+                } else {
+                    $_SESSION['erro'] = "Erro ao fazer upload da imagem.";
+                    header('Location: ' . BASE_URL . 'galeria/editarS/' . $id);
+                    exit();
+                }
+            }
+
+            // Atualiza os dados no banco
+            $dados = [
+                'alt_foto_servico' => $alt_foto_servico,
+                'foto_servico' => $novoCaminhoImagem, // Mantém o caminho antigo se não houve nova imagem
+                'nome_servico' => $nome_servico,
+                'descricao_servico'=>$descricao_servico,
+            ];
+
+            // Chama o modelo para atualizar os dados da galeria
+            if ($this->servicos->atualizarservico($id, $dados)) {
+                $_SESSION['mensagem'] = "Serviço atualizada com sucesso!";
+                header('Location: ' . BASE_URL . 'dashboard');
+            } else {
+                $_SESSION['erro'] = "Erro ao atualizar a imagem da galeria.";
+                header('Location: ' . BASE_URL . 'galeria/editarS/' . $id);
+            }
+            exit();
+        }
+    }
 }
