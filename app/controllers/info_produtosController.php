@@ -41,30 +41,27 @@ class info_produtosController extends Controller
     }
 
 
-    public function info_produtos($id)
+    public function info_produtos($id = null)
     {
-
-
-
-
-
-
-        if (!isset($_SESSION['userTipo'])  || $_SESSION['userTipo'] !== 'Funcionario') {
-
-            header('Location:' . BASE_URL);
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
             exit;
         }
-
+    
         $dados = array();
-        $dados['listarServico'] = $this->info_produtos->getServicoPorid($id);
-
+    
+        if ($id) {
+            // Busca o produto pelo ID, caso ele seja fornecido
+            $dados['listarServico'] = $this->info_produtos->getTodosServicos($id);
+        } else {
+            // Busca todos os produtos caso o ID não seja fornecido
+            $dados['listarServico'] = $this->info_produtos->getTodosServicos();
+        }
+    
         $dados['conteudo'] = 'dash/info_produtos/info_produtos';
-
-
-
+    
         $this->carregarViews('dash/dashboard', $dados);
     }
-
 
 
     public function editarI($id)
@@ -76,9 +73,9 @@ class info_produtosController extends Controller
         }
     
         // Obtém os dados do produto para edição
-        $produto = $this->info_produtos->getServicoPorid($id);
+        $info_produto = $this->info_produtos->getServicoPorId($id);
     
-        if (!$produto) {
+        if (!$info_produto) {
             // Se o produto não for encontrado, redireciona para a lista de produtos
             header('Location: ' . BASE_URL . 'produtos/home');
             exit();
@@ -86,11 +83,11 @@ class info_produtosController extends Controller
     
         // Prepara os dados para a view
         $dados = array();
-        $dados['produto'] = $produto;
+        $dados['info_produto'] = $info_produto;
         $dados['titulo'] = 'Editar Produto - Ki Oficina';
     
         // Carrega a view de edição
-        $this->carregarViews('dash/servico/editar', $dados);
+        $this->carregarViews('dash/info_produtos/editarI', $dados);
     }
 
 

@@ -22,39 +22,68 @@
     <main>
         <?php
         // Verifica se o produto foi carregado corretamente
-        if (isset($produto)):
+        if (isset($info_produto)):
         ?>
             <div class="container">
                 <h1>Editar Produto</h1>
 
                 <!-- Formulário de edição do produto -->
-                <form action="<?php echo BASE_URL . 'produtos/atualizar/' . $produto['id_produto']; ?>" method="POST" enctype="multipart/form-data">
+                <form action="<?php echo BASE_URL . 'produtos/atualizar/' . $info_produto['id_info_produtos']; ?>" method="POST" enctype="multipart/form-data">
 
 
                 
                     <div class="form-group">
-                        <label for="nome_produto">Nome do Produto</label>
-                        <input type="text" id="nome_produto" name="nome_produto" value="<?php echo htmlspecialchars($produto['nome_produto']); ?>" required class="form-control">
+                        <label for="nome_info_produtos">Nome do Produto</label>
+                        <input type="text" id="nome_info_produtos" name="nome_info_produtos" value="<?php echo htmlspecialchars($info_produto['nome_info_produtos']); ?>" required class="form-control">
                     </div>
 
                      <div class="form-group">
-                        <label for="descricao_produto">Descrição</label>
-                        <textarea id="descricao_produto" name="descricao_produto" required class="form-control"><?php echo htmlspecialchars($produto['descricao_produto']); ?></textarea>
+                        <label for="descricao_info_produto">Descrição</label>
+                        <textarea id="descricao_info_produto" name="descricao_info_produto" required class="form-control"><?php echo htmlspecialchars($info_produto['descricao_info_produto']); ?></textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="preco_produto">Preço</label>
-                        <input type="number" step="0.01" id="preco_produto" name="preco_produto" value="<?php echo htmlspecialchars($produto['preco_produto']); ?>" required class="form-control">
+                        <input type="number" step="0.01" id="preco_produto" name="preco_produto" value="<?php echo htmlspecialchars($info_produto['preco_produto']); ?>" required class="form-control">
                     </div>
 
                     <div class="form-group">
-                        <label for="foto_produto">Foto do Produto</label>
-                        <input type="file" id="foto_produto" name="foto_produto" class="form-control">
+                        <label for="info_alt_foto_produto">Texto Alternativo</label>
+                        <input type="text"  id="info_alt_foto_produto" name="info_alt_foto_produto" value="<?php echo htmlspecialchars($info_produto['info_alt_foto_produto']); ?>" required class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="forma_pagamento_info_produto">Forma de pagamento</label>
+                        <input type="text"  id="forma_pagamento_info_produto" name="forma_pagamento_info_produto" value="<?php echo htmlspecialchars($info_produto['forma_pagamento_info_produto']); ?>" required class="form-control">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="entrega_info_produtos">Entrega</label>
+                        <input type="text"  id="entrega_info_produtos" name="entrega_info_produtos" value="<?php echo htmlspecialchars($info_produto['entrega_info_produtos']); ?>" required class="form-control">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="reserva_info_produtos">Reservas</label>
+                        <input type="text"  id="reserva_info_produtos" name="reserva_info_produtos" value="<?php echo htmlspecialchars($info_produto['reserva_info_produtos']); ?>" required class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="personalizacao_info_produtos">Personalizção</label>
+                        <input type="text"  id="personalizacao_info_produtos" name="personalizacao_info_produtos" value="<?php echo htmlspecialchars($info_produto['personalizacao_info_produtos']); ?>" required class="form-control">
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="foto_info_produto">Foto do Produto</label>
+                        <input type="file" id="foto_info_produto" name="foto_info_produto" class="form-control">
                         <small>Deixe em branco para não alterar a imagem.</small>
                     </div> 
-                    <input type="hidden" name="foto_produto_antiga" value="<?php echo htmlspecialchars($produto['foto_produto']); ?>">
+                    <input type="hidden" name="foto_produto_antiga" value="<?php echo htmlspecialchars($info_produto['foto_info_produto']); ?>">
                     <button type="submit" class="btn btn-primary">Salvar alterações</button>
-                    <input type="hidden" name="id_produto" value="<?php echo $produto['id_produto']; ?>">
+                    <input type="hidden" name="id_info_produtos" value="<?php echo $info_produto['id_info_produtos']; ?>">
                     <a href="<?php echo BASE_URL . 'produtos/listar'; ?>" class="btn btn-secondary">Cancelar</a>
                 </form>
             </div>

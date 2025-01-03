@@ -66,17 +66,36 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_info_p
 
 
 
-    public function getServicoPorid($id)
-    {
-        $sql = "SELECT * 
-FROM tbl_info_produtos AS ip
-INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_info_produtos = 'Ativo' AND id_produto= :id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':id', $id);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC); // Certifique-se de que isso retorna um array ou um objeto
-    }
+    public function getTodosServicos()
+{
+    $sql = "  SELECT 
+                ip.*, 
+                p.*
+            
+            FROM tbl_info_produtos AS ip
+            INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto
+            WHERE ip.status_info_produtos = 'Ativo'";
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todas as linhas
+}
 
+
+public function getServicoPorId($id)
+{
+    $sql = "SELECT 
+                ip.*, 
+                p.* 
+                 
+            FROM tbl_info_produtos AS ip
+            INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto
+            WHERE ip.status_info_produtos = 'Ativo' AND ip.id_info_produtos = :id";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+    
 
     //###################################################
 
@@ -123,6 +142,47 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_info_p
     }
     return true;
 }
+
+
+public function atualizar_info_Produto($id, $dados)
+{
+    // Definindo a query SQL
+    $sql = "UPDATE tbl_produtos 
+            SET nome_produto = :nome_produto, 
+                descricao_produto = :descricao_produto, 
+                preco_produto = :preco_produto,
+                foto_produto = :foto_produto
+            WHERE id_produto = :id";
+    
+    // Depuração: Exibe a query e os dados antes da execução
+    echo '<pre>';
+    echo 'Query SQL antes da execução: ';
+    var_dump($sql); // Exibe a query SQL
+    echo 'Dados a serem vinculados: ';
+    var_dump($dados); // Exibe os dados sendo passados para o banco
+    echo '</pre>';
+    
+    // Prepara a query
+    $stmt = $this->db->prepare($sql);
+    
+    // Vincula os parâmetros
+    $stmt->bindValue(':nome_produto', $dados['nome_produto']);
+    $stmt->bindValue(':descricao_produto', $dados['descricao_produto']);
+    $stmt->bindValue(':preco_produto', $dados['preco_produto']);
+    $stmt->bindValue(':foto_produto', $dados['foto_produto']);
+    $stmt->bindValue(':id', $id);
+    
+    // Executa a query
+    if (!$stmt->execute()) {
+        echo '<pre>';
+        echo 'Erro ao executar a query: ';
+        print_r($stmt->errorInfo()); // Exibe os erros da execução
+        echo '</pre>';
+        return false;
+    }
+    return true;
+}
+
 
     
 }
