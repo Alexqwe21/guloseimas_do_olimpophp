@@ -302,6 +302,35 @@ class ProdutosController extends Controller
             exit();
         }
     }
+
+
+    public function status($id)
+{
+    // Verifica se o usuário tem permissão
+    if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+        header('Location: ' . BASE_URL);
+        exit();
+    }
+
+    // Busca os dados do produto
+    $produto = $this->produtoModel->getProdutoPorId($id);
+
+    if (!$produto) {
+        $_SESSION['erro'] = "Produto não encontrado.";
+        header('Location: ' . BASE_URL . 'produtos/listar');
+        exit();
+    }
+
+    // Prepara os dados para a view
+    $dados = [
+        'produto' => $produto,
+        'titulo' => 'Alterar Status do Produto'
+    ];
+
+    // Carrega a view do formulário
+    $this->carregarViews('produtos/status', $dados);
+}
+
     
     
     

@@ -185,6 +185,72 @@ class GaleriaController extends Controller
         }
     }
 
+    public function atualizarImagem_()
+    {
+        // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id_galeira'];
+
+            // Recebe os campos do formulário
+            $altFotoGaleria = $_POST['alt_foto_galeria'];
+            $caminhoAntigoImagem = $_POST['foto_galeria_antiga']; // Caminho da imagem antiga
+            $nome_galeria = $_POST['nome_galeria'];
+
+            // Define o caminho padrão como a imagem antiga
+            $novoCaminhoImagem = $caminhoAntigoImagem;
+
+            // Verifica se uma nova imagem foi enviada
+            if (!empty($_FILES['foto_galeria']['name'])) {
+                $diretorioUploads = __DIR__ . '/../../public/uploads/galeria/';
+
+                // Certifica-se de que o diretório existe
+                if (!is_dir($diretorioUploads)) {
+                    mkdir($diretorioUploads, 0755, true);
+                }
+
+                // Gera um nome único para a nova imagem
+                $nomeArquivo = uniqid() . '_' . $_FILES['foto_galeria']['name'];
+                $caminhoCompleto = $diretorioUploads . $nomeArquivo;
+
+                // Move a imagem para o diretório
+                if (move_uploaded_file($_FILES['foto_galeria']['tmp_name'], $caminhoCompleto)) {
+                    $novoCaminhoImagem = 'galeria/' . $nomeArquivo;
+
+                    // Remove a imagem antiga, se existir
+                    if (!empty($caminhoAntigoImagem) && file_exists(__DIR__ . '/../../public/uploads/' . $caminhoAntigoImagem)) {
+                        unlink(__DIR__ . '/../../public/uploads/' . $caminhoAntigoImagem);
+                    }
+                } else {
+                    $_SESSION['erro'] = "Erro ao fazer upload da imagem.";
+                    header('Location: ' . BASE_URL . 'galeria/editarG/' . $id);
+                    exit();
+                }
+            }
+
+            // Atualiza os dados no banco
+            $dados = [
+                'alt_foto_galeria' => $altFotoGaleria,
+                'foto_galeria' => $novoCaminhoImagem, // Mantém o caminho antigo se não houve nova imagem
+                'nome_galeria' => $nome_galeria,
+            ];
+
+            // Chama o modelo para atualizar os dados da galeria
+            if ($this->galeriaModel->atualizargaleria($id, $dados)) {
+                $_SESSION['mensagem'] = "Imagem da galeria atualizada com sucesso!";
+                header('Location: ' . BASE_URL . 'servico/ben_vind');
+            } else {
+                $_SESSION['erro'] = "Erro ao atualizar a imagem da galeria.";
+                header('Location: ' . BASE_URL . 'galeria/editarG/' . $id);
+            }
+            exit();
+        }
+    }
+
 
     public function atualizar_qualidade()
     {

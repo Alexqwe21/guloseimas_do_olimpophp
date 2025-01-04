@@ -222,6 +222,15 @@ public function atualizar_info_Produto($id, $dados)
     return true;
 }
 
+public function getProdutoPorId($id)
+{
+    $sql = "SELECT * FROM tbl_produtos WHERE id_produto = :id";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 
     
 }

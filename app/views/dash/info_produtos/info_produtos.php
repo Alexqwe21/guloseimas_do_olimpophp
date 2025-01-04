@@ -32,15 +32,15 @@
   <thead>
     <tr>
       <th scope="col">id</th>
-      <th scope="col">Foto</th> ok
-      <th scope="col">Nome</th> ok 
+      <th scope="col">Foto</th> 
+      <th scope="col">Nome</th> 
      
-      <th scope="col">Preço</th> ok
-      <th scope="col">Texto Alternativo</th> ok
-      <th scope="col">Descrição</th> ok
-      <th scope="col">Forma de pagamento</th>ok
-      <th scope="col">Entrega</th> ok
-      <th scope="col">Reservas</th> ok
+      <th scope="col">Preço</th> 
+      <th scope="col">Texto Alternativo</th> 
+      <th scope="col">Descrição</th> 
+      <th scope="col">Forma de pagamento</th>
+      <th scope="col">Entrega</th> 
+      <th scope="col">Reservas</th> 
       <th scope="col">Personalizção</th>
       <!-- <th scope="col">Tempo</th> -->
       <!-- <th scope="col">Especialidade</th> -->
