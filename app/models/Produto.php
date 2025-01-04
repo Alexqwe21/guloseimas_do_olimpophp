@@ -232,5 +232,18 @@ public function getProdutoPorId($id)
 }
 
 
+public function atualizarStatusProduto($id, $status)
+{
+    $sql = "UPDATE tbl_produtos 
+            SET status_pedido = :status 
+            WHERE id_produto = :id";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+    return $stmt->execute();
+}
+
+
     
 }

@@ -105,7 +105,7 @@ class ProdutosController extends Controller
         $dados = array();
         $dados['listarServico'] = $this->produtoModel->getPg_produtos();
 
-        $dados['conteudo'] = 'dash/servico/listar';
+        $dados['conteudo'] = 'dash/produtos/listar';
 
 
 
@@ -162,6 +162,34 @@ class ProdutosController extends Controller
         // Carrega a view de edição
         $this->carregarViews('dash/servico/editar', $dados);
     }
+
+    public function status($id)
+{
+    // Verifica se o usuário tem permissão
+    if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+        header('Location: ' . BASE_URL);
+        exit();
+    }
+
+    // Busca os dados do produto
+    $produto = $this->produtoModel->getProdutoPorId($id);
+
+    if (!$produto) {
+        $_SESSION['erro'] = "Produto não encontrado.";
+        header('Location: ' . BASE_URL . 'produtos/listar');
+        exit();
+    }
+
+    // Prepara os dados para a view
+    $dados = [
+        'produto' => $produto,
+        'titulo' => 'Alterar Status do Produto'
+    ];
+
+    // Carrega a view do formulário
+    $this->carregarViews('dash/produtos/status', $dados);
+}
+
 
 
     public function editarB($id)
@@ -304,7 +332,9 @@ class ProdutosController extends Controller
     }
 
 
-    public function status($id)
+
+
+    public function atualizarStatus($id)
 {
     // Verifica se o usuário tem permissão
     if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
@@ -312,25 +342,29 @@ class ProdutosController extends Controller
         exit();
     }
 
-    // Busca os dados do produto
-    $produto = $this->produtoModel->getProdutoPorId($id);
+    // Verifica se é uma requisição POST
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Obtém o status enviado pelo formulário
+        $status = $_POST['status_pedido'];
 
-    if (!$produto) {
-        $_SESSION['erro'] = "Produto não encontrado.";
+        // Atualiza o status do produto
+        if ($this->produtoModel->atualizarStatusProduto($id, $status)) {
+            $_SESSION['mensagem'] = "Status do produto atualizado com sucesso!";
+        } else {
+            $_SESSION['erro'] = "Erro ao atualizar o status do produto.";
+        }
+
+        // Redireciona para a lista de produtos
         header('Location: ' . BASE_URL . 'produtos/listar');
         exit();
     }
 
-    // Prepara os dados para a view
-    $dados = [
-        'produto' => $produto,
-        'titulo' => 'Alterar Status do Produto'
-    ];
-
-    // Carrega a view do formulário
-    $this->carregarViews('produtos/status', $dados);
+    // Caso não seja POST, redireciona para a lista
+    header('Location: ' . BASE_URL . 'produtos/listar');
+    exit();
 }
 
+    
     
     
     
