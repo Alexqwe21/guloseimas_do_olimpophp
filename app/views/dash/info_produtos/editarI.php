@@ -28,7 +28,7 @@
                 <h1>Editar Produto</h1>
 
                 <!-- Formulário de edição do produto -->
-                <form action="<?php echo BASE_URL . 'produtos/atualizar/' . $info_produto['id_info_produtos']; ?>" method="POST" enctype="multipart/form-data">
+                <form action="<?php echo BASE_URL . 'info_produtos/atualizar_info/' . $info_produto['id_info_produtos']; ?>" method="POST" enctype="multipart/form-data">
 
 
                 

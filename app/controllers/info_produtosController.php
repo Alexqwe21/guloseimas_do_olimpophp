@@ -92,4 +92,68 @@ class info_produtosController extends Controller
 
 
 
+    public function atualizar_info()
+    {
+        // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id_info_produtos'];
+    
+            // Verifica se uma nova imagem foi enviada
+            $novoCaminhoImagem = $_POST['foto_produto_antiga']; // Caminho antigo por padrão
+            if (!empty($_FILES['foto_info_produto']['name'])) {
+                // Diretório de upload
+                $diretorioUploads = __DIR__ . '/../../public/uploads/info_produto/';
+    
+                // Certifica-se de que o diretório existe
+                if (!is_dir($diretorioUploads)) {
+                    mkdir($diretorioUploads, 0755, true);
+                }
+    
+                // Gera um nome único para a imagem
+                $nomeArquivo = uniqid() . '_' . $_FILES['foto_info_produto']['name'];
+                $caminhoCompleto = $diretorioUploads . $nomeArquivo;
+    
+                // Move a imagem para o diretório
+                if (move_uploaded_file($_FILES['foto_info_produto']['tmp_name'], $caminhoCompleto)) {
+                    // Atualiza o caminho da imagem para salvar no banco
+                    $novoCaminhoImagem = 'info_produto/' . $nomeArquivo;
+                } else {
+                    $_SESSION['erro'] = "Erro ao fazer upload da imagem.";
+                    header('Location: ' . BASE_URL . 'produtos/editarI/' . $id);
+                    exit();
+                }
+            }
+    
+            // Atualiza os dados do produto
+            $dados = [
+                'nome_info_produtos' => $_POST['nome_info_produtos'],
+                'descricao_info_produto' => $_POST['descricao_info_produto'],
+                'preco_produto' => $_POST['preco_produto'],
+                'info_alt_foto_produto' => $_POST['info_alt_foto_produto'],
+                'personalizacao_info_produtos' => $_POST['personalizacao_info_produtos'],
+                'forma_pagamento_info_produto' => $_POST['forma_pagamento_info_produto'],
+                'entrega_info_produtos' => $_POST['entrega_info_produtos'],
+                'reserva_info_produtos' => $_POST['reserva_info_produtos'],
+                'foto_info_produto' => $novoCaminhoImagem
+            ];
+    
+            if ($this->info_produtos->atualizar_info_Produto($id, $dados)) {
+                $_SESSION['mensagem'] = " Informação do Produto atualizado com sucesso!";
+                header('Location: ' . BASE_URL . 'info_produtos/info_produtos');
+            } else {
+                $_SESSION['erro'] = "Erro ao atualizar o produto.";
+                header('Location: ' . BASE_URL . 'produtos/editarI/' . $id);
+            }
+            exit();
+        }
+    }
+
+
+
+
 }
