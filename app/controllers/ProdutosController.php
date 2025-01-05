@@ -334,36 +334,33 @@ class ProdutosController extends Controller
 
 
 
-    public function atualizarStatus($id)
-{
-    // Verifica se o usuário tem permissão
-    if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+    public function atualizarStatus()
+    {
+        // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id_produto'];
+            $status = $_POST['status_pedido'];
+    
+            // Atualiza o status do produto
+            if ($this->produtoModel->atualizarStatusProduto($id, $status)) {
+                $_SESSION['mensagem'] = "Status atualizado com sucesso!";
+                header('Location: ' . BASE_URL . 'produtos/listar');
+            } else {
+                $_SESSION['erro'] = "Erro ao atualizar o status do produto.";
+                header('Location: ' . BASE_URL . 'produtos/status/' . $id);
+            }
+            exit();
+        }
+    
         header('Location: ' . BASE_URL);
         exit();
     }
-
-    // Verifica se é uma requisição POST
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Obtém o status enviado pelo formulário
-        $status = $_POST['status_pedido'];
-
-        // Atualiza o status do produto
-        if ($this->produtoModel->atualizarStatusProduto($id, $status)) {
-            $_SESSION['mensagem'] = "Status do produto atualizado com sucesso!";
-        } else {
-            $_SESSION['erro'] = "Erro ao atualizar o status do produto.";
-        }
-
-        // Redireciona para a lista de produtos
-        header('Location: ' . BASE_URL . 'produtos/listar');
-        exit();
-    }
-
-    // Caso não seja POST, redireciona para a lista
-    header('Location: ' . BASE_URL . 'produtos/listar');
-    exit();
-}
-
+    
     
     
     
