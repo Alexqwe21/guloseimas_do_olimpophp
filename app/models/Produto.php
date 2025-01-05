@@ -25,30 +25,38 @@ WHERE status_pedido = 'Ativo' LIMIT 10";
     }
 
 
-    public function getPg_produtos($categoria = null)
-    {
-        $sql = "SELECT * 
-                FROM tbl_produtos p
-                INNER JOIN tbl_categoria c ON c.id_categoria = p.id_categoria
-                WHERE p.id_produto NOT IN (1, 2, 3, 4, 5, 6) 
-                  AND p.status_pedido = 'Ativo'";
-
-        // Adiciona a condição de categoria, se houver
-        if ($categoria !== null) {
-            $sql .= " AND c.nome_categoria = :categoria";
-        }
-
-        $stmt = $this->db->prepare($sql);
-
-        // Liga o parâmetro da categoria, se necessário
-        if ($categoria !== null) {
-            $stmt->bindValue(':categoria', $categoria, PDO::PARAM_STR);
-        }
-
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function getPg_produtos($categoria = null, $status = null)
+{
+    $sql = "SELECT * 
+            FROM tbl_produtos p
+            INNER JOIN tbl_categoria c ON c.id_categoria = p.id_categoria
+            WHERE p.id_produto NOT IN (1, 2, 3, 4, 5, 6)";
+    
+    // Adiciona a condição de categoria, se fornecida
+    if ($categoria !== null) {
+        $sql .= " AND c.nome_categoria = :categoria";
     }
 
+    // Adiciona a condição de status, se fornecida
+    if ($status !== null) {
+        $sql .= " AND p.status_pedido = :status";
+    }
+
+    $stmt = $this->db->prepare($sql);
+
+    // Liga o parâmetro da categoria, se necessário
+    if ($categoria !== null) {
+        $stmt->bindValue(':categoria', $categoria, PDO::PARAM_STR);
+    }
+
+    // Liga o parâmetro do status, se necessário
+    if ($status !== null) {
+        $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+    }
+
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
     public function getServicoPorlink($link)
     {

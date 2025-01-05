@@ -2,7 +2,7 @@
 <html lang="pt-br">
 
 <head>
-<?php
+    <?php
     // Inclui o head
     require('head_geral/head.php');
     ?>
@@ -20,7 +20,7 @@
 
     <main>
 
-        <section class="banner_produtos" style="background-image: url('<?php echo BASE_URL . 'uploads/' . $banner_produto[0] ['foto_banner']; ?>');">
+        <section class="banner_produtos" style="background-image: url('<?php echo BASE_URL . 'uploads/' . $banner_produto[0]['foto_banner']; ?>');">
             <article class="site">
                 <div>
                     <h2>Encomende seu produto</h2>
@@ -69,21 +69,27 @@
                     <div class="wrap">
 
                         <?php foreach ($pg_produtos as $PG_produtos): ?>
-                            <div class="tamanho_link">
-                                <a href="<?php echo BASE_URL . 'produtos/detalhe/' . $PG_produtos['link_produto']; ?>"> <!-- Substituindo o link fixo -->
-                                    <div class="produto_a_mostra">
-                                        
-                                        <img src="<?php echo BASE_URL . 'uploads/' . $PG_produtos['foto_produto']; ?>" alt="<?php echo htmlspecialchars($PG_produtos['alt_foto_produto']); ?>" class="pg_produto">
-                                    </div>
-                                    <div class="preco_produto">
-                                        <h3><?php echo htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8'); ?></h3>
-                                        <p>R$ <?php echo number_format($PG_produtos['preco_produto'], 2, ',', '.'); ?></p>
-                                        <button><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg"
-                                                alt="adicionar_favoritos"></button>
-                                    </div>
-                                </a>
-                            </div>
+                            <?php if ($PG_produtos['status_pedido'] === 'Ativo'): ?> <!-- Verifica se o produto está ativo -->
+                                <div class="tamanho_link">
+                                    <a href="<?php echo BASE_URL . 'produtos/detalhe/' . $PG_produtos['link_produto']; ?>"> <!-- Substituindo o link fixo -->
+                                        <div class="produto_a_mostra">
+                                            <img src="<?php echo BASE_URL . 'uploads/' . $PG_produtos['foto_produto']; ?>"
+                                                alt="<?php echo htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8'); ?>"
+                                                class="pg_produto">
+                                        </div>
+                                        <div class="preco_produto">
+                                            <h3><?php echo htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                                            <p>R$ <?php echo number_format($PG_produtos['preco_produto'], 2, ',', '.'); ?></p>
+                                            <button>
+                                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg"
+                                                    alt="adicionar_favoritos">
+                                            </button>
+                                        </div>
+                                    </a>
+                                </div>
+                            <?php endif; ?>
                         <?php endforeach; ?>
+
 
 
                     </div>
