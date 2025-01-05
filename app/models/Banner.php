@@ -151,6 +151,20 @@ class Banner extends Model
     }
 
 
+    public function atualizarStatusBanner($id, $status)
+{
+    $sql = "UPDATE tbl_banner 
+            SET status_banner = :status 
+            WHERE id_banner = :id";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+    return $stmt->execute();
+}
+
+
+
 
 
 
