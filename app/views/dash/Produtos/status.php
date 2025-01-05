@@ -5,5 +5,5 @@
         <option value="Ativo" <?php echo $produto['status_pedido'] === 'Ativo' ? 'selected' : ''; ?>>Ativo</option>
         <option value="Inativo" <?php echo $produto['status_pedido'] === 'Inativo' ? 'selected' : ''; ?>>Inativo</option>
     </select>
-    <button type="submit">Salvar</button>
+    <button type="submit">Salvar</button><a href=""></a>
 </form>
