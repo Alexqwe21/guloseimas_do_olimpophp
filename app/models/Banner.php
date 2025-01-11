@@ -7,15 +7,23 @@ class Banner extends Model
 
     // METODO PARA PEGAR FOTOS DA GALERIA
 
-    public function getBanner()
+    public function getBanner($status = null)
     {
-
-
-
-        $sql = "SELECT * FROM tbl_banner WHERE status_banner = 'Ativo'";
-
-
+        // Consulta básica que retorna todos os banners
+        $sql = "SELECT * FROM tbl_banner";
+        
+        // Adiciona a condição de status apenas se fornecida
+        if ($status !== null) {
+            $sql .= " WHERE status_banner = :status";
+        }
+    
         $stmt = $this->db->prepare($sql);
+    
+        // Liga o parâmetro do status, se necessário
+        if ($status !== null) {
+            $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+        }
+    
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -107,14 +115,14 @@ class Banner extends Model
 
 
 
-
-    public function getbannerPorId($id)
+   
+    public function  getbannerPorId($id)
     {
-        $sql = "SELECT * FROM tbl_banner WHERE status_banner ='Ativo' AND id_banner = :id";
+        $sql = "SELECT * FROM tbl_banner WHERE id_banner = :id";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna um array com os dados ou false
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function atualizarProduto_banner($id, $dados)

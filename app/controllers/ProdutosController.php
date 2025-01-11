@@ -393,7 +393,7 @@ public function statusB($id)
 
     public function atualizarStatusB()
     {
-        // Verifica se o usuário tem permissão
+         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
             exit();
@@ -406,10 +406,10 @@ public function statusB($id)
             // Atualiza o status do produto
             if ($this->banner_produto->atualizarStatusBanner($id, $status)) {
                 $_SESSION['mensagem'] = "Status atualizado com sucesso!";
-                header('Location: ' . BASE_URL . 'banners/banners');
+                header('Location: ' . BASE_URL . 'produtos/banner_produto');
             } else {
                 $_SESSION['erro'] = "Erro ao atualizar o status do produto.";
-                header('Location: ' . BASE_URL . 'banners/banners/' . $id);
+                header('Location: ' . BASE_URL . 'produtos/banner_produto/' . $id);
             }
             exit();
         }

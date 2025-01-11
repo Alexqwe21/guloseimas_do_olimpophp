@@ -567,7 +567,7 @@ footer .contato {
 .banner_galeria,
 .banner_produtos,
 .banner_contato {
-    background-image: url(../img/banner_galeria.jpg);
+   
     height: 435px;
     background-repeat: no-repeat;
     background-size: cover;
