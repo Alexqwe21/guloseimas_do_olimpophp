@@ -45,7 +45,7 @@
       <!-- <th scope="col">Tempo</th> -->
       <!-- <th scope="col">Especialidade</th> -->
       <th scope="col">Editar</th>
-      <th scope="col">Desativar</th>
+      
 
     </tr>
   </thead>
@@ -71,7 +71,7 @@
             <button><i class="bi bi-pencil-fill"></i></button>
           </a>
         </td>
-        <td><button><i class="bi bi-trash-fill"></i></button></td>
+        
       </tr>
 
 

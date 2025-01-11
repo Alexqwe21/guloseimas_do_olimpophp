@@ -25,7 +25,9 @@
       <th scope="col">Nome da Galeria</th>
       <th scope="col">Texto Alternativo</th>
       <th scope="col">Status</th>
-     
+      <th scope="col">Editar</th>
+      <th scope="col">Desativar/Ativar</th>
+
     </tr>
   </thead>
   <tbody>
@@ -36,14 +38,19 @@
         <td><?php echo htmlspecialchars($linha['nome_galeria']); ?></td>
         <td><?php echo htmlspecialchars($linha['alt_foto_galeria']); ?></td>
         <td>
-    <?php echo ($linha['status_galeria'] == 'Ativo') ? 'Ativo' : 'Inativo'; ?>
-</td>
-        
+          <?php echo ($linha['status_galeria'] == 'Ativo') ? 'Ativo' : 'Inativo'; ?>
+        </td>
+
         <td>
           <a href="<?php echo BASE_URL . 'galeria/editarG/' . $linha['id_galeira']; ?>">
             <button><i class="bi bi-pencil-fill"></i></button>
-          </a>
-          <button><i class="bi bi-trash-fill"></i></button>
+          
+        </td>
+
+        <td>
+        <a href="<?php echo BASE_URL . 'galeria/statusG/' . $linha['id_galeira']; ?>">
+              <button><i class="bi bi-trash-fill"></i></button>
+            </a>
         </td>
       </tr>
     <?php endforeach; ?>

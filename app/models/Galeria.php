@@ -89,7 +89,9 @@ class Galeria extends Model
 
     public function getGaleria_pg_galeria(){
 
-        $sql = "SELECT * FROM tbl_galeria WHERE status_galeria = 'Ativo' AND id_galeira  IN(14,15,16,17,18,19,20,21)";
+        $sql = "SELECT * 
+FROM tbl_galeria 
+WHERE id_galeira  IN (14, 15, 16, 17, 18, 19, 20, 21);";
     
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
@@ -188,6 +190,20 @@ class Galeria extends Model
             return false;
         }
     }
+
+
+    public function atualizarStatusGaleria($id, $status)
+{
+    $sql = "UPDATE tbl_galeria 
+            SET status_galeria = :status 
+            WHERE id_galeira = :id";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+    return $stmt->execute();
+}
+
     
     
 
