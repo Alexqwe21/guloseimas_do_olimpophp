@@ -191,6 +191,35 @@ class ProdutosController extends Controller
 }
 
 
+public function statusB($id)
+{
+    // Verifica se o usuário tem permissão
+    if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+        header('Location: ' . BASE_URL);
+        exit();
+    }
+
+    // Busca os dados do produto
+    $banner = $this->banner_produto-> getbannerPorId($id);
+
+    if (!$banner) {
+        $_SESSION['erro'] = "Produto não encontrado.";
+        header('Location: ' . BASE_URL . 'produtos/banners');
+        exit();
+    }
+
+    // Prepara os dados para a view
+    $dados = [
+        'banner' => $banner,
+        'titulo' => 'Alterar Status do Produto'
+    ];
+
+    // Carrega a view do formulário
+    $this->carregarViews('dash/banners/statusB', $dados);
+}
+
+
+
 
     public function editarB($id)
     {
@@ -353,6 +382,34 @@ class ProdutosController extends Controller
             } else {
                 $_SESSION['erro'] = "Erro ao atualizar o status do produto.";
                 header('Location: ' . BASE_URL . 'produtos/status/' . $id);
+            }
+            exit();
+        }
+    
+        header('Location: ' . BASE_URL);
+        exit();
+    }
+
+
+    public function atualizarStatusB()
+    {
+        // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id_banner'];
+            $status = $_POST['status_banner'];
+    
+            // Atualiza o status do produto
+            if ($this->banner_produto->atualizarStatusBanner($id, $status)) {
+                $_SESSION['mensagem'] = "Status atualizado com sucesso!";
+                header('Location: ' . BASE_URL . 'banners/banners');
+            } else {
+                $_SESSION['erro'] = "Erro ao atualizar o status do produto.";
+                header('Location: ' . BASE_URL . 'banners/banners/' . $id);
             }
             exit();
         }

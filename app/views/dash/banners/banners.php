@@ -43,7 +43,9 @@
           <a href="<?php echo BASE_URL . 'produtos/editarB/' . $linha['id_banner']; ?>">
             <button><i class="bi bi-pencil-fill"></i></button>
           </a>
-          <button><i class="bi bi-trash-fill"></i></button>
+          <a href="<?php echo BASE_URL . 'produtos/statusB/' . $linha['id_banner']; ?>">
+            <button><i class="bi bi-trash-fill"></i></button>
+          </a>
         </td>
       </tr>
     <?php endforeach; ?>

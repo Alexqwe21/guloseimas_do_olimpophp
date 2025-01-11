@@ -23,14 +23,14 @@
     </header>
 
     <main>
-        <form action="<?php echo BASE_URL . 'produtos/atualizarStatus'; ?>" method="POST" class="form-group">
-            <input type="hidden" name="id_produto" value="<?php echo $produto['id_produto']; ?>">
+        <form action="<?php echo BASE_URL . 'produtos/atualizarStatusB'; ?>" method="POST" class="form-group">
+            <input type="hidden" name="id_banner" value="<?php echo $banner['id_banner']; ?>">
 
             <div class="form-group">
-                <label for="status_pedido">Status:</label>
-                <select name="status_pedido" id="status_pedido" class="form-control">
-                    <option value="Ativo" <?php echo $produto['status_pedido'] === 'Ativo' ? 'selected' : ''; ?>>Ativo</option>
-                    <option value="Inativo" <?php echo $produto['status_pedido'] === 'Inativo' ? 'selected' : ''; ?>>Inativo</option>
+                <label for="status_banner">Status:</label>
+                <select name="status_banner" id="status_banner" class="form-control">
+                    <option value="Ativo" <?php echo $banner['status_banner'] === 'Ativo' ? 'selected' : ''; ?>>Ativo</option>
+                    <option value="Inativo" <?php echo $banner['status_banner'] === 'Inativo' ? 'selected' : ''; ?>>Inativo</option>
                 </select>
             </div>
 
