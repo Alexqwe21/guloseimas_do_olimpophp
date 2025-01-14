@@ -60,7 +60,13 @@
             <button><i class="bi bi-pencil-fill"></i></button>
           </a>
         </td>
-        <td><button><i class="bi bi-trash-fill"></i></button></td>
+     
+       
+        <td>
+        <a href="<?php echo BASE_URL . 'home/statusC/' . $linha['id_produto']; ?>">  
+          <button><i class="bi bi-trash-fill"></i></button></td>
+      
+       
       </tr>
 
 

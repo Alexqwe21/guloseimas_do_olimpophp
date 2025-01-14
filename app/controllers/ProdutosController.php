@@ -191,6 +191,10 @@ class ProdutosController extends Controller
 }
 
 
+
+
+
+
 public function statusB($id)
 {
     // Verifica se o usuário tem permissão
@@ -389,6 +393,9 @@ public function statusB($id)
         header('Location: ' . BASE_URL);
         exit();
     }
+
+    
+
 
 
     public function atualizarStatusB()

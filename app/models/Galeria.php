@@ -104,7 +104,7 @@ WHERE id_galeira  IN (14, 15, 16, 17, 18, 19, 20, 21);";
 
     public function getGaleriaPorId($id)
     {
-        $sql = "SELECT * FROM tbl_galeria WHERE status_galeria ='Ativo' AND id_galeira = :id";
+        $sql = "SELECT * FROM tbl_galeria WHERE  id_galeira = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->execute();

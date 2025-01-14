@@ -25,6 +25,7 @@
       <th scope="col">Nome da Galeria</th>
       <th scope="col">Texto Alternativo</th>
       <th scope="col">Status</th>
+      <th scope="col">Editar</th>
      
     </tr>
   </thead>
@@ -43,7 +44,7 @@
           <a href="<?php echo BASE_URL . 'galeria/editarG/' . $linha['id_galeira']; ?>">
             <button><i class="bi bi-pencil-fill"></i></button>
           </a>
-          <button><i class="bi bi-trash-fill"></i></button>
+         
         </td>
       </tr>
     <?php endforeach; ?>

@@ -10,6 +10,7 @@ class HomeController extends Controller
     private $sobrehome;
 
     private $carrosel_home;
+    private $produtoModel;
 
 
 
@@ -20,6 +21,7 @@ class HomeController extends Controller
         $this->galeriaqualidade = new Galeria();
         $this->sobrehome = new Galeria();
         $this->carrosel_home = new Produto();
+        $this->produtoModel = new Produto();
     }
 
 
@@ -175,4 +177,59 @@ class HomeController extends Controller
         $this->carregarViews('dash/dashboard', $dados);
     }
 
+
+    public function statusC($id)
+    {
+        // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+
+        // Busca os dados do produto
+        $produto = $this->produtoModel->getProdutoPorId($id);
+
+        if (!$produto) {
+            $_SESSION['erro'] = "Produto não encontrado.";
+            header('Location: ' . BASE_URL . 'servico/carrosel');
+            exit();
+        }
+
+        // Prepara os dados para a view
+        $dados = [
+            'produto' => $produto,
+            'titulo' => 'Alterar Status do Produto'
+        ];
+
+        // Carrega a view do formulário
+        $this->carregarViews('dash/servico/statusC', $dados);
+    }
+
+
+    public function atualizarStatusC()
+    {
+        // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id_produto'];
+            $status = $_POST['status_pedido'];
+
+            // Atualiza o status do produto
+            if ($this->produtoModel->atualizarStatusProduto($id, $status)) {
+                $_SESSION['mensagem'] = "Status atualizado com sucesso!";
+                header('Location: ' . BASE_URL . 'home/carrosel');
+            } else {
+                $_SESSION['erro'] = "Erro ao atualizar o status do produto.";
+                header('Location: ' . BASE_URL . 'home/carrosel' . $id);
+            }
+            exit();
+        }
+
+        header('Location: ' . BASE_URL);
+        exit();
+    }
 }

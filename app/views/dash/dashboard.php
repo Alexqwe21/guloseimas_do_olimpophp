@@ -204,7 +204,7 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item"> <a href="#" class="nav-link"> <i class="bi bi-briefcase"></i>
+                        <!-- <li class="nav-item"> <a href="#" class="nav-link"> <i class="bi bi-briefcase"></i>
                                 <p>
                                     Recursos Humanos
                                     <i class="nav-arrow bi bi-chevron-right"></i>
@@ -217,10 +217,10 @@
 
 
                             </ul>
-                        </li>
+                        </li> -->
 
 
-                        <li class="nav-item"> <a href="#" class="nav-link"> <i class="bi bi-truck"></i>
+                        <!-- <li class="nav-item"> <a href="#" class="nav-link"> <i class="bi bi-truck"></i>
                                 <p>
                                     Fornecedores
                                     <i class="nav-arrow bi bi-chevron-right"></i>
@@ -235,7 +235,7 @@
                                         <p>Peças</p>
                                     </a> </li>
                             </ul>
-                        </li>
+                        </li> -->
 
 
 
