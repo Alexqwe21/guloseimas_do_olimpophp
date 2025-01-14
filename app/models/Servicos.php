@@ -12,7 +12,7 @@ class Servicos extends Model
 
 
 
-        $sql = "SELECT * FROM tbl_servico WHERE status_servico = 'Ativo'";
+        $sql = "SELECT * FROM tbl_servico";
 
 
         $stmt = $this->db->prepare($sql);
@@ -69,4 +69,20 @@ class Servicos extends Model
         }
        
     }
+
+    public function atualizarStatusServico($id, $status)
+    {
+        $sql = "UPDATE tbl_servico 
+                SET status_servico = :status 
+                WHERE id_servico = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    
+        return $stmt->execute();
+    }
+    
+
+
+
 }

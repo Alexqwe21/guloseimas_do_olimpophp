@@ -36,7 +36,7 @@ class Galeria extends Model
 
     public function getGaleriasobre(){
     
-        $sql = "SELECT * FROM tbl_galeria WHERE status_galeria = 'Ativo' AND id_galeira  IN (7 ,8,9,10);";
+        $sql = "SELECT * FROM tbl_galeria WHERE id_galeira   IN (7 ,8,9,10);";
     
         $stmt = $this->db->prepare($sql);
         $stmt->execute();

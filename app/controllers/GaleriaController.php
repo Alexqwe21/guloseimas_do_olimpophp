@@ -147,6 +147,35 @@ class GaleriaController extends Controller
 }
 
 
+public function status_S_G($id)
+{
+    // Verifica se o usuário tem permissão
+    if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+        header('Location: ' . BASE_URL);
+        exit();
+    }
+
+    // Busca os dados da galeria
+    $galeria_pg = $this->pg_galeria-> getGaleriaPorId($id);
+
+    if (!$galeria_pg) {
+        $_SESSION['erro'] = "Produto não encontrado.";
+        header('Location: ' . BASE_URL . 'produtos/banners');
+        exit();
+    }
+
+    // Prepara os dados para a view
+    $dados = [
+        'galeria_pg' => $galeria_pg,
+        'titulo' => 'Alterar Status do Produto'
+    ];
+
+    // Carrega a view do formulário
+    $this->carregarViews('dash/galeria/statusG', $dados);
+}
+
+
+
     public function atualizarStatusG()
     {
          // Verifica se o usuário tem permissão
@@ -173,6 +202,35 @@ class GaleriaController extends Controller
         header('Location: ' . BASE_URL);
         exit();
     }
+
+
+    public function atualizarstatus_S_G()
+    {
+         // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id_galeira'];
+            $status = $_POST['status_galeria'];
+    
+            // Atualiza o status do produto
+            if ($this->pg_galeria->atualizarStatusGaleria($id, $status)) {
+                $_SESSION['mensagem'] = "Status atualizado com sucesso!";
+                header('Location: ' . BASE_URL . 'sobre/carrosel_sobre');
+            } else {
+                $_SESSION['erro'] = "Erro ao atualizar o status do produto.";
+                header('Location: ' . BASE_URL . 'sobre/carrosel_sobre' . $id);
+            }
+            exit();
+        }
+    
+        header('Location: ' . BASE_URL);
+        exit();
+    }
+
 
 
     public function atualizarImagem()

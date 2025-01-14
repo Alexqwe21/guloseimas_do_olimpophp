@@ -40,6 +40,7 @@
       <!-- <th scope="col">Especialidade</th> -->
       <th scope="col">Editar</th>
       <th scope="col">Desativar</th>
+      <th scope="col">Status</th>
 
     </tr>
   </thead>
@@ -53,6 +54,8 @@
         <td><?php echo $linha['nome_produto'] ?></td>
        
         <td><?php echo $linha['preco_produto'] ?></td>
+
+        <td><?php echo $linha['status_pedido'] ?></td>
 
 
         <td>

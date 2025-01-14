@@ -197,6 +197,63 @@ public function __construct()
     }
 
 
+    public function status_S_S($id)
+{
+    // Verifica se o usuário tem permissão
+    if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+        header('Location: ' . BASE_URL);
+        exit();
+    }
+
+    // Busca os dados da galeria
+    $galeria_pg = $this->servicos-> getServicoPorId($id);
+
+    if (!$galeria_pg) {
+        $_SESSION['erro'] = "Produto não encontrado.";
+        header('Location: ' . BASE_URL . 'produtos/banners');
+        exit();
+    }
+
+    // Prepara os dados para a view
+    $dados = [
+        'galeria_pg' => $galeria_pg,
+        'titulo' => 'Alterar Status do Produto'
+    ];
+
+    // Carrega a view do formulário
+    $this->carregarViews('dash/sobre/status_S_S', $dados);
+}
+
+
+
+public function atualizarstatus_S_S()
+    {
+         // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id_servico'];
+            $status = $_POST['status_servico'];
+    
+            // Atualiza o status do produto
+            if ($this->servicos->atualizarStatusServico($id, $status)) {
+                $_SESSION['mensagem'] = "Status atualizado com sucesso!";
+                header('Location: ' . BASE_URL . 'sobre/servicos');
+            } else {
+                $_SESSION['erro'] = "Erro ao atualizar o status do produto.";
+                header('Location: ' . BASE_URL . 'sobre/servicos' . $id);
+            }
+            exit();
+        }
+    
+        header('Location: ' . BASE_URL);
+        exit();
+    }
+
+
     public function atualizarImagem_servico()
     {
         // Verifica se o usuário tem permissão

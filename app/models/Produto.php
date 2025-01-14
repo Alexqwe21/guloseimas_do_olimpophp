@@ -14,9 +14,11 @@ class Produto extends Model
 
 
 
-        $sql = "SELECT id_produto,foto_produto, alt_foto_produto, nome_produto, preco_produto 
-FROM tbl_produtos 
-WHERE status_pedido = 'Ativo' LIMIT 10";
+        $sql = " SELECT id_produto, foto_produto, alt_foto_produto, nome_produto, preco_produto, status_pedido
+FROM tbl_produtos
+WHERE id_produto NOT IN (1, 2, 3 , 4 , 5)
+LIMIT 10
+";
 
 
         $stmt = $this->db->prepare($sql);
