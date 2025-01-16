@@ -256,7 +256,38 @@ public function atualizarStatusProduto($id, $status)
 
 
 
+public function adicionar($idProduto , $id_cliente)
+{
+   
+   
 
+    $sql = "SELECT * FROM tbl_reserva WHERE id_cliente = :id_cliente AND id_produto = :id_produto";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':id_cliente', $id_cliente);
+    $stmt->bindValue(':id_produto', $idProduto);
+    $stmt->execute();
+    $reserva = $stmt->fetch();
+
+    if ($reserva) {
+        $sql = "UPDATE tbl_reserva SET quantidade_reserva = quantidade_reserva + 1 WHERE id_cliente = :id_cliente AND id_produto = :id_produto";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id_cliente', $id_cliente);
+        $stmt->bindValue(':id_produto', $idProduto);
+        $stmt->execute();
+    } else {
+        $sql = "INSERT INTO tbl_reserva (id_cliente, id_produto, quantidade_reserva) VALUES (:id_cliente, :id_produto, 1)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id_cliente', $id_cliente);
+        $stmt->bindValue(':id_produto', $idProduto);
+        $stmt->execute();
+    }
+//     var_dump($_SESSION['userId']);
+// var_dump($idProduto);
+// exit(); // Para parar a execução e visualizar os dados
+
+    header('Location: ' . BASE_URL . 'compras');
+    exit();
+}
 
 
 

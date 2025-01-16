@@ -19,6 +19,9 @@ class LoginController extends Controller
     public function login()
     {
         
+
+
+        
 // Inicia a sessão
 session_start();
 

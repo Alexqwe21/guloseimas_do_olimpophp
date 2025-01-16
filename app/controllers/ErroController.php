@@ -10,6 +10,9 @@ class ErroController{
 
 
         echo '<img src="assets/img/BRIGADEIRO 2.svg" alt="brigadeiro">';
+
+        var_dump($_SESSION);
+      
       
     }
  

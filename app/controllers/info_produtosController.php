@@ -5,12 +5,15 @@ class info_produtosController extends Controller
 
 
     private $info_produtos;
-
+   
 
 
 
     public function __construct()
     {
+
+        
+
         // Inicializa a sessão se ainda não estiver iniciada
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -47,9 +50,9 @@ class info_produtosController extends Controller
             header('Location: ' . BASE_URL);
             exit;
         }
-    
+
         $dados = array();
-    
+
         if ($id) {
             // Busca o produto pelo ID, caso ele seja fornecido
             $dados['listarServico'] = $this->info_produtos->getTodosServicos($id);
@@ -57,9 +60,9 @@ class info_produtosController extends Controller
             // Busca todos os produtos caso o ID não seja fornecido
             $dados['listarServico'] = $this->info_produtos->getTodosServicos();
         }
-    
+
         $dados['conteudo'] = 'dash/info_produtos/info_produtos';
-    
+
         $this->carregarViews('dash/dashboard', $dados);
     }
 
@@ -71,21 +74,21 @@ class info_produtosController extends Controller
             header('Location: ' . BASE_URL);
             exit();
         }
-    
+
         // Obtém os dados do produto para edição
         $info_produto = $this->info_produtos->getServicoPorId($id);
-    
+
         if (!$info_produto) {
             // Se o produto não for encontrado, redireciona para a lista de produtos
             header('Location: ' . BASE_URL . 'produtos/home');
             exit();
         }
-    
+
         // Prepara os dados para a view
         $dados = array();
         $dados['info_produto'] = $info_produto;
         $dados['titulo'] = 'Editar Produto - Ki Oficina';
-    
+
         // Carrega a view de edição
         $this->carregarViews('dash/info_produtos/editarI', $dados);
     }
@@ -99,25 +102,25 @@ class info_produtosController extends Controller
             header('Location: ' . BASE_URL);
             exit();
         }
-    
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id_info_produtos'];
-    
+
             // Verifica se uma nova imagem foi enviada
             $novoCaminhoImagem = $_POST['foto_produto_antiga']; // Caminho antigo por padrão
             if (!empty($_FILES['foto_info_produto']['name'])) {
                 // Diretório de upload
                 $diretorioUploads = __DIR__ . '/../../public/uploads/info_produto/';
-    
+
                 // Certifica-se de que o diretório existe
                 if (!is_dir($diretorioUploads)) {
                     mkdir($diretorioUploads, 0755, true);
                 }
-    
+
                 // Gera um nome único para a imagem
                 $nomeArquivo = uniqid() . '_' . $_FILES['foto_info_produto']['name'];
                 $caminhoCompleto = $diretorioUploads . $nomeArquivo;
-    
+
                 // Move a imagem para o diretório
                 if (move_uploaded_file($_FILES['foto_info_produto']['tmp_name'], $caminhoCompleto)) {
                     // Atualiza o caminho da imagem para salvar no banco
@@ -128,7 +131,7 @@ class info_produtosController extends Controller
                     exit();
                 }
             }
-    
+
             // Atualiza os dados do produto
             $dados = [
                 'nome_info_produtos' => $_POST['nome_info_produtos'],
@@ -141,7 +144,7 @@ class info_produtosController extends Controller
                 'reserva_info_produtos' => $_POST['reserva_info_produtos'],
                 'foto_info_produto' => $novoCaminhoImagem
             ];
-    
+
             if ($this->info_produtos->atualizar_info_Produto($id, $dados)) {
                 $_SESSION['mensagem'] = " Informação do Produto atualizado com sucesso!";
                 header('Location: ' . BASE_URL . 'info_produtos/info_produtos');
@@ -154,6 +157,34 @@ class info_produtosController extends Controller
     }
 
 
+   public function adicionarReserva($idProduto)
+{
+    // Verifica se o cliente está logado
+    if (!isset($_SESSION['userId'])) {  // Alterar para $_SESSION['userId']
+        $_SESSION['erro'] = 'Faça login para reservar.';
+        header('Location: ' . BASE_URL . 'login');
+        exit();
+    }
+
+    // Obtém o id do cliente a partir da sessão
+    $id_cliente = $_SESSION['userId'];  // Alterar para $_SESSION['userId']
+    
+    // Cria uma instância do modelo Produto (assumindo que o método adicionar está lá)
+    $produtoModel = new Produto();
+
+    // Chama o método de adicionar do modelo Produto para fazer a reserva, passando o $id_cliente
+    $produtoModel->adicionar($idProduto, $id_cliente);
+
+    // Redireciona o usuário para a página de reservas
+    header('Location: ' . BASE_URL . 'reservas');
+    exit();
+}
 
 
+
+    
+
+
+  
+    
 }

@@ -69,7 +69,7 @@
                                     <i class="fa-solid fa-cart-shopping"></i>
                                 </div>
                                 <div>
-                                    <a href="login.html">
+                                    <a href="<?php echo BASE_URL . 'info_produtos/adicionarReserva/' . $detalheServico['id_produto']; ?>">
                                         <p>RESERVE AGORA</p>
                                     </a>
                                 </div>

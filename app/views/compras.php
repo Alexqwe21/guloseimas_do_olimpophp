@@ -17,22 +17,37 @@
     </header>
 
 
-    <main>
-        <section class="compras">
-            <article class="site">
-                <div>
-                    <h3>Carinho de Compras</h3>
-                </div>
-                <div class="lado_a_lado">
+    <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+// Verifica se há itens no carrinho
+if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])):
+?>
+
+<main>
+    <section class="compras">
+        <article class="site">
+            <div>
+                <h3>Carrinho de Compras</h3>
+            </div>
+            <div class="lado_a_lado">
+                
+                <?php
+                $total = 0;
+                foreach ($_SESSION['carrinho'] as $idProduto => $produto): 
+                    $subtotal = $produto['quantidade_reserva'] * $produto['preco'];
+                    $total += $subtotal;
+                ?>
+                
                     <div class="compras_box">
                         <div>
                             <a href="#">
-                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/produto_a_mostra-01.svg"
-                                    alt="Produto - Carrinho de Compras">
+                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/produto_a_mostra-01.svg" alt="Produto - Carrinho de Compras">
                             </a>
                         </div>
                         <div class="desc_compras">
-                            <p>Chocolate Truffles</p>
+                            <p><?php echo $produto['nome']; ?></p>
                             <p>500g</p>
                             <h6>REMOVER
                                 <i class="fa-solid fa-trash"></i>
@@ -40,7 +55,7 @@
                         </div>
                         <div class="compras_preco">
                             <p>PREÇO UNITÁRIO</p>
-                            <h6>R$9.99</h6>
+                            <h6>R$<?php echo number_format($produto['preco'], 2, ',', '.'); ?></h6>
                         </div>
 
                         <div class="qtd_compras">
@@ -50,7 +65,7 @@
                                     <button class="decrement-button" id="decrement-button">-</button>
                                 </div>
                                 <div class="number">
-                                    <p id="number-display">1</p>
+                                    <p id="number-display"><?php echo $produto['quantidade']; ?></p>
                                 </div>
                                 <div>
                                     <button class="increment-button" id="increment-button">+</button>
@@ -61,40 +76,55 @@
 
                         <div class="subtotal">
                             <p>Subtotal</p>
-                            <h6>R$9.99</h6>
+                            <h6>R$<?php echo number_format($subtotal, 2, ',', '.'); ?></h6>
                         </div>
+                    </div>
+                <?php endforeach; ?>
 
+                <div class="resumo_compras">
+                    <h3>Resumo do pedido</h3>
+                    <div class="resumo_pedido">
+                        <p><?php echo count($_SESSION['carrinho']); ?> Produto(s)</p>
+                        <h6>R$<?php echo number_format($total, 2, ',', '.'); ?></h6>
+                    </div>
+                    <hr>
+                    <div class="total_compras">
+                        <p>TOTAL</p>
+                        <p>R$<?php echo number_format($total, 2, ',', '.'); ?></p>
                     </div>
 
-                    <div class="resumo_compras">
-                        <h3>Resumo do pedido</h3>
-                        <div class="resumo_pedido">
-                            <p>1</p>
-                            <p>Produto(s)</p>
-                            <h6>R$9.99</h6>
-                        </div>
-                        <hr>
-                        <div class="total_compras">
-                            <p>TOTAL</p>
-                            <p>R$9.99</p>
-                        </div>
-
-                        <div class="finalizar">
-                            <div> </div>
-                            <a href="#">Reservar Pedido</a>
-                        </div>
+                    <div class="finalizar">
+                        <div> </div>
+                        <a href="#">Reservar Pedido</a>
                     </div>
                 </div>
+            </div>
 
-                <div class="acoes_compras">
-                    <p>Esvaziar Carrinho</p>
-                    <div>
-                        <a href="produtos.html">Continuar Comprando</a>
-                    </div>
+            <div class="acoes_compras">
+                <p>Esvaziar Carrinho</p>
+                <div>
+                    <a href="produtos.html">Continuar Comprando</a>
                 </div>
-            </article>
-        </section>
-    </main>
+            </div>
+        </article>
+    </section>
+    
+</main>
+
+<?php
+else:
+    echo "Seu carrinho está vazio.";
+   
+if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
+    echo '<pre>';
+    print_r($_SESSION['carrinho']); // Exibe o conteúdo do carrinho
+    echo '</pre>';
+} else {
+    echo 'Seu carrinho está vazio.';
+}
+
+endif;
+?>
 
     <footer>
         <?php
