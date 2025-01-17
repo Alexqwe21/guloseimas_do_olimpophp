@@ -16,13 +16,13 @@
         ?>
     </header>
 
-
     <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 // Verifica se há itens no carrinho
 if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])):
+    $total = 0; // Inicializa o total fora do loop
 ?>
 
 <main>
@@ -32,18 +32,22 @@ if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])):
                 <h3>Carrinho de Compras</h3>
             </div>
             <div class="lado_a_lado">
-                
+
                 <?php
-                $total = 0;
-                foreach ($_SESSION['carrinho'] as $idProduto => $produto): 
-                    $subtotal = $produto['quantidade_reserva'] * $produto['preco'];
-                    $total += $subtotal;
+                foreach ($_SESSION['carrinho'] as $idProduto => $produto):
+                    $subtotal = $produto['quantidade'] * $produto['preco']; // Calcula o subtotal
+                    $total += $subtotal; // Soma o subtotal ao total
                 ?>
-                
+
                     <div class="compras_box">
                         <div>
                             <a href="#">
-                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/produto_a_mostra-01.svg" alt="Produto - Carrinho de Compras">
+
+                            <img src="<?php echo BASE_URL . 'uploads/' . $produto['foto']; ?>" alt="<?php echo $produto['nome']; ?>">
+
+
+                           
+
                             </a>
                         </div>
                         <div class="desc_compras">
@@ -108,23 +112,24 @@ if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])):
             </div>
         </article>
     </section>
-    
+
 </main>
 
 <?php
 else:
     echo "Seu carrinho está vazio.";
-   
-if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
-    echo '<pre>';
-    print_r($_SESSION['carrinho']); // Exibe o conteúdo do carrinho
-    echo '</pre>';
-} else {
-    echo 'Seu carrinho está vazio.';
-}
+
+    if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
+        echo '<pre>';
+        print_r($_SESSION['carrinho']); // Exibe o conteúdo do carrinho
+        echo '</pre>';
+    } else {
+        echo 'Seu carrinho está vazio.';
+    }
 
 endif;
 ?>
+
 
     <footer>
         <?php

@@ -63,7 +63,7 @@ class EntrarController extends Controller
                     $_SESSION['userEndereco'] = $cliente['endereco_cliente'];
 
                     // Redireciona para o painel ou página do cliente
-                    header('Location: ' . BASE_URL . 'painel_cliente');
+                    header('Location: ' . BASE_URL . 'home');
                     exit;
                 }
 

@@ -256,10 +256,48 @@ public function atualizarStatusProduto($id, $status)
 
 
 
-public function adicionar($idProduto , $id_cliente)
+// public function adicionar($idProduto , $id_cliente)
+// {
+   
+   
+
+//     $sql = "SELECT * FROM tbl_reserva WHERE id_cliente = :id_cliente AND id_produto = :id_produto";
+//     $stmt = $this->db->prepare($sql);
+//     $stmt->bindValue(':id_cliente', $id_cliente);
+//     $stmt->bindValue(':id_produto', $idProduto);
+//     $stmt->execute();
+//     $reserva = $stmt->fetch();
+
+//     if ($reserva) {
+//         $sql = "UPDATE tbl_reserva SET quantidade_reserva = quantidade_reserva + 1 WHERE id_cliente = :id_cliente AND id_produto = :id_produto";
+//         $stmt = $this->db->prepare($sql);
+//         $stmt->bindValue(':id_cliente', $id_cliente);
+//         $stmt->bindValue(':id_produto', $idProduto);
+//         $stmt->execute();
+//     } else {
+//         $sql = "INSERT INTO tbl_reserva (id_cliente, id_produto, quantidade_reserva) VALUES (:id_cliente, :id_produto, 1)";
+//         $stmt = $this->db->prepare($sql);
+//         $stmt->bindValue(':id_cliente', $id_cliente);
+//         $stmt->bindValue(':id_produto', $idProduto);
+//         $stmt->execute();
+//     }
+// //     var_dump($_SESSION['userId']);
+// // var_dump($idProduto);
+// // exit(); // Para parar a execução e visualizar os dados
+
+//     header('Location: ' . BASE_URL . 'compras');
+//     exit();
+// }
+
+
+public function adicionar($idProduto, $id_cliente)
 {
-   
-   
+    // Verifica se o cliente está logado
+    if (!isset($_SESSION['userId'])) {
+        $_SESSION['erro'] = 'Faça login para continuar.';
+        header('Location: ' . BASE_URL . 'login');
+        exit();
+    }
 
     $sql = "SELECT * FROM tbl_reserva WHERE id_cliente = :id_cliente AND id_produto = :id_produto";
     $stmt = $this->db->prepare($sql);
@@ -269,25 +307,52 @@ public function adicionar($idProduto , $id_cliente)
     $reserva = $stmt->fetch();
 
     if ($reserva) {
+        // Atualiza a quantidade no banco
         $sql = "UPDATE tbl_reserva SET quantidade_reserva = quantidade_reserva + 1 WHERE id_cliente = :id_cliente AND id_produto = :id_produto";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id_cliente', $id_cliente);
         $stmt->bindValue(':id_produto', $idProduto);
         $stmt->execute();
     } else {
+        // Insere um novo item no banco
         $sql = "INSERT INTO tbl_reserva (id_cliente, id_produto, quantidade_reserva) VALUES (:id_cliente, :id_produto, 1)";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id_cliente', $id_cliente);
         $stmt->bindValue(':id_produto', $idProduto);
         $stmt->execute();
     }
-//     var_dump($_SESSION['userId']);
-// var_dump($idProduto);
-// exit(); // Para parar a execução e visualizar os dados
 
+    // Atualiza a sessão com os dados mais recentes
+    $this->atualizarCarrinhoSessao($id_cliente);
+
+    // Redireciona para a página de compras
     header('Location: ' . BASE_URL . 'compras');
     exit();
 }
+
+private function atualizarCarrinhoSessao($id_cliente)
+{
+    $sql = "SELECT r.id_produto, r.quantidade_reserva, p.nome_produto, p.preco_produto, p.foto_produto
+            FROM tbl_reserva r
+            JOIN tbl_produtos p ON r.id_produto = p.id_produto
+            WHERE r.id_cliente = :id_cliente";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':id_cliente', $id_cliente);
+    $stmt->execute();
+    $reservas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Atualiza a variável de sessão
+    $_SESSION['carrinho'] = [];
+    foreach ($reservas as $reserva) {
+        $_SESSION['carrinho'][$reserva['id_produto']] = [
+            'quantidade' => $reserva['quantidade_reserva'],
+            'nome' => $reserva['nome_produto'],
+            'preco' => $reserva['preco_produto'],
+            'foto' => $reserva['foto_produto'] // Certifique-se de que este campo está no banco
+        ];
+    }
+}
+
 
 
 
