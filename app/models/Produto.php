@@ -354,6 +354,31 @@ private function atualizarCarrinhoSessao($id_cliente)
 }
 
 
+public function remover($idProduto, $id_cliente)
+{
+    // Verifica se o cliente está logado
+    if (!isset($_SESSION['userId'])) {
+        $_SESSION['erro'] = 'Faça login para continuar.';
+        header('Location: ' . BASE_URL . 'login');
+        exit();
+    }
+
+    // Remove o item da tabela tbl_reserva
+    $sql = "DELETE FROM tbl_reserva WHERE id_cliente = :id_cliente AND id_produto = :id_produto";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':id_cliente', $id_cliente);
+    $stmt->bindValue(':id_produto', $idProduto);
+    $stmt->execute();
+
+    // Atualiza a sessão com os dados mais recentes
+    $this->atualizarCarrinhoSessao($id_cliente);
+
+    // Redireciona para a página do carrinho
+    header('Location: ' . BASE_URL . 'compras');
+    exit();
+}
+
+
 
 
 
