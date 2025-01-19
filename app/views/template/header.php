@@ -1,3 +1,9 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
 <style>
     .cliente_logado {
         display: flex;
@@ -67,13 +73,12 @@
     </nav>
 
     <div class="login_header">
-        <?php if (isset($_SESSION['userId'])): ?>
+        <?php if (isset($_SESSION['userId'])): ?> <!-- Aqui começa PHP, sem espaços -->
             <div class="cliente_logado">
                 <!-- Foto do cliente -->
-                 <a href="http://localhost/guloseimas_do_olimpophp/public/painel_cliente">
-                <img src="<?php echo BASE_URL . 'uploads/' . $_SESSION['userFoto']; ?>"
-                    alt="Foto de <?php echo $_SESSION['userNome']; ?>" class="foto_cliente">
-                    </a>
+                <a href="http://localhost/guloseimas_do_olimpophp/public/painel_cliente">
+                    <img src="<?php echo BASE_URL . 'uploads/' . $_SESSION['userFoto']; ?>" alt="Foto de <?php echo $_SESSION['userNome']; ?>" class="foto_cliente">
+                </a>
                 <!-- Nome do cliente -->
                 <p><?php echo $_SESSION['userNome']; ?>!</p>
                 <!-- Botão de logout -->
@@ -84,6 +89,6 @@
             <a href="<?php echo BASE_URL; ?>login">
                 <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/login.svg" alt="Login">
             </a>
-        <?php endif; ?>
+        <?php endif; ?> <!-- Aqui termina PHP, sem espaços -->
+
     </div>
-</div>

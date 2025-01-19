@@ -1,3 +1,78 @@
+<style>
+    .carrinho-vazio {
+        text-align: center;
+        padding: 50px 20px;
+        background-color: #f9f9f9;
+        /* Fundo suave */
+        border: 1px solid #ddd;
+        /* Borda leve */
+        border-radius: 5px;
+        /* Bordas arredondadas */
+        max-width: 600px;
+        /* Largura máxima */
+        margin: 0 auto;
+    }
+
+    .carrinho-vazio h3 {
+        font-size: 24px;
+        color: #333;
+    }
+
+    .carrinho-vazio p {
+        font-size: 16px;
+        color: #555;
+    }
+
+    .carrinho-vazio a {
+        color: #0066cc;
+        text-decoration: none;
+    }
+
+    .carrinho-vazio a:hover {
+        text-decoration: underline;
+    }
+
+    .esvaziar-btn {
+        border: none;
+        background-color: transparent;
+        margin-right: 50px;
+    }
+</style>
+
+<?php if (isset($_POST['esvaziar_carrinho'])) {
+    unset($_SESSION['carrinho']); // Limpa o carrinho
+    header("Location: " . BASE_URL . "compras"); // Atualiza a página
+    exit;
+}
+
+// Lógica para gerar o link do WhatsApp
+if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
+    $numeroWhatsApp = '5511968812993'; // Número do WhatsApp no formato internacional
+    $mensagem = "Olá, gostaria de reservar os seguintes produtos:\n\n";
+
+    foreach ($_SESSION['carrinho'] as $produto) {
+        $mensagem .= "- " . $produto['nome'] . ": " . $produto['quantidade'] . " x R$" . number_format($produto['preco'], 2, ',', '.') . "\n";
+    }
+
+    $total = array_sum(array_map(function ($produto) {
+        return $produto['quantidade'] * $produto['preco'];
+    }, $_SESSION['carrinho']));
+
+    $mensagem .= "\nTotal: R$" . number_format($total, 2, ',', '.');
+    $mensagemCodificada = urlencode($mensagem);
+
+    // Gera o link do WhatsApp
+    $linkWhatsApp = "https://wa.me/$numeroWhatsApp?text=$mensagemCodificada";
+
+    // Redireciona para o WhatsApp
+    header("Location: $linkWhatsApp");
+
+    // Esvazia o carrinho após enviar para o WhatsApp
+    unset($_SESSION['carrinho']);
+    exit;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -20,14 +95,6 @@
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
-
-
-    if (isset($_POST['esvaziar_carrinho'])) {
-        unset($_SESSION['carrinho']); // Limpa o carrinho
-        header("Location: " . BASE_URL . "compras"); // Atualiza a página
-        exit;
-    }
-
     // Verifica se há itens no carrinho
     if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])):
         $total = 0; // Inicializa o total fora do loop
@@ -113,8 +180,9 @@
                             </div>
 
                             <div class="finalizar">
-                                <div> </div>
-                                <a href="#">Reservar Pedido</a>
+                                <form method="POST" action="">
+                                    <button type="submit" name="reservar_pedido" id="reservarPedido">Reservar Pedido</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -134,16 +202,18 @@
 
     <?php
     else:
-        echo "Seu carrinho está vazio.";
+    ?>
 
-        if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
-            echo '<pre>';
-            print_r($_SESSION['carrinho']); // Exibe o conteúdo do carrinho
-            echo '</pre>';
-        } else {
-            echo 'Seu carrinho está vazio.';
-        }
+        <section class="compras">
+            <article class="site">
+                <div class="carrinho-vazio">
+                    <h3>Seu carrinho está vazio</h3>
+                    <p>Que tal dar uma olhada nos nossos <a href="<?php echo BASE_URL; ?>produtos">produtos?</a></p>
+                </div>
+            </article>
+        </section>
 
+    <?php
     endif;
     ?>
 
@@ -161,76 +231,91 @@
     ?>
 </body>
 
+
+
 <script>
     document.querySelectorAll('.qtd_box').forEach(function(qtdBox) {
-        // Botões de incremento e decremento
         const decrementButton = qtdBox.querySelector('.decrement-button');
         const incrementButton = qtdBox.querySelector('.increment-button');
         const numberDisplay = qtdBox.querySelector('.number-display');
         const subtotalDisplay = qtdBox.closest('.compras_box').querySelector('.subtotal h6');
 
-        // Elementos de resumo de compras
-        const totalDisplay = document.querySelector('.total_compras p:last-child'); // Exibe o total do resumo
-        const resumoPedido = document.querySelector('.resumo_pedido h6'); // Exibe o total do pedido
-        const numProdutosDisplay = document.querySelector('.resumo_pedido p'); // Exibe o número de produtos
+        const totalDisplay = document.querySelector('.total_compras p:last-child');
+        const resumoPedido = document.querySelector('.resumo_pedido h6');
+        const numProdutosDisplay = document.querySelector('.resumo_pedido p');
 
-        // Função para atualizar o resumo
-        const atualizarResumo = () => {
-            let total = 0;
-            let numProdutos = 0;
+        // Função para atualizar o resumo e a URL do WhatsApp
+const atualizarResumoEUrlWhatsApp = () => {
+    let total = 0; // Inicializa o total como 0
+    let numProdutos = 0; // Inicializa o número total de produtos
+    let mensagem = "Olá, gostaria de reservar os seguintes produtos:\n\n"; // Começa a mensagem
 
-            // Itera por cada produto para calcular o total atualizado
-            document.querySelectorAll('.compras_box').forEach(function(box) {
-                const quantidade = parseInt(box.querySelector('.number-display').textContent);
-                const preco = parseFloat(box.querySelector('.number-display').dataset.preco);
+    // Itera sobre cada produto no carrinho
+    document.querySelectorAll('.compras_box').forEach(function (box) {
+        const quantidade = parseInt(box.querySelector('.number-display').textContent);
+        const preco = parseFloat(box.querySelector('.number-display').dataset.preco);
+        const produtoNome = box.querySelector('.desc_compras p').textContent;
 
-                total += quantidade * preco; // Soma ao total
-                numProdutos += quantidade; // Soma a quantidade
-            });
+        const subtotal = quantidade * preco;
+        total += subtotal; // Adiciona o subtotal ao total
+        numProdutos += quantidade; // Incrementa o número total de produtos
 
-            // Atualiza o total e o número de produtos no resumo
-            totalDisplay.textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
-            resumoPedido.textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
-            numProdutosDisplay.textContent = numProdutos + ' Produto(s)';
-        };
+        // Atualiza a mensagem
+        mensagem += `- ${produtoNome}: ${quantidade} x R$${preco.toFixed(2).replace('.', ',')}\n`;
+    });
 
-        // Adiciona evento de clique no botão de incremento
+    // Adiciona o total ao final da mensagem
+    mensagem += `\nTotal: R$${total.toFixed(2).replace('.', ',')}`;
+
+    // Codifica a mensagem para a URL do WhatsApp
+    const mensagemCodificada = encodeURIComponent(mensagem);
+
+    // Atualiza o link do WhatsApp
+    const numeroWhatsApp = '5511968812993'; // Número do WhatsApp
+    const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensagemCodificada}`;
+    document.querySelector('.finalizar a').setAttribute('href', linkWhatsApp);
+
+    // Atualiza os valores exibidos no resumo do pedido
+    totalDisplay.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    resumoPedido.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    numProdutosDisplay.textContent = `${numProdutos} Produto(s)`;
+};
+
+        // Evento de incremento
         incrementButton.addEventListener('click', function() {
-            let quantidade = parseInt(numberDisplay.textContent); // Pega a quantidade atual
-            const preco = parseFloat(numberDisplay.dataset.preco); // Pega o preço do atributo data-preco
+            let quantidade = parseInt(numberDisplay.textContent);
+            const preco = parseFloat(numberDisplay.dataset.preco);
 
-            // Incrementa a quantidade
             quantidade++;
             numberDisplay.textContent = quantidade;
 
-            // Atualiza o subtotal
             const subtotal = quantidade * preco;
-            subtotalDisplay.textContent = 'R$ ' + subtotal.toFixed(2).replace('.', ',');
+            subtotalDisplay.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
 
-            // Atualiza o resumo
-            atualizarResumo();
+            atualizarResumoEUrlWhatsApp();
         });
 
-        // Adiciona evento de clique no botão de decremento
+        // Evento de decremento
         decrementButton.addEventListener('click', function() {
-            let quantidade = parseInt(numberDisplay.textContent); // Pega a quantidade atual
-            const preco = parseFloat(numberDisplay.dataset.preco); // Pega o preço do atributo data-preco
+            let quantidade = parseInt(numberDisplay.textContent);
+            const preco = parseFloat(numberDisplay.dataset.preco);
 
-            // Evita que a quantidade seja menor que 1
             if (quantidade > 1) {
                 quantidade--;
                 numberDisplay.textContent = quantidade;
 
-                // Atualiza o subtotal
                 const subtotal = quantidade * preco;
-                subtotalDisplay.textContent = 'R$ ' + subtotal.toFixed(2).replace('.', ',');
+                subtotalDisplay.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
 
-                // Atualiza o resumo
-                atualizarResumo();
+                atualizarResumoEUrlWhatsApp();
             }
         });
     });
+
+    
 </script>
+
+
 
 
 </html>

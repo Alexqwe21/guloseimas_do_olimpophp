@@ -1675,13 +1675,21 @@ footer .contato {
 /* Pagina Compras */
 
 .compras{
-    height: 500px;
+    min-height: calc(100vh - 200px); /* Altura mínima dinâmica considerando o tamanho do cabeçalho e rodapé */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
 
 
 
 .compras .site{
     max-width: 1400px;
+    display: flex;
+    justify-content: center;
+    flex-flow: column wrap;
+    align-items: center;
 }
  
 .compras .site div {
@@ -1693,6 +1701,7 @@ footer .contato {
 .compras .site .lado_a_lado {
     display: flex;
     justify-content: space-between;
+    flex-flow: column wrap;
 }
 
 .compras .compras_box {
