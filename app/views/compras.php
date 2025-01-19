@@ -1,9 +1,3 @@
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -30,7 +24,7 @@
 
     if (isset($_POST['esvaziar_carrinho'])) {
         unset($_SESSION['carrinho']); // Limpa o carrinho
-        header("Location: " . $_SERVER['PHP_SELF']); // Atualiza a página
+        header("Location: " . BASE_URL . "compras"); // Atualiza a página
         exit;
     }
 

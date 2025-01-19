@@ -76,7 +76,6 @@
                     </a>
                 <!-- Nome do cliente -->
                 <p><?php echo $_SESSION['userNome']; ?>!</p>
-
                 <!-- Botão de logout -->
                 <a href="http://localhost/guloseimas_do_olimpophp/public/login/sair" class="logout">Sair</a>
             </div>
