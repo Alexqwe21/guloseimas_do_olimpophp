@@ -37,6 +37,18 @@
         background-color: transparent;
         margin-right: 50px;
     }
+
+
+    .pedido-confirmado {
+        text-align: center;
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+        padding: 15px;
+        margin: 20px auto;
+        border-radius: 5px;
+        max-width: 600px;
+    }
 </style>
 
 <?php if (isset($_POST['esvaziar_carrinho'])) {
@@ -45,7 +57,6 @@
     exit;
 }
 
-// Lógica para gerar o link do WhatsApp
 if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
     $numeroWhatsApp = '5511968812993'; // Número do WhatsApp no formato internacional
     $mensagem = "Olá, gostaria de reservar os seguintes produtos:\n\n";
@@ -64,8 +75,12 @@ if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($
     // Gera o link do WhatsApp
     $linkWhatsApp = "https://wa.me/$numeroWhatsApp?text=$mensagemCodificada";
 
-    // Redireciona para o WhatsApp
-    header("Location: $linkWhatsApp");
+    // Esvazia o carrinho após enviar para o WhatsApp
+    unset($_SESSION['carrinho']);
+
+    // Redireciona com parâmetro de sucesso
+    header("Location: " . BASE_URL . "compras?pedido=sucesso");
+
 
     // Esvazia o carrinho após enviar para o WhatsApp
     unset($_SESSION['carrinho']);
@@ -181,7 +196,18 @@ if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($
 
                             <div class="finalizar">
                                 <form method="POST" action="">
-                                    <button type="submit" name="reservar_pedido" id="reservarPedido">Reservar Pedido</button>
+
+                                    <div class="finalizar">
+                                        <a href="<?php echo $linkWhatsApp; ?>" target="_blank">Reservar Pedido</a>
+                                    </div>
+
+                                    <?php
+                                    if (isset($_GET['pedido']) && $_GET['pedido'] === 'sucesso') {
+                                        echo '<div class="pedido-confirmado">Pedido feito, obrigado!</div>';
+                                    }
+                                    ?>
+
+
                                 </form>
                             </div>
                         </div>
@@ -240,48 +266,52 @@ if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($
         const numberDisplay = qtdBox.querySelector('.number-display');
         const subtotalDisplay = qtdBox.closest('.compras_box').querySelector('.subtotal h6');
 
+        // Seletores do resumo e total
         const totalDisplay = document.querySelector('.total_compras p:last-child');
         const resumoPedido = document.querySelector('.resumo_pedido h6');
         const numProdutosDisplay = document.querySelector('.resumo_pedido p');
+        const linkWhatsAppButton = document.querySelector('.finalizar a'); // Link do botão de WhatsApp
 
         // Função para atualizar o resumo e a URL do WhatsApp
-const atualizarResumoEUrlWhatsApp = () => {
-    let total = 0; // Inicializa o total como 0
-    let numProdutos = 0; // Inicializa o número total de produtos
-    let mensagem = "Olá, gostaria de reservar os seguintes produtos:\n\n"; // Começa a mensagem
+        const atualizarResumoEUrlWhatsApp = () => {
+            let total = 0; // Inicializa o total
+            let numProdutos = 0; // Número total de produtos
+            let mensagem = "Olá, gostaria de reservar os seguintes produtos:\n\n"; // Início da mensagem
 
-    // Itera sobre cada produto no carrinho
-    document.querySelectorAll('.compras_box').forEach(function (box) {
-        const quantidade = parseInt(box.querySelector('.number-display').textContent);
-        const preco = parseFloat(box.querySelector('.number-display').dataset.preco);
-        const produtoNome = box.querySelector('.desc_compras p').textContent;
+            // Atualiza os subtotais e recalcula o total
+            document.querySelectorAll('.compras_box').forEach(function(box) {
+                const quantidade = parseInt(box.querySelector('.number-display').textContent);
+                const preco = parseFloat(box.querySelector('.number-display').dataset.preco);
+                const produtoNome = box.querySelector('.desc_compras p').textContent;
 
-        const subtotal = quantidade * preco;
-        total += subtotal; // Adiciona o subtotal ao total
-        numProdutos += quantidade; // Incrementa o número total de produtos
+                const subtotal = quantidade * preco;
+                total += subtotal; // Soma o subtotal ao total geral
+                numProdutos += quantidade; // Soma a quantidade total de produtos
 
-        // Atualiza a mensagem
-        mensagem += `- ${produtoNome}: ${quantidade} x R$${preco.toFixed(2).replace('.', ',')}\n`;
-    });
+                // Adiciona o produto à mensagem
+                mensagem += `- ${produtoNome}: ${quantidade} x R$${preco.toFixed(2).replace('.', ',')}\n`;
+            });
 
-    // Adiciona o total ao final da mensagem
-    mensagem += `\nTotal: R$${total.toFixed(2).replace('.', ',')}`;
+            // Adiciona o total final à mensagem
+            mensagem += `\nTotal: R$${total.toFixed(2).replace('.', ',')}`;
 
-    // Codifica a mensagem para a URL do WhatsApp
-    const mensagemCodificada = encodeURIComponent(mensagem);
+            // Codifica a mensagem para a URL do WhatsApp
+            const mensagemCodificada = encodeURIComponent(mensagem);
+            const numeroWhatsApp = '5511968812993'; // Número do WhatsApp
+            const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensagemCodificada}`;
 
-    // Atualiza o link do WhatsApp
-    const numeroWhatsApp = '5511968812993'; // Número do WhatsApp
-    const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensagemCodificada}`;
-    document.querySelector('.finalizar a').setAttribute('href', linkWhatsApp);
+            // Atualiza o link do botão de WhatsApp
+            if (linkWhatsAppButton) {
+                linkWhatsAppButton.setAttribute('href', linkWhatsApp);
+            }
 
-    // Atualiza os valores exibidos no resumo do pedido
-    totalDisplay.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
-    resumoPedido.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
-    numProdutosDisplay.textContent = `${numProdutos} Produto(s)`;
-};
+            // Atualiza os valores exibidos no resumo do pedido
+            totalDisplay.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            resumoPedido.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            numProdutosDisplay.textContent = `${numProdutos} Produto(s)`;
+        };
 
-        // Evento de incremento
+        // Evento para incrementar quantidade
         incrementButton.addEventListener('click', function() {
             let quantidade = parseInt(numberDisplay.textContent);
             const preco = parseFloat(numberDisplay.dataset.preco);
@@ -295,7 +325,7 @@ const atualizarResumoEUrlWhatsApp = () => {
             atualizarResumoEUrlWhatsApp();
         });
 
-        // Evento de decremento
+        // Evento para decrementar quantidade
         decrementButton.addEventListener('click', function() {
             let quantidade = parseInt(numberDisplay.textContent);
             const preco = parseFloat(numberDisplay.dataset.preco);
@@ -312,7 +342,13 @@ const atualizarResumoEUrlWhatsApp = () => {
         });
     });
 
-    
+    // Chama a função para garantir que o link seja gerado no carregamento inicial
+    document.addEventListener('DOMContentLoaded', () => {
+        const atualizarResumoEUrlWhatsApp = () => {
+            // Lógica já definida no evento anterior
+        };
+        atualizarResumoEUrlWhatsApp();
+    });
 </script>
 
 
