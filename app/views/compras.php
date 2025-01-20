@@ -75,15 +75,11 @@ if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($
     // Gera o link do WhatsApp
     $linkWhatsApp = "https://wa.me/$numeroWhatsApp?text=$mensagemCodificada";
 
-    // Esvazia o carrinho após enviar para o WhatsApp
+    // Esvazia o carrinho após gerar a mensagem
     unset($_SESSION['carrinho']);
 
-    // Redireciona com parâmetro de sucesso
+    // Redireciona para a mesma página com a mensagem de sucesso
     header("Location: " . BASE_URL . "compras?pedido=sucesso");
-
-
-    // Esvazia o carrinho após enviar para o WhatsApp
-    unset($_SESSION['carrinho']);
     exit;
 }
 
@@ -105,6 +101,12 @@ if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($
         require('template/header.php');
         ?>
     </header>
+
+    <?php
+    if (isset($_GET['pedido']) && $_GET['pedido'] === 'sucesso') {
+        echo '<div class="pedido-confirmado">Pedido feito com sucesso! Obrigado por comprar conosco.</div>';
+    }
+    ?>
 
     <?php
     if (session_status() === PHP_SESSION_NONE) {
@@ -195,20 +197,9 @@ if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($
                             </div>
 
                             <div class="finalizar">
-                                <form method="POST" action="">
-
-                                    <div class="finalizar">
-                                        <a href="<?php echo $linkWhatsApp; ?>" target="_blank">Reservar Pedido</a>
-                                    </div>
-
-                                    <?php
-                                    if (isset($_GET['pedido']) && $_GET['pedido'] === 'sucesso') {
-                                        echo '<div class="pedido-confirmado">Pedido feito, obrigado!</div>';
-                                    }
-                                    ?>
-
-
-                                </form>
+                                <div class="finalizar">
+                                    <a href="javascript:void(0);" onclick="abrirWhatsApp(event);">Reservar Pedido</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -260,6 +251,53 @@ if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($
 
 
 <script>
+    function abrirWhatsApp(event) {
+    // Previne o comportamento padrão do link
+    if (event) {
+        event.preventDefault();
+    }
+
+    const numeroWhatsApp = '5511968812993'; // Número do WhatsApp no formato internacional
+    let mensagem = "Olá, gostaria de reservar os seguintes produtos:\n\n";
+    let total = 0; // Total inicial
+
+    // Percorre os produtos do carrinho
+    document.querySelectorAll('.compras_box').forEach(function(box) {
+        const nomeProduto = box.querySelector('.desc_compras p').textContent;
+        const quantidade = parseInt(box.querySelector('.number-display').textContent);
+        const preco = parseFloat(box.querySelector('.number-display').dataset.preco);
+
+        // Calcula o subtotal
+        total += quantidade * preco;
+
+        // Adiciona o produto e quantidade à mensagem
+        mensagem += `- ${nomeProduto}: ${quantidade} x R$${preco.toFixed(2).replace('.', ',')}\n`;
+    });
+
+    // Adiciona o total ao final da mensagem
+    mensagem += `\nTotal: R$${total.toFixed(2).replace('.', ',')}`;
+
+    // Codifica a mensagem para a URL
+    const mensagemCodificada = encodeURIComponent(mensagem);
+    const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensagemCodificada}`;
+
+    // Abre o WhatsApp em uma nova aba
+    window.open(linkWhatsApp, '_blank');
+
+    // Exibe a mensagem de pedido confirmado
+    const mensagemConfirmacao = document.createElement('div');
+    mensagemConfirmacao.className = 'pedido-confirmado';
+    mensagemConfirmacao.textContent = 'Pedido feito com sucesso! Obrigado por comprar conosco.';
+    document.body.insertBefore(mensagemConfirmacao, document.body.firstChild);
+
+    // Limpa o carrinho na página
+    document.querySelector('.compras').innerHTML = `
+        <div class="carrinho-vazio">
+            <h3>Seu carrinho está vazio</h3>
+            <p>Que tal dar uma olhada nos nossos <a href="${BASE_URL}produtos">produtos?</a></p>
+        </div>
+    `;
+}
     document.querySelectorAll('.qtd_box').forEach(function(qtdBox) {
         const decrementButton = qtdBox.querySelector('.decrement-button');
         const incrementButton = qtdBox.querySelector('.increment-button');
