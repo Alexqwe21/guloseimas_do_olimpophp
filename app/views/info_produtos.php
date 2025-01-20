@@ -42,7 +42,7 @@
                                 <p>O valor é equivalente a <span class="pers">personalização</span> <?php echo htmlspecialchars($detalheServico['personalizacao_info_produtos'], ENT_QUOTES, 'UTF-8'); ?></p>
 
                             </div>
-                            <div class="tipos_personalizacoes">
+                            <!-- <div class="tipos_personalizacoes">
                                 <button></button>
                                 <button></button>
                                 <button></button>
@@ -52,10 +52,10 @@
                         <div class="reserva_preco">
                             <p>R$35</p>
                             <p>Quantidade em estoque  <?php echo number_format($detalheServico['qtd_info_produto'], ); ?> </p>
-                        </div>
+                        </div> -->
 
                         <div class="reserva_acoes">
-                            <div class="qtd_produto">
+                            <!-- <div class="qtd_produto">
                                 <div class="number">
                                     <p id="number-display">1</p>
                                 </div>
@@ -63,7 +63,7 @@
                                     <button id="increment-button"><i class="fa-solid fa-arrow-up"></i> </button>
                                     <button id="decrement-button"><i class="fa-solid fa-arrow-down"></i></button>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="carrinho_produto">
                                 <div class="car">
                                     <i class="fa-solid fa-cart-shopping"></i>
