@@ -7,15 +7,15 @@
     require('head_geral/head.php');
     ?>
 </head>
-
+<!-- teste --> <!-- teste -->
 <body>
-   
-<header>
-    <?php
-    // Inclui o cabeçalho
-    require('template/header.php');
-    ?>
-</header>
+
+    <header>
+        <?php
+        // Inclui o cabeçalho
+        require('template/header.php');
+        ?>
+    </header>
     <main>
 
         <?php
