@@ -65,5 +65,5 @@
     <?php endforeach; ?>
   </tbody>
 </table>
-
+<script src="http://localhost/guloseimas_do_olimpophp/public/vendors/dash/js/adminlte.js"></script>
 </html>

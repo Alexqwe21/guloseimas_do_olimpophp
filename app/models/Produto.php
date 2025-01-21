@@ -14,7 +14,7 @@ class Produto extends Model
 
 
 
-        $sql = " SELECT id_produto, foto_produto, alt_foto_produto, nome_produto, preco_produto, status_pedido
+        $sql = " SELECT id_produto, foto_produto, alt_foto_produto, nome_produto, preco_produto, status_pedido , link_produto
 FROM tbl_produtos
 WHERE id_produto NOT IN (1, 2, 3 , 4 , 5)
 LIMIT 10

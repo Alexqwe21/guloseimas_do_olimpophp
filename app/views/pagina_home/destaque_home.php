@@ -14,7 +14,7 @@
 
                     <div class="box">
                         <div class="img_01">
-                            <a href="produtos.html"><img
+                            <a href="<?php echo BASE_URL . 'produtos/detalhe/' . $item['link_produto'];?>"><img
                                     src="<?php echo BASE_URL . 'uploads/' . $item['foto_produto']; ?>"
                                     alt="<?php echo $item['alt_foto_produto']; ?>" class="destaque_img"></a>
                         </div>

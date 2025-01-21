@@ -24,7 +24,7 @@
             <div class="container-fluid"> <!--begin::Start Navbar Links-->
                 <ul class="navbar-nav">
                     <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i class="bi bi-list"></i> </a> </li>
-                    <li class="nav-item d-none d-md-block"> <a href="http://localhost/guloseimas_do_olimpophp/public/dashboard" class="nav-link">SITE KI OFICINA</a> </li>
+                    <li class="nav-item d-none d-md-block"> <a href="http://localhost/guloseimas_do_olimpophp/public/dashboard" class="nav-link">SITE GULOSEIMAS DO OLIMPO</a> </li>
 
                 </ul> <!--end::Start Navbar Links--> <!--begin::End Navbar Links-->
                 <?php if (!empty($_SESSION['mensagem'])): ?>
@@ -130,7 +130,7 @@
             </div> <!--end::Container-->
         </nav> <!--end::Header--> <!--begin::Sidebar-->
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> <!--begin::Sidebar Brand-->
-            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="./index.html" class="brand-link"> <!--begin::Brand Image--> <img src="http://localhost/Kioficina/public/assets/img/logo-kioficina.svg" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--> <span class="brand-text fw-light"></span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
+            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="http://localhost/guloseimas_do_olimpophp/public/dashboard" class="brand-link"> <!--begin::Brand Image--> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/logo_dash.svg" alt="LOGO_SITE"> <!--end::Brand Image--> <!--begin::Brand Text--> <span class="brand-text fw-light"></span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
             <div class="sidebar-wrapper">
                 <nav class="mt-2"> <!--begin::Sidebar Menu-->
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
@@ -409,7 +409,7 @@
                         if (isset($conteudo)) {
                             $this->carregarViews($conteudo, $dados);
                         } else {
-                            echo '<h2> esta no else arrume</h2>';
+                            echo '<h2> Bem  vindo ao Dashboard</h2>';
                         }
 
 
@@ -432,6 +432,7 @@
     </footer> <!--end::Footer-->
 
     </div> <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
+   
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js" integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script> <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
     <!-- Bootstrap -->
 
@@ -647,11 +648,13 @@
             option_sparkline3,
         );
         sparkline3.render();
+
+     
     </script> <!--end::Script-->
 </body><!--end::Body-->
 
 
 
-<script src="http://localhost/guloseimas_do_olimpophp/public/vendors/dash/js/adminlte.js"></script>
+
 
 </html>
