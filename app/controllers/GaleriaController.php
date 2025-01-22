@@ -65,6 +65,8 @@ class GaleriaController extends Controller
             exit();
         }
 
+       
+
 
 
 
