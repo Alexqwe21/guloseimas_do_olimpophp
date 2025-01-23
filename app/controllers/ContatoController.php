@@ -35,7 +35,7 @@ $this->carregarViews('contato', $dados);
             $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
             $tel = filter_input(INPUT_POST, 'tel', FILTER_SANITIZE_NUMBER_INT);
             $assunto = filter_input(INPUT_POST, 'assunto', FILTER_SANITIZE_SPECIAL_CHARS);
-            $msg = filter_input(INPUT_POST, 'msg', FILTER_SANITIZE_SPECIAL_CHARS);
+            $msg = filter_input(INPUT_POST, 'ajudar', FILTER_SANITIZE_SPECIAL_CHARS);
 
 
             if ($nome && $email && $tel && $msg) {
