@@ -33,6 +33,13 @@ define('USER_EMAIL', 'desenvolvedorweb21@gmail.com');
 define('PASS_EMAIL', 'dqay vqmc xpjd yosa');
 
 
+define('EMAIL_HOST', 'smtp.hostinger.com');
+define('EMAIL_PORT', '465');
+define('EMAIL_USER', 'innovaclicktipi02@smpsistema.com.br');
+define('EMAIL_PASS', 'Senac@tipi02');
+
+
+
 
 // define('HOTS_EMAIL', 'smtp.gmail.com');
 // define('PORT_EMAIL', '465');
