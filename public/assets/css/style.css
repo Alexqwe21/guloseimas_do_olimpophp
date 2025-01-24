@@ -374,7 +374,7 @@ footer .site .lado_a_lado,
     filter: brightness(75%);
     box-shadow: inset 5px 5px 5px 5px black;
     padding: 50px 0;
-    height: 500px;
+    /* height: 500px; */
 }
 
 .carousel .title h3 {
@@ -388,6 +388,7 @@ footer .site .lado_a_lado,
     height: 400px;
     align-items: center;
     text-align: center;
+    
 }
 
 .box_carousel div img {
@@ -420,6 +421,7 @@ footer .site .lado_a_lado,
 footer {
     padding: var(--para_separar_a_secoes);
     background-color: var(--cor_do_footer);
+    margin-top: 30px;
 }
 
 footer .site {
@@ -1266,7 +1268,7 @@ footer .contato {
 
 .contato .site .forms_contato .button_forms button,
 .login_contato .site .forms_contato .button_forms button {
-    width: 220px;
+    /* width: 220px; */
     height: 55px;
     background-color: #985C41;
     border: none;

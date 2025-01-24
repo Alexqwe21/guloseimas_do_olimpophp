@@ -256,7 +256,7 @@
                         <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/produtos/banner_produto" class="nav-link"> <i class="bi bi-card-image"></i>
                                 <p>Banners</p>
                             </a> </li>
-                        <li class="nav-item"> <a href="./docs/color-mode.html" class="nav-link"> <i class="bi bi-envelope"></i>
+                        <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/contato/contato" class="nav-link"> <i class="bi bi-envelope"></i>
                                 <p>Contato</p>
                             </a> </li>
 
