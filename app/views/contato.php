@@ -196,18 +196,31 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('formContato');
-            const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('formContato');
+    const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+    const modalMessage = document.getElementById('modalMessage');  // O campo onde você vai exibir a mensagem do modal
 
-            form.addEventListener('submit', (e) => {
-                e.preventDefault(); // Evita o envio tradicional do formulário
-                modal.show(); // Exibe o modal
+    // Verificar se há um parâmetro indicando erro ou sucesso na URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const emailExistente = urlParams.get('emailExistente');
+    const sucesso = urlParams.get('sucesso');
 
-                // Se necessário, envie os dados via AJAX (opcional)
-                form.submit(); // Remove o `e.preventDefault` se quiser o envio direto.
-            });
-        });
+    // Exibir o modal com a mensagem correspondente
+    if (emailExistente) {
+        modalMessage.textContent = 'Este e-mail já está registrado em nossa lista de newsletters.';
+        modal.show();
+    } else if (sucesso) {
+        modalMessage.textContent = 'O formulário foi enviado com sucesso!';
+        modal.show();
+    }
+
+    form.addEventListener('submit', (e) => {
+        // Após o envio, o servidor redirecionará com parâmetros de erro ou sucesso
+        // O formulário será enviado normalmente
+    });
+});
+
     </script>
 
 

@@ -1,6 +1,16 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+
+
+}
+?>
+
+<?php
+
+if (isset($_SESSION['mensagem'])) {
+    echo $_SESSION['mensagem'];
+    unset($_SESSION['mensagem']); // Limpar a mensagem após exibi-la
 }
 ?>
 

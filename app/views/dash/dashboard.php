@@ -260,6 +260,10 @@
                                 <p>Contato</p>
                             </a> </li>
 
+                            <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/newsletter/contato_Newsletter" class="nav-link"> <i class="bi bi-envelope-check"></i>
+                                <p>Newsletter</p>
+                            </a> </li>
+
 
                         <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/galeria/galeria_pg_galeria" class="nav-link"> <i class="bi bi-aspect-ratio"></i>
                                 <p>Galeria</p>
