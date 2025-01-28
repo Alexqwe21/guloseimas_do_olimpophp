@@ -5,12 +5,8 @@ class SobreController extends Controller
 
 private $quem_sou_eu;
 private $minha_historia;
-
 private $carrosel_sobre;
-
-
 private $servicos;
-
 
 public function __construct()
 {

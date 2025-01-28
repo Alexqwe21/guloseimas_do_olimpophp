@@ -18,9 +18,7 @@
 
 
 
-<a href="http://localhost/Kioficina/public/servicos/adicionar">ADICIONAR</a>
-<a href="http://localhost/Kioficina/public/servicos/editar">EDITAR</a>
-<a href="http://localhost/Kioficina/public/servicos/desativar">DESATIVAR</a>
+<a href="<?php echo BASE_URL . 'produtos/adicionar/'  ?>" class="btn btn-primary mb-3" >ADICIONAR</a>
 
 
 <table class="table table-hover">
