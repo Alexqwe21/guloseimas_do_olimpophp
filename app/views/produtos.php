@@ -72,7 +72,8 @@
                             <?php if ($PG_produtos['status_pedido'] === 'Ativo'): ?> <!-- Verifica se o produto está ativo -->
                                 <div class="tamanho_link">
                                     <a href="<?php echo BASE_URL . 'produtos/detalhe/' . $PG_produtos['link_produto']; ?>"> <!-- Substituindo o link fixo -->
-                                        <div class="produto_a_mostra">
+                                        
+                                    <div class="produto_a_mostra">
                                             <img src="<?php echo BASE_URL . 'uploads/' . $PG_produtos['foto_produto']; ?>"
                                                 alt="<?php echo htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8'); ?>"
                                                 class="pg_produto">

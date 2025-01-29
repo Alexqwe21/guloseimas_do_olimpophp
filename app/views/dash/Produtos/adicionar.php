@@ -29,7 +29,6 @@
 <form action="http://localhost/guloseimas_do_olimpophp/public/produtos/adicionar" method="POST" enctype="multipart/form-data">
 
     <div class="lado">
-
         <!-- Seção de Imagem -->
         <div class="col-md-3 text-center">
             <img id="preview-img" src="http://localhost/kioficina/public/uploads/sem_foto.png" alt="imagem do Serviço"
@@ -38,17 +37,44 @@
         </div>
 
         <div class="container">
-            <!-- Nome do Serviço -->
+            <!-- Nome do Produto -->
             <div class="mb-3">
                 <label for="nome_produto" class="form-label">Nome do serviço</label>
                 <input type="text" class="form-control" name="nome_produto" id="nome_produto" placeholder="Nome Produto">
             </div>
 
-            <!-- Descrição do Serviço
+            <!-- Descrição do Produto -->
             <div class="mb-3">
-                <label for="descricao_servico" class="form-label">Descrição do serviço</label>
-                <textarea class="form-control" name="descricao_servico" id="descricao_servico" rows="3" placeholder="Descrição detalhada do serviço"></textarea>
-            </div> -->
+                <label for="descricao_info_produto" class="form-label">Descrição do Produto</label>
+                <input type="text" class="form-control" name="descricao_info_produto" id="descricao_info_produto" placeholder="Descrição detalhada do produto">
+            </div>
+
+            <!-- Nome da Especialização ou Personalização -->
+            <div class="mb-3">
+                <label for="personalizacao_info_produto" class="form-label">Personalização</label>
+                <select class="form-select" name="personalizacao_info_produto" id="personalizacao_info_produto">
+                    <option value="com_personalizacao">Com personalização</option>
+                    <option value="sem_personalizacao">Sem personalização</option>
+                </select>
+            </div>
+
+            <!-- Forma de Pagamento -->
+            <div class="mb-3">
+                <label for="forma_pagamento_info_produto" class="form-label">Forma de Pagamento</label>
+                <input type="text" class="form-control" name="forma_pagamento_info_produto" id="forma_pagamento_info_produto" placeholder="Forma de pagamento">
+            </div>
+
+            <!-- Opções de Entrega -->
+            <div class="mb-3">
+                <label for="entrega_info_produto" class="form-label">Opções de Entrega</label>
+                <input type="text" class="form-control" name="entrega_info_produtos" id="entrega_info_produtos" placeholder="Opções de entrega do produto">
+            </div>
+
+            <!-- Informações de Reserva -->
+            <div class="mb-3">
+                <label for="reserva_info_produto" class="form-label">Reserva do Produto</label>
+                <input type="text" class="form-control" name="reserva_info_produtos" id="reserva_info_produtos" placeholder="Informações sobre a reserva">
+            </div>
 
             <!-- Preço, Tempo Estimado e Status -->
             <div class="mb-3" id="lado_a_lado">
@@ -56,10 +82,6 @@
                     <label for="preco_produto" class="form-label">Preço base</label>
                     <input type="text" class="form-control" name="preco_produto" id="preco_produto" placeholder="Preço base do produto">
                 </div>
-                <!-- <div>
-                    <label for="tempo_estimado_servico" class="form-label">Tempo Estimado</label>
-                    <input type="time" class="form-control" name="tempo_estimado_servico" id="tempo_estimado_servico" placeholder="Tempo estimado para o serviço">
-                </div> -->
                 <div>
                     <label for="status_pedido" class="form-label">Status do produto</label>
                     <select name="status_pedido" id="status_pedido" class="form-select">
@@ -91,6 +113,7 @@
     </div>
 
 </form>
+
 
 
 

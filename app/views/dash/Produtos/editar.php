@@ -30,7 +30,7 @@
                 <!-- Formulário de edição do produto -->
                 <form action="<?php echo BASE_URL . 'produtos/atualizar/' . $produto['id_produto']; ?>" method="POST" enctype="multipart/form-data">
 
-<a href=""></a>
+
                 
                     <div class="form-group">
                         <label for="nome_produto">Nome do Produto</label>

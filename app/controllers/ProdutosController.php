@@ -46,38 +46,22 @@ class ProdutosController extends Controller
 
     public function detalhe($link = null)
     {
-        // var_dump("Método detalhe chamado");
-        // var_dump($link);
-
-
-
+        var_dump($link); // Verifique se o link está correto
         if ($link === null) {
-            // Redireciona para a página inicial se o parâmetro estiver ausente
             header("Location: /guloseimas_do_olimpophp/public");
             exit;
         }
-
+    
         $dados = array();
-
         $produtoModel = new Produto();
-
-        // Chama o método corretamente para buscar os detalhes do produto
         $detalheServico = $produtoModel->getServicoPorlink($link);
-
+    
         if (!$detalheServico) {
-            // Redireciona se o produto não for encontrado
             header("Location: /guloseimas_do_olimpophp/public");
             exit;
         }
-
-        // var_dump($detalheServico);
-
+    
         $dados['detalheServico'] = $detalheServico;
-        // $dados['info_produtos'] = $Produto;
-
-
-
-        // Carregar a view de detalhes
         $this->carregarViews('info_produtos', $dados);
     }
 
@@ -114,89 +98,143 @@ class ProdutosController extends Controller
 
 
     public function adicionar()
-    {
-        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
-            header('Location:' . BASE_URL);
-            exit;
+{
+    if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+        header('Location:' . BASE_URL);
+        exit;
+    }
+
+    $categoria = new Categoria();
+    $dados['Todascategorias'] = $categoria->getCategoria();
+    $dados['conteudo'] = 'dash/produtos/adicionar';
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Filtra os inputs corretamente
+        $nome_produto = filter_input(INPUT_POST, 'nome_produto', FILTER_SANITIZE_SPECIAL_CHARS);
+        $preco_produto = filter_input(INPUT_POST, 'preco_produto', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $alt_foto_produto = filter_input(INPUT_POST, 'alt_foto_produto', FILTER_SANITIZE_SPECIAL_CHARS);
+        $id_categoria = filter_input(INPUT_POST, 'id_categoria', FILTER_SANITIZE_NUMBER_INT);
+        $status_pedido = filter_input(INPUT_POST, 'status_pedido', FILTER_SANITIZE_SPECIAL_CHARS);
+        $link_produto = filter_input(INPUT_POST, 'link_produto', FILTER_SANITIZE_URL);
+        $nova_categoria = filter_input(INPUT_POST, 'nova_categoria', FILTER_SANITIZE_SPECIAL_CHARS);
+
+        // Certifique-se de que nenhum campo obrigatório está vazio
+        if (!$nome_produto || !$preco_produto) {
+            die("Erro: Todos os campos obrigatórios devem ser preenchidos.");
         }
-    
-        $categoria = new Categoria();
-        $dados['Todascategorias'] = $categoria->getCategoria();
-        $dados['conteudo'] = 'dash/produtos/adicionar';
-    
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Filtra os inputs corretamente
-            $nome_produto = filter_input(INPUT_POST, 'nome_produto', FILTER_SANITIZE_SPECIAL_CHARS);
-            $preco_produto = filter_input(INPUT_POST, 'preco_produto', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-            $alt_foto_produto = filter_input(INPUT_POST, 'alt_foto_produto', FILTER_SANITIZE_SPECIAL_CHARS);
-            $id_categoria = filter_input(INPUT_POST, 'id_categoria', FILTER_SANITIZE_NUMBER_INT);
-            $status_pedido = filter_input(INPUT_POST, 'status_pedido', FILTER_SANITIZE_SPECIAL_CHARS);
-            $link_produto = filter_input(INPUT_POST, 'link_produto', FILTER_SANITIZE_URL);
-    
-            // Certifique-se de que nenhum campo obrigatório está vazio
-            if (!$nome_produto || !$preco_produto || !$id_categoria) {
-                die("Erro: Todos os campos obrigatórios devem ser preenchidos.");
-            }
-    
-            // Criando o array corretamente
-            $dadosproduto = array(
-                'nome_produto'     => $nome_produto,
-                'preco_produto'    => $preco_produto,
-                'alt_foto_produto' => $nome_produto,
-                'id_categoria'     => $id_categoria,
-                'status_pedido'    => $status_pedido,
-                'link_produto'     => $nome_produto,
-            );
-    
-            $id_produto = $this->produtoModel->addproduto($dadosproduto);
-    
-            if ($id_produto) {
-                if (isset($_FILES['foto_produto']) && $_FILES['foto_produto']['error'] == 0) {
-                    // Upload da foto
-                    $arquivo = $this->uploadFoto($_FILES['foto_produto']);
-                    if ($arquivo) {
-                        // Inserir na Galeria associando à foto ao produto
-                        $this->produtoModel->addFotoProduto($id_produto, $arquivo, $nome_produto);
-                    } else {
-                        // Definir uma mensagem informando que a foto não foi enviada corretamente
-                        $_SESSION['mensagem'] = "Erro ao fazer o upload da imagem.";
-                        $_SESSION['tipo-msg'] = 'erro';
-                    }
-                }
-    
-                /** Mensagem de Sucesso */
-                $_SESSION['mensagem'] = "Serviço adicionado com Sucesso!";
-                $_SESSION['tipo-msg'] = 'sucesso';
+
+        if (empty($id_categoria) && !empty($nova_categoria)) {
+            // Criar e Obter a categoria nova
+            $id_categoria = $this->produtoModel->obterOuCriarcategoria($nova_categoria);
+        }
+
+        // Gerar link único para o produto
+        $link_produto = $this->gerarLinkServico($nome_produto);
+
+        // Criando o array com os dados para inserção
+        $dadosproduto = array(
+            'nome_produto'     => $nome_produto,
+            'preco_produto'    => $preco_produto,
+            'alt_foto_produto' => $alt_foto_produto,
+            'id_categoria'     => $id_categoria,
+            'status_pedido'    => $status_pedido,
+            'link_produto'     => $link_produto,
+        );
+
+        // Define as informações do produto
+        $informacoes_produto = array(
+           
+            'descricao_info_produto' => filter_input(INPUT_POST, 'descricao_info_produto', FILTER_SANITIZE_SPECIAL_CHARS),
+            'personalizacao_info_produtos' => filter_input(INPUT_POST, 'personalizacao_info_produto', FILTER_SANITIZE_SPECIAL_CHARS),
+            'forma_pagamento_info_produto' => filter_input(INPUT_POST, 'forma_pagamento_info_produto', FILTER_SANITIZE_SPECIAL_CHARS),
+            'entrega_info_produtos' => filter_input(INPUT_POST, 'entrega_info_produtos', FILTER_SANITIZE_SPECIAL_CHARS),
+            'reserva_info_produtos' => filter_input(INPUT_POST, 'reserva_info_produtos', FILTER_SANITIZE_SPECIAL_CHARS),
+        );
+
+        // Verifica se a foto foi enviada
+        if (isset($_FILES['foto_produto']) && $_FILES['foto_produto']['error'] == 0) {
+            // Faz o upload da foto
+            $arquivo = $this->uploadFoto($_FILES['foto_produto']);
+            if ($arquivo) {
+                // Adiciona o produto com a foto e suas informações
+                $id_produto = $this->produtoModel->addproduto($dadosproduto, $arquivo, $informacoes_produto);
+            } else {
+                // Mensagem de erro caso o upload da foto falhe
+                $_SESSION['mensagem'] = "Erro ao fazer o upload da imagem.";
+                $_SESSION['tipo-msg'] = 'erro';
                 header('Location: http://localhost/guloseimas_do_olimpophp/public/produtos/adicionar/');
                 exit;
-            } else {
-                $dados['mensagem'] = "Erro ao adicionar o serviço";
-                $dados['tipo-msg'] = "erro-servico";
             }
+        } else {
+            // Se não houver foto, adicione o produto sem a foto
+            $id_produto = $this->produtoModel->addproduto($dadosproduto, null, $informacoes_produto);
         }
-    
-        $this->carregarViews('dash/dashboard', $dados);
+
+        if ($id_produto) {
+            // Mensagem de sucesso
+            $_SESSION['mensagem'] = "Produto e suas informações adicionados com sucesso!";
+            $_SESSION['tipo-msg'] = 'sucesso';
+            header('Location: http://localhost/guloseimas_do_olimpophp/public/produtos/adicionar/');
+            exit;
+        } else {
+            // Mensagem de erro caso não consiga adicionar o produto
+            $dados['mensagem'] = "Erro ao adicionar o produto";
+            $dados['tipo-msg'] = "erro-produto";
+        }
     }
+
+    $this->carregarViews('dash/dashboard', $dados);
+}
+
+    
     
     
 
-    private function uploadFoto($file){
+
+
+    private function uploadFoto($file)
+    {
         $dir = '../public/uploads/';
         if (!file_exists($dir)) {
             mkdir($dir, 0755, true);
         }
-
+    
         $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
         $nome_arquivo = 'produto/' . uniqid() . '.' . $ext;
-
-
+    
         if (move_uploaded_file($file['tmp_name'], $dir . $nome_arquivo)) {
             return $nome_arquivo;
         }
-
+    
         return false;
     }
-    
+
+
+    public function gerarLinkServico($nome_produto)
+    {
+        //REMOVE OS ACENTOS PARA CARACTERES EM CAIXAS BAIXAS 
+        $semAcento = iconv('UTF-8', 'ASCII//TRANSLIT', $nome_produto);
+
+        $link = strtolower(trim(preg_replace('/[^a-zA-Z0-9]/', '-',  $semAcento)));
+        // var_dump($link);
+
+
+        $contador = 1;
+
+        $link_original = $link;
+
+        while ($this->produtoModel->existeEsseServico($link)) {
+
+
+            $link = $link_original . '-' . $contador;
+            $contador++;
+        }
+
+
+        var_dump($link);
+        return $link;
+    }
+
 
 
 
@@ -234,7 +272,7 @@ class ProdutosController extends Controller
         }
 
         // Obtém os dados do produto para edição
-        $produto = $this->produtoModel->getServicoPorlink($id);
+        $produto = $this->produtoModel->getProdutoPorId($id);
 
         if (!$produto) {
             // Se o produto não for encontrado, redireciona para a lista de produtos
