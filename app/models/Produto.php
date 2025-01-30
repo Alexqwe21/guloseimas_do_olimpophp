@@ -14,10 +14,10 @@ class Produto extends Model
 
 
         $sql = " SELECT id_produto, foto_produto, alt_foto_produto, nome_produto, preco_produto, status_pedido , link_produto
-FROM tbl_produtos
-WHERE id_produto NOT IN (1, 2, 3 , 4 , 5)
-LIMIT 10
-";
+       FROM tbl_produtos
+       WHERE id_produto NOT IN (1, 2, 3 , 4 , 5)
+       LIMIT 10
+       ";
 
 
         $stmt = $this->db->prepare($sql);
@@ -58,11 +58,11 @@ LIMIT 10
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getServicoPorlink($link){
+     public function getServicoPorlink($link){
         var_dump($link);
         $sql = "SELECT * 
-FROM tbl_info_produtos AS ip
-INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido = 'Ativo' AND link_produto = :link  AND status_info_produtos = 'Ativo'" ;
+   FROM tbl_info_produtos AS ip
+     INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido = 'Ativo' AND link_produto = :link  AND status_info_produtos = 'Ativo'" ;
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':link', $link);
         $stmt->execute();
@@ -92,9 +92,7 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
-    public function getServicoPorId($id)
-    {
+    public function getServicoPorId($id){
         $sql = "SELECT 
                 ip.*, 
                 p.* 
@@ -156,8 +154,7 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido
     }
 
 
-    public function atualizar_info_Produto($id, $dados)
-    {
+    public function atualizar_info_Produto($id, $dados){
         // Definindo a query SQL
         $sql = "UPDATE tbl_produtos AS p
     INNER JOIN tbl_info_produtos AS ip ON p.id_produto = ip.id_produto
@@ -220,8 +217,7 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido
         return true;
     }
 
-    public function getProdutoPorId($id)
-    {
+    public function getProdutoPorId($id){
         $sql = "SELECT * FROM tbl_produtos WHERE id_produto = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -230,8 +226,7 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido
     }
 
 
-    public function atualizarStatusProduto($id, $status)
-    {
+    public function atualizarStatusProduto($id, $status){
         $sql = "UPDATE tbl_produtos 
             SET status_pedido = :status 
             WHERE id_produto = :id";
@@ -243,8 +238,7 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido
     }
 
 
-    public function adicionar($idProduto, $id_cliente)
-    {
+    public function adicionar($idProduto, $id_cliente){
         // Verifica se o cliente está logado
         if (!isset($_SESSION['userId'])) {
             $_SESSION['erro'] = 'Faça login para continuar.';
@@ -311,8 +305,7 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido
     }
 
 
-    public function existeEsseServico($link)
-    {
+    public function existeEsseServico($link){
         $sql = "SELECT COUNT(*) AS total FROM tbl_produtos WHERE link_produto = :link";
 
         $stmt = $this->db->prepare($sql);
@@ -327,8 +320,7 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido
     }
 
 
-    private function atualizarCarrinhoSessao($id_cliente)
-    {
+    private function atualizarCarrinhoSessao($id_cliente){
         $sql = "SELECT r.id_produto, r.quantidade_reserva, p.nome_produto, p.preco_produto, p.foto_produto
             FROM tbl_reserva r
             JOIN tbl_produtos p ON r.id_produto = p.id_produto
@@ -351,8 +343,7 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido
     }
 
 
-    public function remover($idProduto, $id_cliente)
-    {
+    public function remover($idProduto, $id_cliente){
         // Verifica se o cliente está logado
         if (!isset($_SESSION['userId'])) {
             $_SESSION['erro'] = 'Faça login para continuar.';
@@ -375,8 +366,7 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido
         exit();
     }
 
-    public function addproduto($dados, $arquivo, $informacoes_produto)
-    {
+    public function addproduto($dados, $arquivo, $informacoes_produto){
         try {
             // Inicia a transação
             $this->db->beginTransaction();
@@ -423,8 +413,7 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido
         }
     }
 
-    public function addInformacoesProduto($id_produto, $informacoes)
-    {
+    public function addInformacoesProduto($id_produto, $informacoes){
         $sql = "INSERT INTO tbl_info_produtos(id_produto,  descricao_info_produto, personalizacao_info_produtos, forma_pagamento_info_produto, entrega_info_produtos, reserva_info_produtos)
             VALUES(:id_produto,  :descricao_info_produto, :personalizacao_info_produtos, :forma_pagamento_info_produto, :entrega_info_produtos, :reserva_info_produtos)";
 
@@ -440,8 +429,7 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido
     }
 
 
-    public function obterOuCriarcategoria($nome)
-    {
+    public function obterOuCriarcategoria($nome){
         $sql = "INSERT INTO tbl_categoria(nome_categoria , status_categoria) VALUES(
                 :nome_categoria, 'Ativo')";
         $stmt = $this->db->prepare($sql);
@@ -454,4 +442,15 @@ INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido
 
         return false;
     }
+
+
+    public function getVerMaisProdutos($limite, $offset){
+        $sql = "SELECT * FROM tbl_produtos WHERE status_pedido = 'Ativo' LIMIT :limite OFFSET :offset";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

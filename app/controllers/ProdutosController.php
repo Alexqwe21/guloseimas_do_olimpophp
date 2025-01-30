@@ -6,8 +6,7 @@ class ProdutosController extends Controller
     private $produtoModel;
     private $banner_produto;
 
-    public function __construct()
-    {
+    public function __construct(){
         // Inicializa a sessão se ainda não estiver iniciada
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -20,8 +19,7 @@ class ProdutosController extends Controller
 
 
 
-    public function index()
-    {
+    public function index(){
         $dados = array();
 
         $pg_produtos = new Produto();
@@ -44,8 +42,7 @@ class ProdutosController extends Controller
     }
 
 
-    public function detalhe($link = null)
-    {
+    public function detalhe($link = null){
         var_dump($link); // Verifique se o link está correto
         if ($link === null) {
             header("Location: /guloseimas_do_olimpophp/public");
@@ -72,8 +69,7 @@ class ProdutosController extends Controller
     //###################################################
 
 
-    public function listar()
-    {
+    public function listar(){
 
 
 
@@ -186,14 +182,8 @@ class ProdutosController extends Controller
     $this->carregarViews('dash/dashboard', $dados);
 }
 
+    private function uploadFoto($file){
     
-    
-    
-
-
-
-    private function uploadFoto($file)
-    {
         $dir = '../public/uploads/';
         if (!file_exists($dir)) {
             mkdir($dir, 0755, true);
@@ -209,9 +199,7 @@ class ProdutosController extends Controller
         return false;
     }
 
-
-    public function gerarLinkServico($nome_produto)
-    {
+    public function gerarLinkServico($nome_produto){
         //REMOVE OS ACENTOS PARA CARACTERES EM CAIXAS BAIXAS 
         $semAcento = iconv('UTF-8', 'ASCII//TRANSLIT', $nome_produto);
 
@@ -235,12 +223,7 @@ class ProdutosController extends Controller
         return $link;
     }
 
-
-
-
-
-    public function banner_produto()
-    {
+    public function banner_produto(){
 
 
 
@@ -263,8 +246,7 @@ class ProdutosController extends Controller
         $this->carregarViews('dash/dashboard', $dados);
     }
 
-    public function editar($id)
-    {
+    public function editar($id){
         // Verifica se o usuário está logado e tem permissão para editar
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -289,8 +271,7 @@ class ProdutosController extends Controller
         $this->carregarViews('dash/servico/editar', $dados);
     }
 
-    public function status($id)
-    {
+    public function status($id){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -316,13 +297,7 @@ class ProdutosController extends Controller
         $this->carregarViews('dash/produtos/status', $dados);
     }
 
-
-
-
-
-
-    public function statusB($id)
-    {
+    public function statusB($id){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -348,11 +323,7 @@ class ProdutosController extends Controller
         $this->carregarViews('dash/banners/statusB', $dados);
     }
 
-
-
-
-    public function editarB($id)
-    {
+    public function editarB($id){
         // Verifica se o usuário está logado e tem permissão para editar
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -377,8 +348,7 @@ class ProdutosController extends Controller
         $this->carregarViews('dash/banners/editarB', $dados);
     }
 
-    public function atualizar()
-    {
+    public function atualizar(){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -433,10 +403,7 @@ class ProdutosController extends Controller
         }
     }
 
-
-
-    public function atualizarBanner_produto()
-    {
+    public function atualizarBanner_produto(){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -490,11 +457,7 @@ class ProdutosController extends Controller
         }
     }
 
-
-
-
-    public function atualizarStatus()
-    {
+    public function atualizarStatus(){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -520,12 +483,7 @@ class ProdutosController extends Controller
         exit();
     }
 
-
-
-
-
-    public function atualizarStatusB()
-    {
+    public function atualizarStatusB(){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -550,4 +508,36 @@ class ProdutosController extends Controller
         header('Location: ' . BASE_URL);
         exit();
     }
+
+    public function carregarMaisProdutos(){
+        $limite = 4;
+        $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+
+        $produtos = $this->produtoModel->getVerMaisProdutos($limite, $offset);
+
+        if (!empty($produtos)) {
+            foreach ($produtos as $PG_produtos) {
+                echo '<div class="tamanho_link">
+                        <a href="' . BASE_URL . 'produtos/detalhe/' . htmlspecialchars($PG_produtos['link_produto']) . '">
+                            <div class="produto_a_mostra">
+                                <img src="' . BASE_URL . 'uploads/' . htmlspecialchars($PG_produtos['foto_produto']) . '" 
+                                    alt="' . htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8') . '" 
+                                    class="pg_produto">
+                            </div>
+                            <div class="preco_produto">
+                                <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
+                                <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
+                                <button>
+                                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg">
+                                </button>
+                            </div>
+                        </a>
+                    </div>';
+            }
+        } else {
+            echo ''; // Caso não tenha mais produtos
+        }
+    }
+
+    
 }

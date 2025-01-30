@@ -31,7 +31,7 @@
     <div class="lado">
         <!-- Seção de Imagem -->
         <div class="col-md-3 text-center">
-            <img id="preview-img" src="http://localhost/kioficina/public/uploads/sem_foto.png" alt="imagem do Serviço"
+            <img id="preview-img" src="http://localhost/guloseimas_do_olimpophp/public/uploads/selecione_foto/selecione a foto.svg" alt="imagem do Serviço"
                 style="width: 100%; cursor:pointer;" title="Clique na imagem para selecionar uma foto do serviço">
             <input type="file" name="foto_produto" id="foto_produto" style="display: none;">
         </div>
@@ -115,7 +115,7 @@
 </form>
 
 
-
+<script src="http://localhost/guloseimas_do_olimpophp/public/vendors/dash/js/adminlte.js"></script>
 
 
 <script>

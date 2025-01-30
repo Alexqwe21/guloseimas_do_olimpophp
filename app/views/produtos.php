@@ -6,8 +6,6 @@
     // Inclui o head
     require('head_geral/head.php');
     ?>
-
-
 </head>
 
 <body>
@@ -40,7 +38,6 @@
                             <div>
                                 <input type="range" min="0" max="1000" value="250" class="escolher-valor" id="escolher-valor">
                                 <p>Preço : R$ 0 - R$ 140</p>
-                                <!-- <button><img src="img/filtrar.svg" alt="filtro"></button> -->
                                 <h3>Filtrar por categoria</h3>
 
                                 <div class="lado_a_lado_lista">
@@ -60,20 +57,12 @@
                         </ul>
                     </div>
 
-                    <div class="produtos-container">
-                        <div id="produtos">
-                            <!-- Os produtos irão aparecer aqui após clicar no filtro -->
-                        </div>
-                    </div>
-
-                    <div class="wrap">
-
+                    <div class="wrap" id="produtos"> <!-- Aqui é o contêiner onde os produtos aparecerão -->
                         <?php foreach ($pg_produtos as $PG_produtos): ?>
                             <?php if ($PG_produtos['status_pedido'] === 'Ativo'): ?> <!-- Verifica se o produto está ativo -->
                                 <div class="tamanho_link">
-                                    <a href="<?php echo BASE_URL . 'produtos/detalhe/' . $PG_produtos['link_produto']; ?>"> <!-- Substituindo o link fixo -->
-                                        
-                                    <div class="produto_a_mostra">
+                                    <a href="<?php echo BASE_URL . 'produtos/detalhe/' . $PG_produtos['link_produto']; ?>">
+                                        <div class="produto_a_mostra">
                                             <img src="<?php echo BASE_URL . 'uploads/' . $PG_produtos['foto_produto']; ?>"
                                                 alt="<?php echo htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8'); ?>"
                                                 class="pg_produto">
@@ -90,10 +79,7 @@
                                 </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
-
-
-
-                    </div>
+                    </div> <!-- Fecha o wrap -->
                 </div>
             </article>
         </section>
@@ -101,13 +87,12 @@
         <section class="ver_mais">
             <article class="site">
                 <div>
-                    <button>
+                    <button id="verMaisBtn">
                         <h3>Ver mais produtos</h3>
                     </button>
                 </div>
             </article>
         </section>
-
 
     </main>
 
@@ -123,25 +108,52 @@
     require('script_geral/script.php');
     ?>
 
-</body>
+    <!-- Modal de "Todos os produtos carregados" -->
+    <div class="modal fade" id="modal_produtos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Status Produtos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Todos os produtos foram carregados! <!-- Aqui pode ajustar o texto conforme o caso -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+</body>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const categoriaItems = document.querySelectorAll('.categoria-item');
+        let offset = 4; // Começa carregando 6 produtos
+        const limite = 4; // Quantidade de produtos por requisição
+        const btnVerMais = document.getElementById("verMaisBtn");
+        const produtosContainer = document.getElementById("produtos");
 
-        categoriaItems.forEach(function(item) {
-            item.addEventListener('click', function() {
-                const categoriaId = this.dataset.categoria; // Capturando o ID da categoria
+        btnVerMais.addEventListener("click", function() {
+            fetch(`<?php echo BASE_URL; ?>produtos/carregarMaisProdutos?offset=${offset}`)
+                .then(response => response.text())
+                .then(data => {
+                    // Se o retorno estiver vazio, significa que não há mais produtos
+                    if (data.trim() === "") {
+                        // Oculta o botão "Ver mais" se não houver mais produtos
+                        btnVerMais.style.display = "none";
 
-                // Fazendo a requisição AJAX
-                fetch(`produtos.php?categoria=${categoriaId}`)
-                    .then(response => response.text())
-                    .then(data => {
-                        document.getElementById('produtos').innerHTML = data;
-                    })
-                    .catch(error => console.error('Erro ao buscar os produtos:', error));
-            });
+                        // Exibe o modal informando que todos os produtos foram carregados
+                        const modal = new bootstrap.Modal(document.getElementById('modal_produtos'));
+                        modal.show();
+                    } else {
+                        // Adiciona os novos produtos carregados
+                        produtosContainer.innerHTML += data;
+                        offset += limite; // Atualiza o offset para carregar os próximos produtos
+                    }
+                })
+                .catch(error => console.error("Erro ao carregar mais produtos:", error));
         });
     });
 </script>

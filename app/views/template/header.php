@@ -1,8 +1,6 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
-
-
 }
 ?>
 
@@ -19,6 +17,13 @@ if (isset($_SESSION['mensagem'])) {
         display: flex;
         align-items: center;
         gap: 10px;
+    }
+
+
+    .lado_cliente {
+        display: flex;
+        align-items: center;
+       
     }
 
     .cliente_logado .foto_cliente {
@@ -51,6 +56,19 @@ if (isset($_SESSION['mensagem'])) {
         align-items: center;
         justify-content: flex-end;
         gap: 15px;
+    }
+
+    .foto_cliente {
+        display: none;
+    }
+    .fa-regular{
+        font-size: 20pt;
+        color: #985C41;
+        
+    }
+
+    .nome_cliente{
+margin-left: 10px !important;
     }
 </style>
 
@@ -86,11 +104,18 @@ if (isset($_SESSION['mensagem'])) {
         <?php if (isset($_SESSION['userId'])): ?> <!-- Aqui começa PHP, sem espaços -->
             <div class="cliente_logado">
                 <!-- Foto do cliente -->
+
                 <a href="http://localhost/guloseimas_do_olimpophp/public/painel_cliente">
-                    <img src="<?php echo BASE_URL . 'uploads/' . $_SESSION['userFoto']; ?>" alt="Foto de <?php echo $_SESSION['userNome']; ?>" class="foto_cliente">
+                    <div class="lado_cliente">
+                        <i class="fa-regular fa-user"></i>
+                        <img src="<?php echo BASE_URL . 'uploads/' . $_SESSION['userFoto']; ?>" alt="Foto de <?php echo $_SESSION['userNome']; ?>" class="foto_cliente">
+                        <p class="nome_cliente"><?php echo explode(' ', $_SESSION['userNome'])[0]; ?></p>
+                    </div>
                 </a>
+
+
                 <!-- Nome do cliente -->
-                <p><?php echo $_SESSION['userNome']; ?>!</p>
+
                 <!-- Botão de logout -->
                 <a href="http://localhost/guloseimas_do_olimpophp/public/login/sair" class="logout">Sair</a>
             </div>
