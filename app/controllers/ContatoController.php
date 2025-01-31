@@ -8,8 +8,7 @@ class ContatoController extends Controller
     private $contatos_emails;
 
 
-    public function __construct()
-    {
+    public function __construct(){
         // Inicializa a sessão se ainda não estiver iniciada
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -22,8 +21,7 @@ class ContatoController extends Controller
     }
 
 
-    public function index()
-    {
+    public function index(){
 
 
 
@@ -45,8 +43,7 @@ class ContatoController extends Controller
     }
 
 
-    public function enviarEmail()
-    {
+    public function enviarEmail(){
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -161,8 +158,7 @@ class ContatoController extends Controller
     }
 
 
-    public function contato()
-    {
+    public function contato(){
 
 
 

@@ -8,8 +8,7 @@ class NewsletterController extends Controller
     private $Newsletter;
 
 
-    public function __construct()
-    {
+    public function __construct(){
         // Inicializa a sessão se ainda não estiver iniciada
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -22,8 +21,7 @@ class NewsletterController extends Controller
     }
 
 
-    public function index()
-    {
+    public function index(){
 
 
 
@@ -45,17 +43,16 @@ class NewsletterController extends Controller
     }
 
 
-    public function enviarNewsletter()
-    {
+    public function enviarNewsletter(){
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-          
+
             $email = filter_input(INPUT_POST, 'email_newsletter', FILTER_SANITIZE_EMAIL);
-            
+
 
             // Substituir novas linhas por um caractere de espaço ou outro marcador
-           
+
 
             if ($email) {
 
@@ -67,14 +64,13 @@ class NewsletterController extends Controller
 
 
                 if ($salvar) {
-                  
                 } else {
                     $dados = array(
                         'mensagem' => 'Esse email já está cadastrado!',
                         'status'   => 'erro'
                     );
                 }
-        
+
 
                 if ($salvar) {
 
@@ -100,10 +96,10 @@ class NewsletterController extends Controller
                         $phpmail->IsHTML(true); // Trabalhar com estrutura HTML
                         $phpmail->setFrom(USER_EMAIL, 'Contato do Site - Goloseimas do Olimpo'); // E-mail do remetente
                         $phpmail->addAddress(USER_EMAIL, 'Goloseimas do Olimpo - Atendimento'); // E-mail do destinatário (sistema)
-                        
+
                         $phpmail->CharSet = 'UTF-8';
                         $phpmail->Encoding = 'base64';
-                        
+
                         $phpmail->Subject = 'Novo Contato Recebido - Goloseimas do Olimpo'; // Assunto
                         $phpmail->msgHTML("<p><strong>Olá,</strong></p>
                                            <p>Você recebeu um novo contato no site de Goloseimas do Olimpo. Aqui estão os detalhes:</p>
@@ -116,7 +112,7 @@ class NewsletterController extends Controller
                                            <p>Atenciosamente,</p>
                                            <p><strong>Equipe Goloseimas do Olimpo</strong></p>");
                         $phpmail->AltBody = "Novo Contato Recebido - Goloseimas do Olimpo\n\nDetalhes do Contato:\n\nNome: $nome\nE-mail: $email\nTelefone: $tel\nMensagem: $msg\n\nPor favor, entre em contato com o cliente o mais breve possível.";
-                        
+
                         $phpmail->send();
                         // Segundo e-mail (confirmação para o usuário)
                         $phpmail->clearAddresses(); // Limpar os destinatários anteriores
@@ -135,7 +131,7 @@ class NewsletterController extends Controller
                                            <p>Atenciosamente,</p>
                                            <p>Equipe Goloseimas do Olimpo</p>");
                         $phpmail->AltBody = "Olá $nome,\n\nObrigado por se inscrever na nossa Newsletter! Agora você receberá as últimas novidades e ofertas diretamente em seu e-mail.\n\nAtenciosamente,\nEquipe Goloseimas do Olimpo";
-                        
+
                         $phpmail->send();
 
                         $dados = array(
@@ -171,8 +167,7 @@ class NewsletterController extends Controller
     }
 
 
-    public function contato_Newsletter()
-    {
+    public function contato_Newsletter(){
 
 
 

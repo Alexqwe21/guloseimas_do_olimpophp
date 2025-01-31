@@ -3,24 +3,24 @@
 class SobreController extends Controller
 {
 
-private $quem_sou_eu;
-private $minha_historia;
-private $carrosel_sobre;
-private $servicos;
+    private $quem_sou_eu;
+    private $minha_historia;
+    private $carrosel_sobre;
+    private $servicos;
 
-public function __construct()
-{
-    // Inicializa a sessão se ainda não estiver iniciada
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
+    public function __construct()
+    {
+        // Inicializa a sessão se ainda não estiver iniciada
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Cria uma instância do modelo Produto e atribui à propriedade $produtoModel
+        $this->quem_sou_eu = new Galeria();
+        $this->minha_historia = new Galeria();
+        $this->carrosel_sobre = new Galeria();
+        $this->servicos = new Servicos();
     }
-
-    // Cria uma instância do modelo Produto e atribui à propriedade $produtoModel
-    $this->quem_sou_eu = new Galeria();
-    $this->minha_historia = new Galeria();
-    $this->carrosel_sobre = new Galeria();
-    $this->servicos = new Servicos();
-}
 
     public function index()
     {
@@ -193,47 +193,45 @@ public function __construct()
     }
 
 
-    public function status_S_S($id)
-{
-    // Verifica se o usuário tem permissão
-    if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
-        header('Location: ' . BASE_URL);
-        exit();
-    }
-
-    // Busca os dados da galeria
-    $galeria_pg = $this->servicos-> getServicoPorId($id);
-
-    if (!$galeria_pg) {
-        $_SESSION['erro'] = "Produto não encontrado.";
-        header('Location: ' . BASE_URL . 'produtos/banners');
-        exit();
-    }
-
-    // Prepara os dados para a view
-    $dados = [
-        'galeria_pg' => $galeria_pg,
-        'titulo' => 'Alterar Status do Produto'
-    ];
-
-    // Carrega a view do formulário
-    $this->carregarViews('dash/sobre/status_S_S', $dados);
-}
-
-
-
-public function atualizarstatus_S_S()
-    {
-         // Verifica se o usuário tem permissão
+    public function status_S_S($id){
+        // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
             exit();
         }
-    
+
+        // Busca os dados da galeria
+        $galeria_pg = $this->servicos->getServicoPorId($id);
+
+        if (!$galeria_pg) {
+            $_SESSION['erro'] = "Produto não encontrado.";
+            header('Location: ' . BASE_URL . 'produtos/banners');
+            exit();
+        }
+
+        // Prepara os dados para a view
+        $dados = [
+            'galeria_pg' => $galeria_pg,
+            'titulo' => 'Alterar Status do Produto'
+        ];
+
+        // Carrega a view do formulário
+        $this->carregarViews('dash/sobre/status_S_S', $dados);
+    }
+
+
+
+    public function atualizarstatus_S_S(){
+        // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id_servico'];
             $status = $_POST['status_servico'];
-    
+
             // Atualiza o status do produto
             if ($this->servicos->atualizarStatusServico($id, $status)) {
                 $_SESSION['mensagem'] = "Status atualizado com sucesso!";
@@ -244,14 +242,13 @@ public function atualizarstatus_S_S()
             }
             exit();
         }
-    
+
         header('Location: ' . BASE_URL);
         exit();
     }
 
 
-    public function atualizarImagem_servico()
-    {
+    public function atualizarImagem_servico(){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -304,7 +301,7 @@ public function atualizarstatus_S_S()
                 'alt_foto_servico' => $alt_foto_servico,
                 'foto_servico' => $novoCaminhoImagem, // Mantém o caminho antigo se não houve nova imagem
                 'nome_servico' => $nome_servico,
-                'descricao_servico'=>$descricao_servico,
+                'descricao_servico' => $descricao_servico,
             ];
 
             // Chama o modelo para atualizar os dados da galeria

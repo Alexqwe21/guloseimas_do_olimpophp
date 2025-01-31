@@ -2,8 +2,7 @@
 
 class CriarcontaController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $dados = array();
 
         // Obter os estados do banco de dados
@@ -18,8 +17,7 @@ class CriarcontaController extends Controller
         $this->carregarViews('criarconta', $dados);
     }
 
-    public function salvar()
-    {
+    public function salvar(){
         // Inicia a sessão, caso ainda não esteja iniciada
         if (session_status() === PHP_SESSION_NONE) {
             session_start();

@@ -7,8 +7,7 @@ class Destaque extends Model
 
     // METODO PARA PEGAR FOTOS DA GALERIA
 
-    public function getDestaque()
-    {
+    public function getDestaque(){
 
 
 

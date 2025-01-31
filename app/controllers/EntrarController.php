@@ -2,8 +2,7 @@
 
 class EntrarController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $dados = array();
 
         $banner_entrar = new Banner();
@@ -15,8 +14,7 @@ class EntrarController extends Controller
         $this->carregarViews('entrar', $dados);
     }
 
-    public function entrar()
-    {
+    public function entrar(){
         // Inicia a sessão, se necessário
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -83,8 +81,7 @@ class EntrarController extends Controller
         exit;
     }
 
-    public function sair()
-    {
+    public function sair(){
         // Destrói a sessão para logout
         session_unset();
         session_destroy();

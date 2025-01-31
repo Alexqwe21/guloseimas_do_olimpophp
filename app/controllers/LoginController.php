@@ -13,17 +13,15 @@ class LoginController extends Controller
 
         // Carrega a view de login
         $this->carregarViews('login', $dados);
-
     }
 
-    public function login()
-    {
-        
+    public function login(){
 
 
-        
-// Inicia a sessão
-session_start();
+
+
+        // Inicia a sessão
+        session_start();
 
         $dados = array();
 
@@ -42,7 +40,7 @@ session_start();
                     // Se o email for encontrado como funcionário, redireciona para a página de "entrar"
                     $_SESSION['userEmail'] = $email;
                     $_SESSION['userTipo'] = 'Funcionario';
-                    
+
                     header('Location: ' . BASE_URL . 'entrar');
                     exit;
                 }
@@ -77,8 +75,7 @@ session_start();
         $this->carregarViews('login', $dados);
     }
 
-    public function sair()
-    {
+    public function sair(){
         // Destrói a sessão para logout
         session_unset();
         session_destroy();
@@ -88,4 +85,3 @@ session_start();
         exit;
     }
 }
-?>

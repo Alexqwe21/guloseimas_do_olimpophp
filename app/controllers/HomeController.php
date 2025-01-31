@@ -25,8 +25,7 @@ class HomeController extends Controller
     }
 
 
-    public function index()
-    {
+    public function index(){
         $dados = array();
 
 
@@ -59,8 +58,7 @@ class HomeController extends Controller
     }
 
 
-    public function destaque()
-    {
+    public function destaque(){
 
 
 
@@ -84,8 +82,7 @@ class HomeController extends Controller
     }
 
 
-    public function ben_vindo()
-    {
+    public function ben_vindo(){
 
 
 
@@ -109,8 +106,7 @@ class HomeController extends Controller
     }
 
 
-    public function qualidade()
-    {
+    public function qualidade(){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location:' . BASE_URL);
@@ -131,8 +127,7 @@ class HomeController extends Controller
     }
 
 
-    public function sobre_ceo()
-    {
+    public function sobre_ceo(){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location:' . BASE_URL);
@@ -153,8 +148,7 @@ class HomeController extends Controller
     }
 
 
-    public function carrosel()
-    {
+    public function carrosel(){
 
 
 
@@ -178,8 +172,7 @@ class HomeController extends Controller
     }
 
 
-    public function statusC($id)
-    {
+    public function statusC($id){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -206,8 +199,7 @@ class HomeController extends Controller
     }
 
 
-    public function atualizarStatusC()
-    {
+    public function atualizarStatusC(){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);

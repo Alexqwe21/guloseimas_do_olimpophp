@@ -53,6 +53,11 @@
                                         </li>
                                     <?php endif; ?>
                                 </div>
+                                <div class="lado_a_lado_lista">
+                                    <li id="verTodosProdutos" class="categoria-item">
+                                        <p>Ver todos os produtos</p>
+                                    </li>
+                                </div>
                             </div>
                         </ul>
                     </div>
@@ -156,6 +161,73 @@
                 .catch(error => console.error("Erro ao carregar mais produtos:", error));
         });
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+    const categoriaItems = document.querySelectorAll(".categoria-item");
+    const btnVerMais = document.getElementById("verMaisBtn");
+    const btnVerTodosProdutos = document.getElementById("verTodosProdutos");
+    const produtosContainer = document.getElementById("produtos");
+    let offset = 4; // Começa carregando 6 produtos
+    const limite = 4; // Quantidade de produtos por requisição
+
+    // Filtrar produtos por categoria
+    categoriaItems.forEach(item => {
+        item.addEventListener("click", function() {
+            const categoriaId = this.dataset.categoria;
+
+            // Esconde o botão "Ver mais produtos" ao selecionar uma categoria
+            btnVerMais.style.display = "none";
+
+            // Faz a requisição AJAX para buscar todos os produtos da categoria
+            fetch(`<?php echo BASE_URL; ?>produtos/filtrarPorCategoria?categoria=${categoriaId}&offset=0&limite=100`)
+                .then(response => response.text())
+                .then(data => {
+                    if (data.trim() === "" || data.includes("Nenhum produto encontrado")) {
+                        produtosContainer.innerHTML = '<p class="sem-produtos">Nenhum produto encontrado para esta categoria.</p>';
+                    } else {
+                        produtosContainer.innerHTML = data; // Substitui os produtos carregados
+                    }
+                })
+                .catch(error => console.error("Erro ao filtrar produtos:", error));
+        });
+    });
+
+    // Mostrar todos os produtos ao clicar no botão "Ver todos os produtos"
+    btnVerTodosProdutos.addEventListener("click", function() {
+        fetch(`<?php echo BASE_URL; ?>produtos/mostrarTodosProdutos?offset=0&limite=100`) // Buscar todos os produtos
+            .then(response => response.text())
+            .then(data => {
+                if (data.trim() === "" || data.includes("Nenhum produto encontrado")) {
+                    produtosContainer.innerHTML = '<p class="sem-produtos">Nenhum produto encontrado.</p>';
+                    btnVerMais.style.display = "none"; // Esconde o botão "Ver mais produtos" se não houver produtos
+                } else {
+                    produtosContainer.innerHTML = data; // Substitui os produtos carregados
+                    btnVerMais.style.display = "block"; // Exibe o botão "Ver mais produtos"
+                }
+            })
+            .catch(error => console.error("Erro ao carregar todos os produtos:", error));
+    });
+
+    // Ver mais produtos
+    btnVerMais.addEventListener("click", function() {
+        fetch(`<?php echo BASE_URL; ?>produtos/carregarMaisProdutos?offset=${offset}`)
+            .then(response => response.text())
+            .then(data => {
+                if (data.trim() === "") {
+                    btnVerMais.style.display = "none"; // Oculta o botão se não houver mais produtos
+                    const modal = new bootstrap.Modal(document.getElementById('modal_produtos'));
+                    modal.show();
+                } else {
+                    produtosContainer.innerHTML += data; // Adiciona os novos produtos carregados
+                    offset += limite; // Atualiza o offset para carregar os próximos produtos
+                }
+            })
+            .catch(error => console.error("Erro ao carregar mais produtos:", error));
+    });
+});
 </script>
+
+
+
 
 </html>
