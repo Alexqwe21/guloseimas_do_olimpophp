@@ -36,8 +36,8 @@
                                 <h4>Filtrar por preço</h4>
                             </div>
                             <div>
-                                <input type="range" min="0" max="1000" value="250" class="escolher-valor" id="escolher-valor">
-                                <p>Preço : R$ 0 - R$ 140</p>
+                                <input type="range" min="0" max="4000" value="250" class="escolher-valor" id="escolher-valor">
+                                <p>Preço: R$ <span id="preco-atual">500</span></p>
                                 <h3>Filtrar por categoria</h3>
 
                                 <div class="lado_a_lado_lista">
@@ -161,54 +161,64 @@
                 .catch(error => console.error("Erro ao carregar mais produtos:", error));
         });
     });
+</script>
 
+
+
+<script>
     document.addEventListener("DOMContentLoaded", function() {
-    const categoriaItems = document.querySelectorAll(".categoria-item");
-    const btnVerMais = document.getElementById("verMaisBtn");
-    const btnVerTodosProdutos = document.getElementById("verTodosProdutos");
-    const produtosContainer = document.getElementById("produtos");
-    let offset = 4; // Começa carregando 6 produtos
-    const limite = 4; // Quantidade de produtos por requisição
+        const categoriaItems = document.querySelectorAll(".categoria-item");
+        const btnVerMais = document.getElementById("verMaisBtn");
+        const btnVerTodosProdutos = document.getElementById("verTodosProdutos");
+        const produtosContainer = document.getElementById("produtos");
+        let offset = 4; // Começa carregando 6 produtos
+        const limite = 4; // Quantidade de produtos por requisição
 
-    // Filtrar produtos por categoria
-    categoriaItems.forEach(item => {
-        item.addEventListener("click", function() {
-            const categoriaId = this.dataset.categoria;
+        // Filtrar produtos por categoria
+        categoriaItems.forEach(item => {
+            item.addEventListener("click", function() {
+                const categoriaId = this.dataset.categoria;
 
-            // Esconde o botão "Ver mais produtos" ao selecionar uma categoria
-            btnVerMais.style.display = "none";
+                // Esconde o botão "Ver mais produtos" ao selecionar uma categoria
+                btnVerMais.style.display = "none";
 
-            // Faz a requisição AJAX para buscar todos os produtos da categoria
-            fetch(`<?php echo BASE_URL; ?>produtos/filtrarPorCategoria?categoria=${categoriaId}&offset=0&limite=100`)
+                // Faz a requisição AJAX para buscar todos os produtos da categoria
+                fetch(`<?php echo BASE_URL; ?>produtos/filtrarPorCategoria?categoria=${categoriaId}&offset=0&limite=100`)
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data.trim() === "" || data.includes("Nenhum produto encontrado")) {
+                            produtosContainer.innerHTML = '<p class="sem-produtos">Nenhum produto encontrado para esta categoria.</p>';
+                        } else {
+                            produtosContainer.innerHTML = data; // Substitui os produtos carregados
+                        }
+                    })
+                    .catch(error => console.error("Erro ao filtrar produtos:", error));
+            });
+        });
+
+        // Mostrar todos os produtos ao clicar no botão "Ver todos os produtos"
+        btnVerTodosProdutos.addEventListener("click", function() {
+            fetch(`<?php echo BASE_URL; ?>produtos/mostrarTodosProdutos?offset=0&limite=100`) // Buscar todos os produtos
                 .then(response => response.text())
                 .then(data => {
                     if (data.trim() === "" || data.includes("Nenhum produto encontrado")) {
-                        produtosContainer.innerHTML = '<p class="sem-produtos">Nenhum produto encontrado para esta categoria.</p>';
+                        produtosContainer.innerHTML = '<p class="sem-produtos">Nenhum produto encontrado.</p>';
+                        btnVerMais.style.display = "none"; // Esconde o botão "Ver mais produtos" se não houver produtos
                     } else {
                         produtosContainer.innerHTML = data; // Substitui os produtos carregados
+                        btnVerMais.style.display = "block"; // Exibe o botão "Ver mais produtos"
                     }
                 })
-                .catch(error => console.error("Erro ao filtrar produtos:", error));
+                .catch(error => console.error("Erro ao carregar todos os produtos:", error));
         });
-    });
 
-    // Mostrar todos os produtos ao clicar no botão "Ver todos os produtos"
-    btnVerTodosProdutos.addEventListener("click", function() {
-        fetch(`<?php echo BASE_URL; ?>produtos/mostrarTodosProdutos?offset=0&limite=100`) // Buscar todos os produtos
-            .then(response => response.text())
-            .then(data => {
-                if (data.trim() === "" || data.includes("Nenhum produto encontrado")) {
-                    produtosContainer.innerHTML = '<p class="sem-produtos">Nenhum produto encontrado.</p>';
-                    btnVerMais.style.display = "none"; // Esconde o botão "Ver mais produtos" se não houver produtos
-                } else {
-                    produtosContainer.innerHTML = data; // Substitui os produtos carregados
-                    btnVerMais.style.display = "block"; // Exibe o botão "Ver mais produtos"
-                }
-            })
-            .catch(error => console.error("Erro ao carregar todos os produtos:", error));
-    });
+        // Ver mais produtos
 
-    // Ver mais produtos
+    });
+</script>
+
+
+<script>
     btnVerMais.addEventListener("click", function() {
         fetch(`<?php echo BASE_URL; ?>produtos/carregarMaisProdutos?offset=${offset}`)
             .then(response => response.text())
@@ -224,8 +234,34 @@
             })
             .catch(error => console.error("Erro ao carregar mais produtos:", error));
     });
-});
 </script>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const precoRange = document.getElementById("escolher-valor");
+        const precoAtual = document.getElementById("preco-atual");
+        const produtosContainer = document.getElementById("produtos");
+
+        precoRange.addEventListener("input", function() {
+            let precoMaximo = precoRange.value;
+            precoAtual.textContent = precoMaximo; // Atualiza o texto do preço selecionado
+
+            // Faz a requisição AJAX para filtrar os produtos por preço
+            fetch(`<?php echo BASE_URL; ?>produtos/filtrarPorPreco?preco=${precoMaximo}`)
+                .then(response => response.text())
+                .then(data => {
+                    produtosContainer.innerHTML = ""; // REMOVE os produtos antigos antes de adicionar os novos
+                    produtosContainer.innerHTML = data; // Substitui os produtos na página
+                })
+                .catch(error => console.error("Erro ao filtrar por preço:", error));
+        });
+    });
+</script>
+
+
+
 
 
 
