@@ -174,7 +174,13 @@
             fetch(`<?php echo BASE_URL; ?>produtos/filtrarPorCategoria?categoria=${categoriaId}&offset=0&limite=100`)
                 .then(response => response.text())
                 .then(data => {
-                    produtosContainer.innerHTML = data.trim(); // Limpa e exibe apenas os produtos filtrados
+                    let cleanedData = data.trim(); // Remove espaços extras
+
+                    if (cleanedData === "") {
+                        produtosContainer.innerHTML = "<p class='sem-produtos'>Nenhum produto encontrado para esta categoria.</p>";
+                    } else {
+                        produtosContainer.innerHTML = cleanedData; // Limpa e exibe apenas os produtos filtrados
+                    }
                 })
                 .catch(error => console.error("Erro ao filtrar produtos:", error));
         }
@@ -188,11 +194,16 @@
             fetch(`<?php echo BASE_URL; ?>produtos/filtrarPorPreco?preco=${precoMaximo}`)
                 .then(response => response.text())
                 .then(data => {
-                    produtosContainer.innerHTML = data.trim(); // Substitui os produtos com os filtrados
+                    let cleanedData = data.trim(); // Remove espaços extras
+
+                    if (cleanedData === "") {
+                        produtosContainer.innerHTML = "<p class='sem-produtos'>Nenhum produto encontrado dentro desse preço.</p>";
+                    } else {
+                        produtosContainer.innerHTML = cleanedData; // Substitui os produtos com os filtrados
+                    }
                 })
                 .catch(error => console.error("Erro ao filtrar por preço:", error));
         }
-
         /**
          * Função para exibir todos os produtos novamente
          */
@@ -200,8 +211,14 @@
             fetch(`<?php echo BASE_URL; ?>produtos/mostrarTodosProdutos?offset=0&limite=100`)
                 .then(response => response.text())
                 .then(data => {
-                    produtosContainer.innerHTML = data.trim();
-                    btnVerMais.style.display = "block"; // Exibe o botão "Ver mais produtos"
+                    let cleanedData = data.trim(); // Remove espaços extras
+
+                    if (cleanedData === "") {
+                        produtosContainer.innerHTML = "<p class='sem-produtos'>Nenhum produto encontrado.</p>";
+                    } else {
+                        produtosContainer.innerHTML = cleanedData;
+                        btnVerMais.style.display = "block"; // Exibe o botão "Ver mais produtos"
+                    }
                 })
                 .catch(error => console.error("Erro ao carregar todos os produtos:", error));
         }
@@ -227,13 +244,12 @@
         if (btnVerTodosProdutos) {
             btnVerTodosProdutos.addEventListener("click", mostrarTodosProdutos);
         }
+
+
+
     });
+
+    
 </script>
-
-
-
-
-
-
 
 </html>

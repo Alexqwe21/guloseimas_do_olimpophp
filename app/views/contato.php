@@ -95,18 +95,19 @@
 
                             <div class="button_forms">
 
-                                <button class="btn btn-primary" type="submit"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/enviar_froms.svg" alt="enviar">Entre
+                                <button type="submit"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/enviar_froms.svg" alt="enviar">Entre
                                     em contato</button>
                             </div>
 
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <!-- Modal de Status do Envio do Formulário -->
+                            <div class="modal fade" id="exampleModalFormContato" tabindex="-1" aria-labelledby="exampleModalLabelFormContato" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Status do Envio</h1>
+                                            <h1 class="modal-title fs-5" id="exampleModalLabelFormContato">Status do Envio</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="modal-body" id="modalMessageFormContato">
                                             O formulário foi enviado com sucesso!
                                         </div>
                                         <div class="modal-footer">
@@ -115,6 +116,7 @@
                                     </div>
                                 </div>
                             </div>
+
 
 
                         </form>
@@ -196,31 +198,37 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-document.addEventListener('DOMContentLoaded', () => {
+       document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('formContato');
-    const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
-    const modalMessage = document.getElementById('modalMessage');  // O campo onde você vai exibir a mensagem do modal
+    const modal = new bootstrap.Modal(document.getElementById('exampleModalFormContato'));  // Usando o ID do modal
+    const modalMessage = document.getElementById('modalMessageFormContato');  // Usando o ID da mensagem do modal
 
     // Verificar se há um parâmetro indicando erro ou sucesso na URL
     const urlParams = new URLSearchParams(window.location.search);
-    const emailExistente = urlParams.get('emailExistente');
-    const sucesso = urlParams.get('sucesso');
+    const sucesso = urlParams.get('sucesso'); // Este é o parâmetro que indicará sucesso no envio
 
     // Exibir o modal com a mensagem correspondente
-    if (emailExistente) {
-        modalMessage.textContent = 'Este e-mail já está registrado em nossa lista de newsletters.';
-        modal.show();
-    } else if (sucesso) {
+    if (sucesso) {
         modalMessage.textContent = 'O formulário foi enviado com sucesso!';
         modal.show();
     }
 
+    // Prevenir o envio duplo do formulário
     form.addEventListener('submit', (e) => {
-        // Após o envio, o servidor redirecionará com parâmetros de erro ou sucesso
-        // O formulário será enviado normalmente
+        e.preventDefault(); // Previne o envio imediato
+
+        // Enviar o formulário via AJAX ou outra forma
+        // Exemplo:
+        // fetch('/caminho/do/servidor', {
+        //     method: 'POST',
+        //     body: new FormData(form)
+        // }).then(response => {
+        //     if (response.ok) {
+        //         window.location.search = '?sucesso=true'; // Redirecionar com o parâmetro de sucesso
+        //     }
+        // });
     });
 });
-
     </script>
 
 

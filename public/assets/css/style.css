@@ -28,6 +28,13 @@ body {
     width: 100%;
 }
 
+.norton-idsafe-field-logo-imgId{
+    display: none !important;
+}
+.norton-idsafe-field-styling-divId{
+    display: none !important;
+}
+
 :root {
     --cor_de_funco: #FEFBF3;
     --cor_dourado: #DAA522;

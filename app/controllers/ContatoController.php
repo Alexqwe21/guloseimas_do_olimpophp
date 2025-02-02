@@ -2,49 +2,31 @@
 
 class ContatoController extends Controller
 {
-
-
-
     private $contatos_emails;
 
-
-    public function __construct(){
-        // Inicializa a sessão se ainda não estiver iniciada
+    public function __construct()
+    {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
 
-        // Cria uma instância do modelo Produto e atribui à propriedade $produtoModel
-
-
         $this->contatos_emails = new Contato();
     }
 
-
-    public function index(){
-
-
-
-
+    public function index()
+    {
         $dados = array();
-
-
         $banner_contato = new Banner();
-
         $contato_banner = $banner_contato->getBanner_contato();
 
-
-        $dados['nome'] = 'cheguei aqui ';
+        $dados['nome'] = 'cheguei aqui';
         $dados['banner'] = $contato_banner;
-
-
 
         $this->carregarViews('contato', $dados);
     }
 
-
-    public function enviarEmail(){
-
+    public function enviarEmail()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -52,130 +34,117 @@ class ContatoController extends Controller
             $tel = filter_input(INPUT_POST, 'tel', FILTER_SANITIZE_NUMBER_INT);
             $assunto = filter_input(INPUT_POST, 'assunto', FILTER_SANITIZE_SPECIAL_CHARS);
             $msg = filter_input(INPUT_POST, 'ajudar', FILTER_SANITIZE_SPECIAL_CHARS);
-            $msg = filter_input(INPUT_POST, 'ajudar', FILTER_SANITIZE_SPECIAL_CHARS);
-
+            
             // Substituir novas linhas por um caractere de espaço ou outro marcador
-            $msg = str_replace(array("\r", "\n"), ' ', $msg);
+            $msg = str_replace(["\r", "\n"], ' ', $msg);
             $msg = str_replace('&#13;&#10;', "\n", $msg);
-
 
             if ($nome && $email && $tel && $msg) {
 
-
-                //Instanciar o Model de Contato
                 $contatoModel = new Contato();
-
                 $salvar = $contatoModel->salvarEmail($assunto, $nome, $email, $tel, $msg);
 
                 if ($salvar) {
-
-                    //reconhecer estrutura PHPMAILER
                     require_once("vendors/phpmailer/PHPMailer.php");
                     require_once("vendors/phpmailer/SMTP.php");
                     require_once("vendors/phpmailer/Exception.php");
 
-                    $phpmail = new PHPMailer\PHPMailer\PHPMailer(); //Gerando variavel de email
-
                     try {
-                        // Primeiro e-mail (para o sistema)
-                        $phpmail->isSMTP(); // envio por SMTP
-                        $phpmail->SMTPDebug = 2;
+                        $phpmail = new PHPMailer\PHPMailer\PHPMailer(); // Criado dentro do try para evitar duplicações
 
-                        $phpmail->Host = HOTS_EMAIL; // Servidor SMTP
-                        $phpmail->Port = PORT_EMAIL; // Porta do servidor SMTP
-                        $phpmail->SMTPSecure = 'ssl'; // Certificado SSL
-                        $phpmail->SMTPAuth = true; // Requer autenticação
-                        $phpmail->Username = USER_EMAIL; // Usuário do SMTP
-                        $phpmail->Password = PASS_EMAIL; // Senha do SMTP
+                        $phpmail->isSMTP();
+                        $phpmail->SMTPDebug = 0;
+                        $phpmail->Host = HOTS_EMAIL;
+                        $phpmail->Port = PORT_EMAIL;
+                        $phpmail->SMTPSecure = 'ssl';
+                        $phpmail->SMTPAuth = true;
+                        $phpmail->Username = USER_EMAIL;
+                        $phpmail->Password = PASS_EMAIL;
+                        $phpmail->IsHTML(true);
+                        $phpmail->setFrom(USER_EMAIL, 'Contato do site');
+                        $phpmail->addAddress(USER_EMAIL, 'Atendimento');
 
-                        $phpmail->IsHTML(true); // Trabalhar com estrutura HTML
-                        $phpmail->setFrom(USER_EMAIL, 'Contato do site'); // E-mail do remetente
-                        $phpmail->addAddress(USER_EMAIL, $assunto); // E-mail do destinatário (sistema)
-
+                        $phpmail->SMTPOptions = array(
+                            'ssl' => array(
+                                'verify_peer' => false,
+                                'verify_peer_name' => false,
+                                'allow_self_signed' => true
+                            )
+                        );
 
                         $phpmail->CharSet = 'UTF-8';
                         $phpmail->Encoding = 'base64';
 
-                        $phpmail->Subject = $assunto; // Assunto
-                        $phpmail->msgHTML(" Nome:  $nome <br>
-                                            E-Mail: $email <br>
-                                            Telefone: $tel <br>
-                                            Mensagem: $msg");
-                        $phpmail->AltBody = "Nome: $nome\nE-Mail: $email\nTelefone: $tel\nMensagem: $msg";
+                        // **E-mail para a equipe**
+                        $phpmail->Subject = '📩 Novo Contato Recebido - Guloseimas do Olimpo';
+                        $phpmail->msgHTML("
+                            <h2 style='color:#E44D26;'>📩 Novo Contato Recebido!</h2>
+                            <p>Olá, equipe! Vocês acabaram de receber uma nova mensagem pelo site.</p>
+                            <h3>🔹 Detalhes do contato:</h3>
+                            <ul>
+                                <li><strong>📛 Nome:</strong> $nome</li>
+                                <li><strong>✉️ E-mail:</strong> $email</li>
+                                <li><strong>📞 Telefone:</strong> $tel</li>
+                                <li><strong>📝 Mensagem:</strong> $msg</li>
+                            </ul>
+                            <p>🚀 Entre em contato o mais rápido possível para garantir um ótimo atendimento!</p>
+                            <p>Atenciosamente,<br><strong>Equipe Guloseimas do Olimpo</strong></p>
+                        ");
+                        $phpmail->AltBody = "📩 Novo Contato Recebido!\n\nNome: $nome\nE-mail: $email\nTelefone: $tel\nMensagem: $msg";
 
-                        $phpmail->send();
+                        $phpmail->send(); // Envia primeiro e-mail
 
-                        // Segundo e-mail (confirmação para o usuário)
-                        $phpmail->clearAddresses(); // Limpar os destinatários anteriores
-                        $phpmail->addAddress($email, $nome); // Destinatário (usuário)
+                        // **E-mail de confirmação para o usuário**
+                        $phpmail->clearAddresses();
+                        $phpmail->addAddress($email, $nome);
 
-                        $phpmail->Subject = 'Confirmação de Contato'; // Assunto do e-mail de confirmação
-                        $phpmail->msgHTML("<p>Olá $nome,</p>
-                                           <p>Obrigado por entrar em contato conosco! Recebemos sua mensagem com os seguintes detalhes:</p>
-                                           <ul>
-                                               <li><strong>Nome:</strong> $nome</li>
-                                               <li><strong>E-mail:</strong> $email</li>
-                                               <li><strong>Telefone:</strong> $tel</li>
-                                               <li><strong>Mensagem:</strong> $msg</li>
-                                           </ul>
-                                           <p>Em breve nossa equipe entrará em contato para responder sua solicitação.</p>
-                                           <p>Atenciosamente,</p>
-                                           <p>Guloseimas do olimpo </p>");
-                        $phpmail->AltBody = "Olá $nome,\n\nObrigado por entrar em contato conosco! Recebemos sua mensagem e em breve responderemos.";
+                        $phpmail->Subject = '🎉 Sua mensagem foi recebida! - Guloseimas do Olimpo';
+                        $phpmail->msgHTML("
+                            <h2 style='color:#E44D26;'>🎉 Olá, $nome!</h2>
+                            <p>Recebemos sua mensagem e nossa equipe está ansiosa para atendê-lo!</p>
+                            <h3>📌 Resumo da sua mensagem:</h3>
+                            <ul>
+                                <li><strong>📛 Nome:</strong> $nome</li>
+                                <li><strong>✉️ E-mail:</strong> $email</li>
+                                <li><strong>📞 Telefone:</strong> $tel</li>
+                                <li><strong>📝 Sua mensagem:</strong> $msg</li>
+                            </ul>
+                            <p>⏳ Responderemos o mais rápido possível! Enquanto isso, fique à vontade para explorar nosso site e conferir as novidades.</p>
+                            <p>💌 Caso precise de algo urgente, entre em contato conosco diretamente.</p>
+                            <p>Atenciosamente,<br><strong>Equipe Guloseimas do Olimpo</strong></p>
+                        ");
+                        $phpmail->AltBody = "🎉 Olá, $nome!\n\nRecebemos sua mensagem e nossa equipe está ansiosa para atendê-lo!\n\nResumo da sua mensagem:\nNome: $nome\nE-mail: $email\nTelefone: $tel\nMensagem: $msg\n\nResponderemos o mais rápido possível!\n\nAtenciosamente,\nEquipe Guloseimas do Olimpo";
 
-                        $phpmail->send();
+                        $phpmail->send(); // Envia segundo e-mail
 
-                        $dados = array(
-                            'mensagem' => 'Obrigado pelo seu contato, em breve responderemos',
-                            'status'   => 'sucesso'
+                        // Redirecionar para a página de contato com status de sucesso
+                        header('Location: ' . BASE_URL);
+                        exit;
 
-
-
-                        );
-
-                       
-
-
-                        $this->carregarViews('contato', $dados);
                     } catch (Exception $e) {
-                        $dados = array(
-                            'mensagem' => 'Não foi possível enviar sua mensagem!',
-                            'status'   => 'erro',
-                            'erro'     => $phpmail->ErrorInfo
-                        );
-
                         error_log('Erro ao enviar o email: ' . $phpmail->ErrorInfo);
-                        $this->carregarViews('contato', $dados);
+
+                        header('Location: ' . BASE_URL );
+                        exit;
                     }
                 }
-            } // FIM DO IF que testa se os campos estão preenchidos
-
-        } else {
-            $dados = array();
-            $this->carregarViews('contato', $dados);
+            }
         }
+
+        header('Location: ' . BASE_URL );
+        exit;
     }
 
-
-    public function contato(){
-
-
-
-
-
-
-        if (!isset($_SESSION['userTipo'])  || $_SESSION['userTipo'] !== 'Funcionario') {
-
+    public function contato()
+    {
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location:' . BASE_URL);
             exit;
         }
 
         $dados = array();
         $dados['listarEmails'] = $this->contatos_emails->emails_contatos();
-
         $dados['conteudo'] = 'dash/contato/contato';
-
-
 
         $this->carregarViews('dash/dashboard', $dados);
     }
