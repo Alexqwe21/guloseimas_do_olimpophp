@@ -133,8 +133,7 @@ class ContatoController extends Controller
 
                         );
 
-                        header('Location: ' . BASE_URL . 'home'); // Redireciona para a home
-                        exit;
+                       
 
 
                         $this->carregarViews('contato', $dados);
