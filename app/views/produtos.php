@@ -36,7 +36,7 @@
                                 <h4>Filtrar por preço</h4>
                             </div>
                             <div>
-                                <input type="range" min="0" max="4000" value="250" class="escolher-valor" id="escolher-valor">
+                                <input type="range" min="0" max="1000" value="500" class="escolher-valor" id="escolher-valor">
                                 <p>Preço: R$ <span id="preco-atual">500</span></p>
                                 <h3>Filtrar por categoria</h3>
 
@@ -135,128 +135,98 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let offset = 4; // Começa carregando 6 produtos
-        const limite = 4; // Quantidade de produtos por requisição
-        const btnVerMais = document.getElementById("verMaisBtn");
+        let offset = 4;
+        const limite = 4;
         const produtosContainer = document.getElementById("produtos");
+        const btnVerMais = document.getElementById("verMaisBtn");
+        const precoRange = document.getElementById("escolher-valor");
+        const precoAtual = document.getElementById("preco-atual");
+        const categoriaItems = document.querySelectorAll(".categoria-item");
+        const btnVerTodosProdutos = document.getElementById("verTodosProdutos");
 
-        btnVerMais.addEventListener("click", function() {
+        /**
+         * Função para carregar mais produtos ao clicar no botão "Ver mais"
+         */
+        function carregarMaisProdutos() {
             fetch(`<?php echo BASE_URL; ?>produtos/carregarMaisProdutos?offset=${offset}`)
                 .then(response => response.text())
                 .then(data => {
-                    // Se o retorno estiver vazio, significa que não há mais produtos
-                    if (data.trim() === "") {
-                        // Oculta o botão "Ver mais" se não houver mais produtos
-                        btnVerMais.style.display = "none";
+                    let cleanedData = data.trim(); // Remove espaços extras
 
-                        // Exibe o modal informando que todos os produtos foram carregados
+                    if (cleanedData === "") {
+                        btnVerMais.style.display = "none";
                         const modal = new bootstrap.Modal(document.getElementById('modal_produtos'));
                         modal.show();
                     } else {
-                        // Adiciona os novos produtos carregados
-                        produtosContainer.innerHTML += data;
-                        offset += limite; // Atualiza o offset para carregar os próximos produtos
+                        produtosContainer.innerHTML += cleanedData; // Adiciona os novos produtos
+                        offset += limite;
                     }
                 })
                 .catch(error => console.error("Erro ao carregar mais produtos:", error));
-        });
-    });
-</script>
+        }
 
+        /**
+         * Função para filtrar produtos por categoria
+         */
+        function filtrarPorCategoria(categoriaId) {
+            btnVerMais.style.display = "none"; // Esconde o botão "Ver mais produtos"
 
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const categoriaItems = document.querySelectorAll(".categoria-item");
-        const btnVerMais = document.getElementById("verMaisBtn");
-        const btnVerTodosProdutos = document.getElementById("verTodosProdutos");
-        const produtosContainer = document.getElementById("produtos");
-        let offset = 4; // Começa carregando 6 produtos
-        const limite = 4; // Quantidade de produtos por requisição
-
-        // Filtrar produtos por categoria
-        categoriaItems.forEach(item => {
-            item.addEventListener("click", function() {
-                const categoriaId = this.dataset.categoria;
-
-                // Esconde o botão "Ver mais produtos" ao selecionar uma categoria
-                btnVerMais.style.display = "none";
-
-                // Faz a requisição AJAX para buscar todos os produtos da categoria
-                fetch(`<?php echo BASE_URL; ?>produtos/filtrarPorCategoria?categoria=${categoriaId}&offset=0&limite=100`)
-                    .then(response => response.text())
-                    .then(data => {
-                        if (data.trim() === "" || data.includes("Nenhum produto encontrado")) {
-                            produtosContainer.innerHTML = '<p class="sem-produtos">Nenhum produto encontrado para esta categoria.</p>';
-                        } else {
-                            produtosContainer.innerHTML = data; // Substitui os produtos carregados
-                        }
-                    })
-                    .catch(error => console.error("Erro ao filtrar produtos:", error));
-            });
-        });
-
-        // Mostrar todos os produtos ao clicar no botão "Ver todos os produtos"
-        btnVerTodosProdutos.addEventListener("click", function() {
-            fetch(`<?php echo BASE_URL; ?>produtos/mostrarTodosProdutos?offset=0&limite=100`) // Buscar todos os produtos
+            fetch(`<?php echo BASE_URL; ?>produtos/filtrarPorCategoria?categoria=${categoriaId}&offset=0&limite=100`)
                 .then(response => response.text())
                 .then(data => {
-                    if (data.trim() === "" || data.includes("Nenhum produto encontrado")) {
-                        produtosContainer.innerHTML = '<p class="sem-produtos">Nenhum produto encontrado.</p>';
-                        btnVerMais.style.display = "none"; // Esconde o botão "Ver mais produtos" se não houver produtos
-                    } else {
-                        produtosContainer.innerHTML = data; // Substitui os produtos carregados
-                        btnVerMais.style.display = "block"; // Exibe o botão "Ver mais produtos"
-                    }
+                    produtosContainer.innerHTML = data.trim(); // Limpa e exibe apenas os produtos filtrados
                 })
-                .catch(error => console.error("Erro ao carregar todos os produtos:", error));
-        });
+                .catch(error => console.error("Erro ao filtrar produtos:", error));
+        }
 
-        // Ver mais produtos
-
-    });
-</script>
-
-
-<script>
-    btnVerMais.addEventListener("click", function() {
-        fetch(`<?php echo BASE_URL; ?>produtos/carregarMaisProdutos?offset=${offset}`)
-            .then(response => response.text())
-            .then(data => {
-                if (data.trim() === "") {
-                    btnVerMais.style.display = "none"; // Oculta o botão se não houver mais produtos
-                    const modal = new bootstrap.Modal(document.getElementById('modal_produtos'));
-                    modal.show();
-                } else {
-                    produtosContainer.innerHTML += data; // Adiciona os novos produtos carregados
-                    offset += limite; // Atualiza o offset para carregar os próximos produtos
-                }
-            })
-            .catch(error => console.error("Erro ao carregar mais produtos:", error));
-    });
-</script>
-
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const precoRange = document.getElementById("escolher-valor");
-        const precoAtual = document.getElementById("preco-atual");
-        const produtosContainer = document.getElementById("produtos");
-
-        precoRange.addEventListener("input", function() {
-            let precoMaximo = precoRange.value;
+        /**
+         * Função para filtrar produtos por preço
+         */
+        function filtrarPorPreco(precoMaximo) {
             precoAtual.textContent = precoMaximo; // Atualiza o texto do preço selecionado
 
-            // Faz a requisição AJAX para filtrar os produtos por preço
             fetch(`<?php echo BASE_URL; ?>produtos/filtrarPorPreco?preco=${precoMaximo}`)
                 .then(response => response.text())
                 .then(data => {
-                    produtosContainer.innerHTML = ""; // REMOVE os produtos antigos antes de adicionar os novos
-                    produtosContainer.innerHTML = data; // Substitui os produtos na página
+                    produtosContainer.innerHTML = data.trim(); // Substitui os produtos com os filtrados
                 })
                 .catch(error => console.error("Erro ao filtrar por preço:", error));
+        }
+
+        /**
+         * Função para exibir todos os produtos novamente
+         */
+        function mostrarTodosProdutos() {
+            fetch(`<?php echo BASE_URL; ?>produtos/mostrarTodosProdutos?offset=0&limite=100`)
+                .then(response => response.text())
+                .then(data => {
+                    produtosContainer.innerHTML = data.trim();
+                    btnVerMais.style.display = "block"; // Exibe o botão "Ver mais produtos"
+                })
+                .catch(error => console.error("Erro ao carregar todos os produtos:", error));
+        }
+
+        // Eventos
+        if (btnVerMais) {
+            btnVerMais.addEventListener("click", carregarMaisProdutos);
+        }
+
+        if (precoRange) {
+            precoRange.addEventListener("input", function() {
+                filtrarPorPreco(this.value);
+            });
+        }
+
+        categoriaItems.forEach(item => {
+            item.addEventListener("click", function() {
+                const categoriaId = this.dataset.categoria;
+                filtrarPorCategoria(categoriaId);
+            });
         });
+
+        if (btnVerTodosProdutos) {
+            btnVerTodosProdutos.addEventListener("click", mostrarTodosProdutos);
+        }
     });
 </script>
 

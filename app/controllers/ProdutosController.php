@@ -524,12 +524,17 @@ class ProdutosController extends Controller
         exit();
     }
 
+
+
+
     public function carregarMaisProdutos()
     {
         $limite = 2;
         $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
 
         $produtos = $this->produtoModel->getVerMaisProdutos($limite, $offset);
+
+        ob_start(); // Inicia o buffer de saída
 
         if (!empty($produtos)) {
             foreach ($produtos as $PG_produtos) {
@@ -543,53 +548,15 @@ class ProdutosController extends Controller
                             <div class="preco_produto">
                                 <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
                                 <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
-                                <button>
-                                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg">
-                                </button>
                             </div>
                         </a>
                     </div>';
             }
-        } else {
-            echo ''; // Caso não tenha mais produtos
         }
+
+        echo trim(ob_get_clean()); // Enviar a saída limpa
     }
 
-
-    public function filtrarPorCategoria()
-    {
-        // Pegando parâmetros da URL
-        $categoriaId = isset($_GET['categoria']) ? intval($_GET['categoria']) : 0;
-        $limite = isset($_GET['limite']) ? intval($_GET['limite']) : 10; // Padrão é 10
-        $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
-
-        // Chamando o modelo para pegar os produtos pela categoria
-        $produtos = $this->produtoModel->getProdutosPorCategoria($categoriaId, $limite, $offset);
-
-        // Exibindo os produtos
-        if (!empty($produtos)) {
-            foreach ($produtos as $PG_produtos) {
-                echo '<div class="tamanho_link">
-                    <a href="' . BASE_URL . 'produtos/detalhe/' . htmlspecialchars($PG_produtos['link_produto']) . '">
-                        <div class="produto_a_mostra">
-                            <img src="' . BASE_URL . 'uploads/' . htmlspecialchars($PG_produtos['foto_produto']) . '" 
-                                alt="' . htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8') . '" 
-                                class="pg_produto">
-                        </div>
-                        <div class="preco_produto">
-                            <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
-                            <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
-                            <button>
-                               <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg">
-                            </button>
-                        </div>
-                    </a>    
-                </div>';
-            }
-        } else {
-            echo '<p class="sem-produtos">Nenhum produto encontrado para esta categoria.</p>';
-        }
-    }
 
     // Função para mostrar todos os produtos (sem filtro de categoria)
     public function mostrarTodosProdutos()
@@ -630,10 +597,12 @@ class ProdutosController extends Controller
     public function filtrarPorPreco()
     {
         $precoMax = isset($_GET['preco']) ? floatval($_GET['preco']) : 1000;
-    
+
         // Buscar produtos até o preço máximo no banco de dados
         $produtos = $this->produtoModel->getProdutosPorPreco($precoMax);
-    
+
+        ob_start(); // Iniciar buffer de saída
+
         if (!empty($produtos)) {
             foreach ($produtos as $PG_produtos) {
                 echo '<div class="tamanho_link">
@@ -653,6 +622,47 @@ class ProdutosController extends Controller
         } else {
             echo '<p class="sem-produtos">Nenhum produto encontrado dentro desse preço.</p>';
         }
+
+        echo trim(ob_get_clean()); // Enviar a saída limpa
     }
-    
+
+
+    public function filtrarPorCategoria()
+    {
+        $categoriaId = isset($_GET['categoria']) ? intval($_GET['categoria']) : 0;
+        $limite = isset($_GET['limite']) ? intval($_GET['limite']) : 10;
+        $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+
+        if ($categoriaId <= 0) {
+            echo '<p class="sem-produtos">Categoria inválida.</p>';
+            return;
+        }
+
+        // Recupera os produtos da categoria no Model
+        $produtos = $this->produtoModel->getProdutosPorCategoria($categoriaId, $limite, $offset);
+
+        ob_start(); // Inicia buffer de saída
+
+        if (!empty($produtos)) {
+            foreach ($produtos as $PG_produtos) {
+                echo '<div class="tamanho_link">
+                    <a href="' . BASE_URL . 'produtos/detalhe/' . htmlspecialchars($PG_produtos['link_produto']) . '">
+                        <div class="produto_a_mostra">
+                            <img src="' . BASE_URL . 'uploads/' . htmlspecialchars($PG_produtos['foto_produto']) . '" 
+                                alt="' . htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8') . '" 
+                                class="pg_produto">
+                        </div>
+                        <div class="preco_produto">
+                            <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
+                            <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
+                        </div>
+                    </a>
+                </div>';
+            }
+        } else {
+            echo '<p class="sem-produtos">Nenhum produto encontrado para esta categoria.</p>';
+        }
+
+        echo trim(ob_get_clean()); // Enviar a saída limpa
+    }
 }
