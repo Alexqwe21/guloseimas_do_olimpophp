@@ -501,13 +501,14 @@ class Produto extends Model
     }
 
     public function getProdutosPorPreco($precoMax)
-{
-    $sql = "SELECT * FROM tbl_produtos WHERE preco_produto <= :precoMax AND status_pedido = 'Ativo'";
-    $stmt = $this->db->prepare($sql);
-    $stmt->bindValue(':precoMax', $precoMax, PDO::PARAM_STR);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+    {
+        $sql = "SELECT * FROM tbl_produtos WHERE preco_produto <= :precoMax AND status_pedido = 'Ativo' ORDER BY preco_produto ASC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':precoMax', $precoMax, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
 
     
 }

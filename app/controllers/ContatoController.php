@@ -79,7 +79,7 @@ class ContatoController extends Controller
                     try {
                         // Primeiro e-mail (para o sistema)
                         $phpmail->isSMTP(); // envio por SMTP
-                        $phpmail->SMTPDebug = 0;
+                        $phpmail->SMTPDebug = 2;
 
                         $phpmail->Host = HOTS_EMAIL; // Servidor SMTP
                         $phpmail->Port = PORT_EMAIL; // Porta do servidor SMTP
