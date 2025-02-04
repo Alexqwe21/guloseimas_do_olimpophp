@@ -24,6 +24,20 @@
 }
     </style>
 
+<style>
+        input[type="email"], input[type="password"] {
+            text-transform: normal !important;
+        }
+
+        input[type="password"] {
+    text-transform: normal !important; /* Não transforma em maiúsculas */
+}
+
+#senha_entrar{
+    text-transform: normal !important;
+}
+    </style>
+
 <body>
     <header>
         <?php
