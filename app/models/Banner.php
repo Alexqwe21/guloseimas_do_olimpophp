@@ -7,8 +7,7 @@ class Banner extends Model
 
     // METODO PARA PEGAR FOTOS DA GALERIA
 
-    public function getBanner($status = null)
-    {
+    public function getBanner($status = null){
         // Consulta básica que retorna todos os banners
         $sql = "SELECT * FROM tbl_banner";
         
@@ -30,8 +29,7 @@ class Banner extends Model
 
 
 
-    public function getBanner_produto()
-    {
+    public function getBanner_produto(){
 
 
 
@@ -44,8 +42,7 @@ class Banner extends Model
     }
 
 
-    public function getBanner_galeria()
-    {
+    public function getBanner_galeria(){
 
 
 
@@ -58,8 +55,7 @@ class Banner extends Model
     }
 
 
-    public function getBanner_contato()
-    {
+    public function getBanner_contato(){
 
 
 
@@ -72,8 +68,7 @@ class Banner extends Model
     }
 
 
-    public function getBanner_login()
-    {
+    public function getBanner_login(){
 
 
 
@@ -86,8 +81,7 @@ class Banner extends Model
     }
 
 
-    public function getBanner_entrar()
-    {
+    public function getBanner_entrar(){
 
 
 
@@ -100,8 +94,7 @@ class Banner extends Model
     }
 
 
-    public function getBanner_criar_conta()
-    {
+    public function getBanner_criar_conta(){
 
 
 
@@ -116,8 +109,7 @@ class Banner extends Model
 
 
    
-    public function  getbannerPorId($id)
-    {
+    public function  getbannerPorId($id){
         $sql = "SELECT * FROM tbl_banner WHERE id_banner = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -125,8 +117,7 @@ class Banner extends Model
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function atualizarProduto_banner($id, $dados)
-    {
+    public function atualizarProduto_banner($id, $dados){
         // Definindo a query SQL
         $sql = "UPDATE tbl_banner SET nome_banner = :nome_banner , foto_banner = :foto_banner , alt_foto_banner = :alt_foto_banner WHERE id_banner = :id";
         
@@ -159,8 +150,7 @@ class Banner extends Model
     }
 
 
-    public function atualizarStatusBanner($id, $status)
-{
+public function atualizarStatusBanner($id, $status){
     $sql = "UPDATE tbl_banner 
             SET status_banner = :status 
             WHERE id_banner = :id";
@@ -170,17 +160,5 @@ class Banner extends Model
 
     return $stmt->execute();
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

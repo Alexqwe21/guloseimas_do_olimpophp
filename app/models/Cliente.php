@@ -25,37 +25,54 @@ class Cliente extends Model
 
 
     public function salvarCliente($nome, $email, $cpf, $data_nasc, $telefone, $endereco, $bairro, $cidade, $sigla_estado, $senha)
-{
-    // Buscar o ID do estado com base na sigla fornecida
-    $sqlEstado = "SELECT id_uf FROM tbl_estado WHERE sigla_uf= :sigla_estado LIMIT 1";
-    $stmtEstado = $this->db->prepare($sqlEstado);
-    $stmtEstado->bindValue(':sigla_estado', $sigla_estado);
-    $stmtEstado->execute();
+    {
+        // Buscar o ID do estado com base na sigla fornecida
+        $sqlEstado = "SELECT id_uf FROM tbl_estado WHERE sigla_uf= :sigla_estado LIMIT 1";
+        $stmtEstado = $this->db->prepare($sqlEstado);
+        $stmtEstado->bindValue(':sigla_estado', $sigla_estado);
+        $stmtEstado->execute();
 
-    $idEstado = $stmtEstado->fetchColumn();
+        $idEstado = $stmtEstado->fetchColumn();
 
-    if (!$idEstado) {
-        throw new Exception("Estado inválido: $sigla_estado");
-    }
+        if (!$idEstado) {
+            throw new Exception("Estado inválido: $sigla_estado");
+        }
 
-    // Inserir os dados do cliente, incluindo status_cliente como 'Ativo'
-    $sql = "INSERT INTO tbl_cliente 
+        // Inserir os dados do cliente, incluindo status_cliente como 'Ativo'
+        $sql = "INSERT INTO tbl_cliente 
             (nome_cliente, cpf_cliente, data_nasc_cliente, email_cliente, senha_cliente, telefone_cliente, endereco_cliente, bairro_cliente, cidade_cliente, id_uf, status_cliente) 
             VALUES (:nome, :cpf, :data_nasc, :email, :senha, :telefone, :endereco, :bairro, :cidade, :id_uf, 'Ativo')";
-    
-    $stmt = $this->db->prepare($sql);
-    $stmt->bindValue(':nome', $nome);
-    $stmt->bindValue(':email', $email);
-    $stmt->bindValue(':cpf', $cpf);
-    $stmt->bindValue(':data_nasc', $data_nasc);
-    $stmt->bindValue(':telefone', $telefone);
-    $stmt->bindValue(':endereco', $endereco);
-    $stmt->bindValue(':bairro', $bairro);
-    $stmt->bindValue(':cidade', $cidade);
-    $stmt->bindValue(':id_uf', $idEstado);
-    $stmt->bindValue(':senha', $senha);
 
-    return $stmt->execute();
-}
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':nome', $nome);
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':cpf', $cpf);
+        $stmt->bindValue(':data_nasc', $data_nasc);
+        $stmt->bindValue(':telefone', $telefone);
+        $stmt->bindValue(':endereco', $endereco);
+        $stmt->bindValue(':bairro', $bairro);
+        $stmt->bindValue(':cidade', $cidade);
+        $stmt->bindValue(':id_uf', $idEstado);
+        $stmt->bindValue(':senha', $senha);
 
+        return $stmt->execute();
+    }
+
+
+
+    public function buscarPorEmail($email): ?array
+    {
+        $stmt = $this->db->prepare("SELECT * FROM tbl_cliente WHERE email_cliente = ?");
+        $stmt->execute([$email]); // Passa o parâmetro corretamente
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $usuario ?: null; // Retorna null se não encontrar o e-mail
+    }
+
+
+    public function atualizarSenha($email, $novaSenha): bool
+    {
+        $stmt = $this->db->prepare("UPDATE tbl_cliente SET senha_cliente = ? WHERE email_cliente = ?");
+        return $stmt->execute([$novaSenha, $email]); // Passa os parâmetros corretamente
+    }
 }

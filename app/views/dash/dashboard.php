@@ -24,7 +24,7 @@
             <div class="container-fluid"> <!--begin::Start Navbar Links-->
                 <ul class="navbar-nav">
                     <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i class="bi bi-list"></i> </a> </li>
-                    <li class="nav-item d-none d-md-block"> <a href="http://localhost/guloseimas_do_olimpophp/public/dashboard" class="nav-link">SITE KI OFICINA</a> </li>
+                    <li class="nav-item d-none d-md-block"> <a href="http://localhost/guloseimas_do_olimpophp/public/dashboard" class="nav-link">SITE GULOSEIMAS DO OLIMPO</a> </li>
 
                 </ul> <!--end::Start Navbar Links--> <!--begin::End Navbar Links-->
                 <?php if (!empty($_SESSION['mensagem'])): ?>
@@ -130,11 +130,11 @@
             </div> <!--end::Container-->
         </nav> <!--end::Header--> <!--begin::Sidebar-->
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> <!--begin::Sidebar Brand-->
-            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="./index.html" class="brand-link"> <!--begin::Brand Image--> <img src="http://localhost/Kioficina/public/assets/img/logo-kioficina.svg" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--> <span class="brand-text fw-light"></span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
+            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="http://localhost/guloseimas_do_olimpophp/public/dashboard" class="brand-link"> <!--begin::Brand Image--> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/logo_dash.svg" alt="LOGO_SITE"> <!--end::Brand Image--> <!--begin::Brand Text--> <span class="brand-text fw-light"></span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
             <div class="sidebar-wrapper">
                 <nav class="mt-2"> <!--begin::Sidebar Menu-->
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item menu-open"> <a href="#" class="nav-link active"> <i class="bi bi-speedometer2"></i>
+                        <li class="nav-item menu-open"> <a href="http://localhost/guloseimas_do_olimpophp/public/dashboard" class="nav-link active"> <i class="bi bi-speedometer2"></i>
                                 <p>
                                     Dashboard
 
@@ -256,8 +256,12 @@
                         <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/produtos/banner_produto" class="nav-link"> <i class="bi bi-card-image"></i>
                                 <p>Banners</p>
                             </a> </li>
-                        <li class="nav-item"> <a href="./docs/color-mode.html" class="nav-link"> <i class="bi bi-envelope"></i>
+                        <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/contato/contato" class="nav-link"> <i class="bi bi-envelope"></i>
                                 <p>Contato</p>
+                            </a> </li>
+
+                            <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/newsletter/contato_Newsletter" class="nav-link"> <i class="bi bi-envelope-check"></i>
+                                <p>Newsletter</p>
                             </a> </li>
 
 
@@ -409,7 +413,7 @@
                         if (isset($conteudo)) {
                             $this->carregarViews($conteudo, $dados);
                         } else {
-                            echo '<h2> esta no else arrume</h2>';
+                            echo '<h2> Bem  vindo ao Dashboard</h2>';
                         }
 
 
@@ -422,16 +426,17 @@
     </div> <!--end::App Content-->
     </main> <!--end::App Main--> <!--begin::Footer-->
 
-    <footer class="app-footer"> <!--begin::To the end-->
+    <!-- <footer class="app-footer"> <!--begin::To the end-->
         <div class="float-end d-none d-sm-inline">Anything you want</div> <!--end::To the end--> <!--begin::Copyright--> <strong>
             Copyright &copy; 2014-2024&nbsp;
             <a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>.
         </strong>
         All rights reserved.
         <!--end::Copyright-->
-    </footer> <!--end::Footer-->
+    </footer> end::Footer -->
 
     </div> <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
+   
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js" integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script> <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
     <!-- Bootstrap -->
 
@@ -647,8 +652,12 @@
             option_sparkline3,
         );
         sparkline3.render();
+
+     
     </script> <!--end::Script-->
 </body><!--end::Body-->
+
+
 
 
 

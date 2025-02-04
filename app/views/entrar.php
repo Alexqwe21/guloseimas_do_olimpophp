@@ -10,17 +10,31 @@
 
 </head>
 
+<style>
+        input[type="email"], input[type="password"] {
+            text-transform: normal !important;
+        }
+
+        input[type="password"] {
+    text-transform: normal !important; /* Não transforma em maiúsculas */
+}
+
+#senha_entrar{
+    text-transform: normal !important;
+}
+    </style>
+
 <body>
     <header>
-    <?php
+        <?php
         // Inclui o cabeçalho
         require('template/header.php');
-    ?>
+        ?>
     </header>
 
     <main>
 
-        <section class="banner_contato" style="background-image: url('<?php echo BASE_URL . 'uploads/' . $banner[0] ['foto_banner']; ?>');">
+        <section class="banner_contato" style="background-image: url('<?php echo BASE_URL . 'uploads/' . $banner[0]['foto_banner']; ?>');">
             <article class="site">
                 <div>
                     <h2>Entrar</h2>
@@ -45,7 +59,7 @@
             <article class="site">
                 <div class="lado_a_lado">
                     <div class="forms_contato">
-                        <form   method="POST" action="http://localhost/guloseimas_do_olimpophp/public/entrar/entrar">
+                        <form method="POST" action="http://localhost/guloseimas_do_olimpophp/public/entrar/entrar">
                             <div class="nome_entrar">
 
                                 <div class="email_entrar">
@@ -53,15 +67,22 @@
                                         <label for="email">
                                         </label>
                                         <!-- Preenche o campo de email com o valor armazenado na sessão -->
-                                        <input type="email" name="email_entrar" id="email_entrar" placeholder="Endereço de email"  required>
+                                        <input type="email" name="email_entrar" id="email_entrar" placeholder="Endereço de email" required>
                                     </div>
                                     <label for="senha"></label>
-                                    <input type="password" id="senha_entrar" name="senha_entrar" required placeholder="SENHA">
+<div style="position: relative; display: flex; align-items: center;">
+    <input type="password" id="senha_entrar" name="senha_entrar" required placeholder="Senha" style="text-transform: none; padding-right: 40px;">
+    <button type="button" id="toggleSenha" style="position: absolute; right: 10px; background: none; border: none; cursor: pointer;">
+        👁️
+    </button>
+</div>
+
 
                                 </div>
                                 <div class="lembrar">
 
-                                    <a href="#">Esqueceu a senha ? </a>
+                                <a href="http://localhost/guloseimas_do_olimpophp/public/Recuperarsenha/index">Esqueceu a senha?</a>
+
                                     <div class="checkbox">
                                         <input type="checkbox" id="lembrar" name="lembrar">
                                         <label for="lembrar">
@@ -106,5 +127,19 @@
     ?>
 
 </body>
+
+<script>
+    document.getElementById('toggleSenha').addEventListener('click', function() {
+        let inputSenha = document.getElementById('senha_entrar');
+        if (inputSenha.type === 'password') {
+            inputSenha.type = 'text';
+            this.textContent = '👁️'; // Ícone para mostrar a senha
+        } else {
+            inputSenha.type = 'password';
+            this.textContent = '🙈'; // Ícone para esconder a senha
+        }
+    });
+</script>
+
 
 </html>

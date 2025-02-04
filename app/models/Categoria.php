@@ -5,24 +5,19 @@
 class Categoria extends Model
 {
 
-    public function getCategoria()
-    {
+    public function getCategoria(){
 
 
 
         $sql = "SELECT * FROM tbl_categoria WHERE status_categoria = 'Ativo'";
-    $stmt = $this->db->prepare($sql);
-    $stmt->execute();
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
 
-    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Debug para verificar os dados retornados
-  
+        // Debug para verificar os dados retornados
 
-    return $resultado;
+
+        return $resultado;
     }
-
-
-   
 }
-

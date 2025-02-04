@@ -3,7 +3,7 @@
 
 <head>
 
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <?php
     // Inclui o head
     require('head_geral/head.php');
@@ -13,16 +13,16 @@
 
 <body>
 
-<header>
-    <?php
-    // Inclui o cabeçalho
-    require('template/header.php');
-    ?>
-</header>
+    <header>
+        <?php
+        // Inclui o cabeçalho
+        require('template/header.php');
+        ?>
+    </header>
 
     <main>
 
-        <section class="banner_contato" style="background-image: url('<?php echo BASE_URL . 'uploads/' . $banner[0] ['foto_banner']; ?>');">
+        <section class="banner_contato" style="background-image: url('<?php echo BASE_URL . 'uploads/' . $banner[0]['foto_banner']; ?>');">
             <article class="site">
                 <div>
                     <h2>Contato</h2>
@@ -52,7 +52,7 @@
                     </div>
 
                     <div class="forms_contato">
-                        <form action="" method="post">
+                        <form id="formContato" action="contato/enviarEmail" method="post">
                             <div class="nome">
                                 <label for="nome"> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/user_forms.svg" alt="user"></label>
                                 <input type="tex" name="nome" id="nome" placeholder="NOME" required>
@@ -98,6 +98,26 @@
                                 <button type="submit"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/enviar_froms.svg" alt="enviar">Entre
                                     em contato</button>
                             </div>
+
+                            <!-- Modal de Status do Envio do Formulário -->
+                            <div class="modal fade" id="exampleModalFormContato" tabindex="-1" aria-labelledby="exampleModalLabelFormContato" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabelFormContato">Status do Envio</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" id="modalMessageFormContato">
+                                            O formulário foi enviado com sucesso!
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
 
                         </form>
 
@@ -152,7 +172,7 @@
     </main>
 
     <footer>
-        
+
         <?php
         // Inclui o cabeçalho
         require('template/footer.php');
@@ -160,13 +180,58 @@
 
     </footer>
 
+    <!-- Button trigger modal -->
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button> -->
+
+
+
 
     <?php
     // Inclui o script
     require('script_geral/script.php');
     ?>
 
-    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+       document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('formContato');
+    const modal = new bootstrap.Modal(document.getElementById('exampleModalFormContato'));  // Usando o ID do modal
+    const modalMessage = document.getElementById('modalMessageFormContato');  // Usando o ID da mensagem do modal
+
+    // Verificar se há um parâmetro indicando erro ou sucesso na URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const sucesso = urlParams.get('sucesso'); // Este é o parâmetro que indicará sucesso no envio
+
+    // Exibir o modal com a mensagem correspondente
+    if (sucesso) {
+        modalMessage.textContent = 'O formulário foi enviado com sucesso!';
+        modal.show();
+    }
+
+    // Prevenir o envio duplo do formulário
+    form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Previne o envio imediato
+
+        // Enviar o formulário via AJAX ou outra forma
+        // Exemplo:
+        // fetch('/caminho/do/servidor', {
+        //     method: 'POST',
+        //     body: new FormData(form)
+        // }).then(response => {
+        //     if (response.ok) {
+        //         window.location.search = '?sucesso=true'; // Redirecionar com o parâmetro de sucesso
+        //     }
+        // });
+    });
+});
+    </script>
+
+
 </body>
 
 </html>

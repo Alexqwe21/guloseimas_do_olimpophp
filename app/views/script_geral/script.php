@@ -6,3 +6,5 @@
 <script type="text/javascript" src="http://localhost/guloseimas_do_olimpophp/public/vendors/slick/slick.min.js"></script>
 <script type="text/javascript" src="http://localhost/guloseimas_do_olimpophp/public/assets/js/animacao.js"></script>
 <script src="http://localhost/guloseimas_do_olimpophp/public/assets/js/mobile-navbar.js"></script>
+<script src="https://kit.fontawesome.com/a327b26a99.js" crossorigin="anonymous"></script>
+

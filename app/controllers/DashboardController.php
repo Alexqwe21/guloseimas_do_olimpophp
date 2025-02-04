@@ -2,8 +2,7 @@
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         // Inicia a sessão se ainda não estiver iniciada
         if (session_status() == PHP_SESSION_NONE) {
             session_start();

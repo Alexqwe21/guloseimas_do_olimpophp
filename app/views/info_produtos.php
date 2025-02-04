@@ -26,7 +26,7 @@
             <article class="site">
                 <div class="lado_a_lado">
                     <div>
-                        <a href="http://localhost/guloseimas_do_olimpophp/public/produtos"><img src="<?php echo BASE_URL . 'uploads/' . $detalheServico['foto_info_produto']; ?>" alt="<?php echo htmlspecialchars($detalheServico['info_alt_foto_produto']); ?>" class="img_info"></a>
+                        <a href="http://localhost/guloseimas_do_olimpophp/public/produtos"><img src="<?php echo BASE_URL . 'uploads/' . $detalheServico['foto_produto']; ?>" alt="<?php echo htmlspecialchars($detalheServico['info_alt_foto_produto']); ?>" class="img_info"></a>
                     </div>
                     <div class="inf_produto">
                         <div class="reserva_title">

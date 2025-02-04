@@ -8,13 +8,52 @@
     ?>
 </head>
 
+<style>
+    body , html{
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h1{
+        font-size: 30pt;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+      
+    }
+
+
+    main{
+      width: 100vh;
+    
+    }
+
+    label{
+        margin: 10px 0;
+        font-size: 15pt;
+        font-weight: bold;
+    }
+
+    
+input{
+    margin: 10px 0;
+}
+
+button{
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+a{
+margin-top: 10px;
+}
+
+</style>
 <body>
-    <header>
-        <?php
-        // Inclui o cabeçalho
-        require(__DIR__ . '/../../template/header.php');
-        ?>
-    </header>
+   
 
     <main>
 
@@ -55,7 +94,7 @@
                      alt="<?php echo htmlspecialchars($foto['alt_foto_galeria']); ?>" 
                      style="max-width: 200px; display: block; margin-bottom: 10px;">
             </div>
-
+<!-- PAREI AQUI; -->
             <div class="form-group">
                 <label for="foto_galeria">Nova Foto</label>
                 <input type="file" id="foto_galeria" name="foto_galeria" class="form-control">
@@ -73,12 +112,7 @@
 
 
 
-    <footer>
-        <?php
-        // Inclui o rodapé
-        require(__DIR__ . '/../../template/footer.php');
-        ?>
-    </footer>
+ 
 
     <?php
     // Inclui o script

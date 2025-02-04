@@ -7,8 +7,7 @@ class GaleriaController extends Controller
     private $pg_galeria;
     private $sobrehome;
 
-    public function __construct()
-    {
+    public function __construct(){
         // Inicializa a sessão se ainda não estiver iniciada
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -22,8 +21,7 @@ class GaleriaController extends Controller
         $this->pg_galeria = new Galeria();
     }
 
-    public function index()
-    {
+    public function index(){
         $dados = array();
 
         $galeria_banner = new  Banner();
@@ -36,12 +34,9 @@ class GaleriaController extends Controller
 
         // Carrega a view de listagem da galeria
         $this->carregarViews('galeria', $dados);
-
-        
     }
 
-    public function editarG($id)
-    {
+    public function editarG($id){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -69,6 +64,8 @@ class GaleriaController extends Controller
 
 
 
+
+
         // Prepara os dados para a view
         $dados = array();
         $dados['foto'] = $foto;
@@ -80,8 +77,7 @@ class GaleriaController extends Controller
 
 
 
-    public function editarQ($id)
-    {
+    public function editarQ($id){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -119,75 +115,72 @@ class GaleriaController extends Controller
     }
 
 
-    public function statusG($id)
-{
-    // Verifica se o usuário tem permissão
-    if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
-        header('Location: ' . BASE_URL);
-        exit();
-    }
-
-    // Busca os dados da galeria
-    $galeria_pg = $this->pg_galeria-> getGaleriaPorId($id);
-
-    if (!$galeria_pg) {
-        $_SESSION['erro'] = "Produto não encontrado.";
-        header('Location: ' . BASE_URL . 'produtos/banners');
-        exit();
-    }
-
-    // Prepara os dados para a view
-    $dados = [
-        'galeria_pg' => $galeria_pg,
-        'titulo' => 'Alterar Status do Produto'
-    ];
-
-    // Carrega a view do formulário
-    $this->carregarViews('dash/galeria/statusG', $dados);
-}
-
-
-public function status_S_G($id)
-{
-    // Verifica se o usuário tem permissão
-    if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
-        header('Location: ' . BASE_URL);
-        exit();
-    }
-
-    // Busca os dados da galeria
-    $galeria_pg = $this->pg_galeria-> getGaleriaPorId($id);
-
-    if (!$galeria_pg) {
-        $_SESSION['erro'] = "Produto não encontrado.";
-        header('Location: ' . BASE_URL . 'produtos/banners');
-        exit();
-    }
-
-    // Prepara os dados para a view
-    $dados = [
-        'galeria_pg' => $galeria_pg,
-        'titulo' => 'Alterar Status do Produto'
-    ];
-
-    // Carrega a view do formulário
-    $this->carregarViews('dash/galeria/statusG', $dados);
-}
-
-
-
-    public function atualizarStatusG()
-    {
-         // Verifica se o usuário tem permissão
+    public function statusG($id){
+        // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
             exit();
         }
-    
+
+        // Busca os dados da galeria
+        $galeria_pg = $this->pg_galeria->getGaleriaPorId($id);
+
+        if (!$galeria_pg) {
+            $_SESSION['erro'] = "Produto não encontrado.";
+            header('Location: ' . BASE_URL . 'produtos/banners');
+            exit();
+        }
+
+        // Prepara os dados para a view
+        $dados = [
+            'galeria_pg' => $galeria_pg,
+            'titulo' => 'Alterar Status do Produto'
+        ];
+
+        // Carrega a view do formulário
+        $this->carregarViews('dash/galeria/statusG', $dados);
+    }
+
+
+    public function status_S_G($id){
+        // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+
+        // Busca os dados da galeria
+        $galeria_pg = $this->pg_galeria->getGaleriaPorId($id);
+
+        if (!$galeria_pg) {
+            $_SESSION['erro'] = "Produto não encontrado.";
+            header('Location: ' . BASE_URL . 'produtos/banners');
+            exit();
+        }
+
+        // Prepara os dados para a view
+        $dados = [
+            'galeria_pg' => $galeria_pg,
+            'titulo' => 'Alterar Status do Produto'
+        ];
+
+        // Carrega a view do formulário
+        $this->carregarViews('dash/galeria/statusG', $dados);
+    }
+
+
+
+    public function atualizarStatusG(){
+        // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id_galeira'];
             $status = $_POST['status_galeria'];
-    
+
             // Atualiza o status do produto
             if ($this->pg_galeria->atualizarStatusGaleria($id, $status)) {
                 $_SESSION['mensagem'] = "Status atualizado com sucesso!";
@@ -198,24 +191,23 @@ public function status_S_G($id)
             }
             exit();
         }
-    
+
         header('Location: ' . BASE_URL);
         exit();
     }
 
 
-    public function atualizarstatus_S_G()
-    {
-         // Verifica se o usuário tem permissão
+    public function atualizarstatus_S_G(){
+        // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
             exit();
         }
-    
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id_galeira'];
             $status = $_POST['status_galeria'];
-    
+
             // Atualiza o status do produto
             if ($this->pg_galeria->atualizarStatusGaleria($id, $status)) {
                 $_SESSION['mensagem'] = "Status atualizado com sucesso!";
@@ -226,15 +218,14 @@ public function status_S_G($id)
             }
             exit();
         }
-    
+
         header('Location: ' . BASE_URL);
         exit();
     }
 
 
 
-    public function atualizarImagem()
-    {
+    public function atualizarImagem(){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -299,8 +290,7 @@ public function status_S_G($id)
         }
     }
 
-    public function atualizarImagem_()
-    {
+    public function atualizarImagem_(){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -366,8 +356,7 @@ public function status_S_G($id)
     }
 
 
-    public function atualizar_qualidade()
-    {
+    public function atualizar_qualidade(){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -434,8 +423,7 @@ public function status_S_G($id)
     }
 
 
-    public function atualizar_sobre_home()
-    {
+    public function atualizar_sobre_home(){
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -503,8 +491,7 @@ public function status_S_G($id)
 
 
 
-    public function galeria_pg_galeria()
-    {
+    public function galeria_pg_galeria(){
 
 
 
