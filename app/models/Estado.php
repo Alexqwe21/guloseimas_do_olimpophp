@@ -4,8 +4,7 @@
 
 class Estado extends Model
 {
-    public function getEstado()
-    {
+    public function getEstado(){
         // A consulta agora busca pelo valor da sigla e retorna o id_uf correspondente.
         $sql = "SELECT * FROM tbl_estado ";
         $stmt = $this->db->prepare($sql);

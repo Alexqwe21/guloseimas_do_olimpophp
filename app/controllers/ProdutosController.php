@@ -46,38 +46,22 @@ class ProdutosController extends Controller
 
     public function detalhe($link = null)
     {
-        // var_dump("Método detalhe chamado");
-        // var_dump($link);
-
-
-
+        var_dump($link); // Verifique se o link está correto
         if ($link === null) {
-            // Redireciona para a página inicial se o parâmetro estiver ausente
             header("Location: /guloseimas_do_olimpophp/public");
             exit;
         }
 
         $dados = array();
-
         $produtoModel = new Produto();
-
-        // Chama o método corretamente para buscar os detalhes do produto
         $detalheServico = $produtoModel->getServicoPorlink($link);
 
         if (!$detalheServico) {
-            // Redireciona se o produto não for encontrado
             header("Location: /guloseimas_do_olimpophp/public");
             exit;
         }
 
-        // var_dump($detalheServico);
-
         $dados['detalheServico'] = $detalheServico;
-        // $dados['info_produtos'] = $Produto;
-
-
-
-        // Carregar a view de detalhes
         $this->carregarViews('info_produtos', $dados);
     }
 
@@ -113,6 +97,138 @@ class ProdutosController extends Controller
     }
 
 
+    public function adicionar()
+    {
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location:' . BASE_URL);
+            exit;
+        }
+
+        $categoria = new Categoria();
+        $dados['Todascategorias'] = $categoria->getCategoria();
+        $dados['conteudo'] = 'dash/produtos/adicionar';
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Filtra os inputs corretamente
+            $nome_produto = filter_input(INPUT_POST, 'nome_produto', FILTER_SANITIZE_SPECIAL_CHARS);
+            $preco_produto = filter_input(INPUT_POST, 'preco_produto', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            $alt_foto_produto = filter_input(INPUT_POST, 'alt_foto_produto', FILTER_SANITIZE_SPECIAL_CHARS);
+            $id_categoria = filter_input(INPUT_POST, 'id_categoria', FILTER_SANITIZE_NUMBER_INT);
+            $status_pedido = filter_input(INPUT_POST, 'status_pedido', FILTER_SANITIZE_SPECIAL_CHARS);
+            $link_produto = filter_input(INPUT_POST, 'link_produto', FILTER_SANITIZE_URL);
+            $nova_categoria = filter_input(INPUT_POST, 'nova_categoria', FILTER_SANITIZE_SPECIAL_CHARS);
+
+            // Certifique-se de que nenhum campo obrigatório está vazio
+            if (!$nome_produto || !$preco_produto) {
+                die("Erro: Todos os campos obrigatórios devem ser preenchidos.");
+            }
+
+            if (empty($id_categoria) && !empty($nova_categoria)) {
+                // Criar e Obter a categoria nova
+                $id_categoria = $this->produtoModel->obterOuCriarcategoria($nova_categoria);
+            }
+
+            // Gerar link único para o produto
+            $link_produto = $this->gerarLinkServico($nome_produto);
+
+            // Criando o array com os dados para inserção
+            $dadosproduto = array(
+                'nome_produto'     => $nome_produto,
+                'preco_produto'    => $preco_produto,
+                'alt_foto_produto' => $alt_foto_produto,
+                'id_categoria'     => $id_categoria,
+                'status_pedido'    => $status_pedido,
+                'link_produto'     => $link_produto,
+            );
+
+            // Define as informações do produto
+            $informacoes_produto = array(
+
+                'descricao_info_produto' => filter_input(INPUT_POST, 'descricao_info_produto', FILTER_SANITIZE_SPECIAL_CHARS),
+                'personalizacao_info_produtos' => filter_input(INPUT_POST, 'personalizacao_info_produto', FILTER_SANITIZE_SPECIAL_CHARS),
+                'forma_pagamento_info_produto' => filter_input(INPUT_POST, 'forma_pagamento_info_produto', FILTER_SANITIZE_SPECIAL_CHARS),
+                'entrega_info_produtos' => filter_input(INPUT_POST, 'entrega_info_produtos', FILTER_SANITIZE_SPECIAL_CHARS),
+                'reserva_info_produtos' => filter_input(INPUT_POST, 'reserva_info_produtos', FILTER_SANITIZE_SPECIAL_CHARS),
+            );
+
+            // Verifica se a foto foi enviada
+            if (isset($_FILES['foto_produto']) && $_FILES['foto_produto']['error'] == 0) {
+                // Faz o upload da foto
+                $arquivo = $this->uploadFoto($_FILES['foto_produto']);
+                if ($arquivo) {
+                    // Adiciona o produto com a foto e suas informações
+                    $id_produto = $this->produtoModel->addproduto($dadosproduto, $arquivo, $informacoes_produto);
+                } else {
+                    // Mensagem de erro caso o upload da foto falhe
+                    $_SESSION['mensagem'] = "Erro ao fazer o upload da imagem.";
+                    $_SESSION['tipo-msg'] = 'erro';
+                    header('Location: http://localhost/guloseimas_do_olimpophp/public/produtos/adicionar/');
+                    exit;
+                }
+            } else {
+                // Se não houver foto, adicione o produto sem a foto
+                $id_produto = $this->produtoModel->addproduto($dadosproduto, null, $informacoes_produto);
+            }
+
+            if ($id_produto) {
+                // Mensagem de sucesso
+                $_SESSION['mensagem'] = "Produto e suas informações adicionados com sucesso!";
+                $_SESSION['tipo-msg'] = 'sucesso';
+                header('Location: http://localhost/guloseimas_do_olimpophp/public/produtos/adicionar/');
+                exit;
+            } else {
+                // Mensagem de erro caso não consiga adicionar o produto
+                $dados['mensagem'] = "Erro ao adicionar o produto";
+                $dados['tipo-msg'] = "erro-produto";
+            }
+        }
+
+        $this->carregarViews('dash/dashboard', $dados);
+    }
+
+    private function uploadFoto($file)
+    {
+
+        $dir = '../public/uploads/';
+        if (!file_exists($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
+        $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $nome_arquivo = 'produto/' . uniqid() . '.' . $ext;
+
+        if (move_uploaded_file($file['tmp_name'], $dir . $nome_arquivo)) {
+            return $nome_arquivo;
+        }
+
+        return false;
+    }
+
+    public function gerarLinkServico($nome_produto)
+    {
+        //REMOVE OS ACENTOS PARA CARACTERES EM CAIXAS BAIXAS 
+        $semAcento = iconv('UTF-8', 'ASCII//TRANSLIT', $nome_produto);
+
+        $link = strtolower(trim(preg_replace('/[^a-zA-Z0-9]/', '-',  $semAcento)));
+        // var_dump($link);
+
+
+        $contador = 1;
+
+        $link_original = $link;
+
+        while ($this->produtoModel->existeEsseServico($link)) {
+
+
+            $link = $link_original . '-' . $contador;
+            $contador++;
+        }
+
+
+        var_dump($link);
+        return $link;
+    }
+
     public function banner_produto()
     {
 
@@ -144,86 +260,78 @@ class ProdutosController extends Controller
             header('Location: ' . BASE_URL);
             exit();
         }
-    
+
         // Obtém os dados do produto para edição
-        $produto = $this->produtoModel->getServicoPorlink($id);
-    
+        $produto = $this->produtoModel->getProdutoPorId($id);
+
         if (!$produto) {
             // Se o produto não for encontrado, redireciona para a lista de produtos
             header('Location: ' . BASE_URL . 'produtos/home');
             exit();
         }
-    
+
         // Prepara os dados para a view
         $dados = array();
         $dados['produto'] = $produto;
         $dados['titulo'] = 'Editar Produto - Ki Oficina';
-    
+
         // Carrega a view de edição
         $this->carregarViews('dash/servico/editar', $dados);
     }
 
     public function status($id)
-{
-    // Verifica se o usuário tem permissão
-    if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
-        header('Location: ' . BASE_URL);
-        exit();
+    {
+        // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+
+        // Busca os dados do produto
+        $produto = $this->produtoModel->getProdutoPorId($id);
+
+        if (!$produto) {
+            $_SESSION['erro'] = "Produto não encontrado.";
+            header('Location: ' . BASE_URL . 'produtos/listar');
+            exit();
+        }
+
+        // Prepara os dados para a view
+        $dados = [
+            'produto' => $produto,
+            'titulo' => 'Alterar Status do Produto'
+        ];
+
+        // Carrega a view do formulário
+        $this->carregarViews('dash/produtos/status', $dados);
     }
 
-    // Busca os dados do produto
-    $produto = $this->produtoModel->getProdutoPorId($id);
+    public function statusB($id)
+    {
+        // Verifica se o usuário tem permissão
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
 
-    if (!$produto) {
-        $_SESSION['erro'] = "Produto não encontrado.";
-        header('Location: ' . BASE_URL . 'produtos/listar');
-        exit();
+        // Busca os dados do produto
+        $banner = $this->banner_produto->getbannerPorId($id);
+
+        if (!$banner) {
+            $_SESSION['erro'] = "Produto não encontrado.";
+            header('Location: ' . BASE_URL . 'produtos/banners');
+            exit();
+        }
+
+        // Prepara os dados para a view
+        $dados = [
+            'banner' => $banner,
+            'titulo' => 'Alterar Status do Produto'
+        ];
+
+        // Carrega a view do formulário
+        $this->carregarViews('dash/banners/statusB', $dados);
     }
-
-    // Prepara os dados para a view
-    $dados = [
-        'produto' => $produto,
-        'titulo' => 'Alterar Status do Produto'
-    ];
-
-    // Carrega a view do formulário
-    $this->carregarViews('dash/produtos/status', $dados);
-}
-
-
-
-
-
-
-public function statusB($id)
-{
-    // Verifica se o usuário tem permissão
-    if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
-        header('Location: ' . BASE_URL);
-        exit();
-    }
-
-    // Busca os dados do produto
-    $banner = $this->banner_produto-> getbannerPorId($id);
-
-    if (!$banner) {
-        $_SESSION['erro'] = "Produto não encontrado.";
-        header('Location: ' . BASE_URL . 'produtos/banners');
-        exit();
-    }
-
-    // Prepara os dados para a view
-    $dados = [
-        'banner' => $banner,
-        'titulo' => 'Alterar Status do Produto'
-    ];
-
-    // Carrega a view do formulário
-    $this->carregarViews('dash/banners/statusB', $dados);
-}
-
-
-
 
     public function editarB($id)
     {
@@ -232,21 +340,21 @@ public function statusB($id)
             header('Location: ' . BASE_URL);
             exit();
         }
-    
+
         // Obtém os dados do produto para edição
         $banner_produto = $this->banner_produto->getbannerPorId($id);
-    
+
         if (!$banner_produto) {
             // Se o produto não for encontrado, redireciona para a lista de produtos
             header('Location: ' . BASE_URL . 'produtos/home');
             exit();
         }
-    
+
         // Prepara os dados para a view
         $dados = array();
         $dados['banner_produto'] = $banner_produto;
         $dados['titulo'] = 'Editar Produto - Ki Oficina';
-    
+
         // Carrega a view de edição
         $this->carregarViews('dash/banners/editarB', $dados);
     }
@@ -258,25 +366,25 @@ public function statusB($id)
             header('Location: ' . BASE_URL);
             exit();
         }
-    
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id_produto'];
-    
+
             // Verifica se uma nova imagem foi enviada
             $novoCaminhoImagem = $_POST['foto_produto_antiga']; // Caminho antigo por padrão
             if (!empty($_FILES['foto_produto']['name'])) {
                 // Diretório de upload
                 $diretorioUploads = __DIR__ . '/../../public/uploads/produto/';
-    
+
                 // Certifica-se de que o diretório existe
                 if (!is_dir($diretorioUploads)) {
                     mkdir($diretorioUploads, 0755, true);
                 }
-    
+
                 // Gera um nome único para a imagem
                 $nomeArquivo = uniqid() . '_' . $_FILES['foto_produto']['name'];
                 $caminhoCompleto = $diretorioUploads . $nomeArquivo;
-    
+
                 // Move a imagem para o diretório
                 if (move_uploaded_file($_FILES['foto_produto']['tmp_name'], $caminhoCompleto)) {
                     // Atualiza o caminho da imagem para salvar no banco
@@ -287,7 +395,7 @@ public function statusB($id)
                     exit();
                 }
             }
-    
+
             // Atualiza os dados do produto
             $dados = [
                 'nome_produto' => $_POST['nome_produto'],
@@ -295,7 +403,7 @@ public function statusB($id)
                 'preco_produto' => $_POST['preco_produto'],
                 'foto_produto' => $novoCaminhoImagem
             ];
-    
+
             if ($this->produtoModel->atualizarProduto($id, $dados)) {
                 $_SESSION['mensagem'] = "Produto atualizado com sucesso!";
                 header('Location: ' . BASE_URL . 'dashboard');
@@ -307,8 +415,6 @@ public function statusB($id)
         }
     }
 
-
-
     public function atualizarBanner_produto()
     {
         // Verifica se o usuário tem permissão
@@ -316,25 +422,25 @@ public function statusB($id)
             header('Location: ' . BASE_URL);
             exit();
         }
-    
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id_banner'];
-    
+
             // Verifica se uma nova imagem foi enviada
             $novoCaminhoImagem = $_POST['foto_produto_antiga']; // Caminho antigo por padrão
             if (!empty($_FILES['foto_banner']['name'])) {
                 // Diretório de upload
                 $diretorioUploads = __DIR__ . '/../../public/uploads/banner/';
-    
+
                 // Certifica-se de que o diretório existe
                 if (!is_dir($diretorioUploads)) {
                     mkdir($diretorioUploads, 0755, true);
                 }
-    
+
                 // Gera um nome único para a imagem
                 $nomeArquivo = uniqid() . '_' . $_FILES['foto_banner']['name'];
                 $caminhoCompleto = $diretorioUploads . $nomeArquivo;
-    
+
                 // Move a imagem para o diretório
                 if (move_uploaded_file($_FILES['foto_banner']['tmp_name'], $caminhoCompleto)) {
                     // Atualiza o caminho da imagem para salvar no banco
@@ -345,14 +451,14 @@ public function statusB($id)
                     exit();
                 }
             }
-    
+
             // Atualiza os dados do produto
             $dados = [
                 'nome_banner' => $_POST['nome_banner'],
                 'foto_banner' => $novoCaminhoImagem,
-                'alt_foto_banner'=> $_POST['alt_foto_banner']
+                'alt_foto_banner' => $_POST['alt_foto_banner']
             ];
-    
+
             if ($this->banner_produto->atualizarProduto_banner($id, $dados)) {
                 $_SESSION['mensagem'] = "Banner atualizado com sucesso!";
                 header('Location: ' . BASE_URL . 'dashboard');
@@ -364,9 +470,6 @@ public function statusB($id)
         }
     }
 
-
-
-
     public function atualizarStatus()
     {
         // Verifica se o usuário tem permissão
@@ -374,11 +477,11 @@ public function statusB($id)
             header('Location: ' . BASE_URL);
             exit();
         }
-    
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id_produto'];
             $status = $_POST['status_pedido'];
-    
+
             // Atualiza o status do produto
             if ($this->produtoModel->atualizarStatusProduto($id, $status)) {
                 $_SESSION['mensagem'] = "Status atualizado com sucesso!";
@@ -389,27 +492,23 @@ public function statusB($id)
             }
             exit();
         }
-    
+
         header('Location: ' . BASE_URL);
         exit();
     }
 
-    
-
-
-
     public function atualizarStatusB()
     {
-         // Verifica se o usuário tem permissão
+        // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
             exit();
         }
-    
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_POST['id_banner'];
             $status = $_POST['status_banner'];
-    
+
             // Atualiza o status do produto
             if ($this->banner_produto->atualizarStatusBanner($id, $status)) {
                 $_SESSION['mensagem'] = "Status atualizado com sucesso!";
@@ -420,15 +519,150 @@ public function statusB($id)
             }
             exit();
         }
-    
+
         header('Location: ' . BASE_URL);
         exit();
     }
-    
-    
-    
-    
-    
 
 
+
+
+    public function carregarMaisProdutos()
+    {
+        $limite = 2;
+        $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+
+        $produtos = $this->produtoModel->getVerMaisProdutos($limite, $offset);
+
+        ob_start(); // Inicia o buffer de saída
+
+        if (!empty($produtos)) {
+            foreach ($produtos as $PG_produtos) {
+                echo '<div class="tamanho_link">
+                        <a href="' . BASE_URL . 'produtos/detalhe/' . htmlspecialchars($PG_produtos['link_produto']) . '">
+                            <div class="produto_a_mostra">
+                                <img src="' . BASE_URL . 'uploads/' . htmlspecialchars($PG_produtos['foto_produto']) . '" 
+                                    alt="' . htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8') . '" 
+                                    class="pg_produto">
+                            </div>
+                            <div class="preco_produto">
+                                <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
+                                <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
+                            </div>
+                        </a>
+                    </div>';
+            }
+        }
+
+        echo trim(ob_get_clean()); // Enviar a saída limpa
+    }
+
+
+    // Função para mostrar todos os produtos (sem filtro de categoria)
+    public function mostrarTodosProdutos()
+    {
+        // Pega todos os produtos sem categoria filtrada
+        $limite = isset($_GET['limite']) ? intval($_GET['limite']) : 2; // Padrão é 10
+        $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+
+        // Recupera os produtos
+        $produtos = $this->produtoModel->getTodosProdutos($limite, $offset);
+
+        // Exibindo os produtos
+        if (!empty($produtos)) {
+            foreach ($produtos as $PG_produtos) {
+                echo '<div class="tamanho_link">
+                    <a href="' . BASE_URL . 'produtos/detalhe/' . htmlspecialchars($PG_produtos['link_produto']) . '">
+                        <div class="produto_a_mostra">
+                            <img src="' . BASE_URL . 'uploads/' . htmlspecialchars($PG_produtos['foto_produto']) . '" 
+                                alt="' . htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8') . '" 
+                                class="pg_produto">
+                        </div>
+                        <div class="preco_produto">
+                            <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
+                            <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
+                            <button>
+                               <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg">
+                            </button>
+                        </div>
+                    </a>    
+                </div>';
+            }
+        } else {
+            echo '<p class="sem-produtos">Nenhum produto encontrado.</p>';
+        }
+        echo trim(ob_get_clean()); // Enviar a saída limpa
+    }
+
+
+    public function filtrarPorPreco()
+    {
+        $precoMax = isset($_GET['preco']) ? floatval($_GET['preco']) : 1000;
+    
+        // Buscar produtos até o preço máximo no banco de dados
+        $produtos = $this->produtoModel->getProdutosPorPreco($precoMax);
+    
+        ob_start(); // Iniciar buffer de saída
+    
+        if (!empty($produtos)) {
+            foreach ($produtos as $PG_produtos) {
+                echo '<div class="tamanho_link">
+                        <a href="' . BASE_URL . 'produtos/detalhe/' . htmlspecialchars($PG_produtos['link_produto']) . '">
+                            <div class="produto_a_mostra">
+                                <img src="' . BASE_URL . 'uploads/' . htmlspecialchars($PG_produtos['foto_produto']) . '" 
+                                    alt="' . htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8') . '" 
+                                    class="pg_produto">
+                            </div>
+                            <div class="preco_produto">
+                                <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
+                                <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
+                            </div>
+                        </a>    
+                    </div>';
+            }
+        } else {
+            echo '<p class="sem-produtos">Nenhum produto encontrado dentro desse preço.</p>';
+        }
+    
+        echo trim(ob_get_clean()); // Enviar a saída limpa
+    }
+
+    public function filtrarPorCategoria()
+{
+    $categoriaId = isset($_GET['categoria']) ? intval($_GET['categoria']) : 0;
+    $limite = isset($_GET['limite']) ? intval($_GET['limite']) : 10;
+    $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+
+    if ($categoriaId <= 0) {
+        echo '<p class="sem-produtos">Categoria inválida.</p>';
+        return;
+    }
+
+    // Recupera os produtos da categoria no Model
+    $produtos = $this->produtoModel->getProdutosPorCategoria($categoriaId, $limite, $offset);
+
+    ob_start(); // Inicia buffer de saída
+
+    if (!empty($produtos)) {
+        foreach ($produtos as $PG_produtos) {
+            echo '<div class="tamanho_link">
+                <a href="' . BASE_URL . 'produtos/detalhe/' . htmlspecialchars($PG_produtos['link_produto']) . '">
+                    <div class="produto_a_mostra">
+                        <img src="' . BASE_URL . 'uploads/' . htmlspecialchars($PG_produtos['foto_produto']) . '" 
+                            alt="' . htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8') . '" 
+                            class="pg_produto">
+                    </div>
+                    <div class="preco_produto">
+                        <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
+                        <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
+                    </div>
+                </a>
+            </div>';
+        }
+    } else {
+        echo '<p class="sem-produtos">Nenhum produto encontrado para esta categoria.</p>';
+    }
+
+    echo trim(ob_get_clean()); // Enviar a saída limpa
+}
 }

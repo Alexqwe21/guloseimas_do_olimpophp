@@ -12,10 +12,10 @@ define("BASE_URL" ,"http://localhost/guloseimas_do_olimpophp/public/");
 
 
 //  Configuração do Data Base para desenvolvimento local
- define("DB_HOST", "smpsistema.com.br"); // Ou 127.0.0.1
- define("DB_NAME", "u283879542_olimpo"); // Substitua pelo nome do banco local
- define("DB_USER", "u283879542_olimpo"); // Usuário padrão do MySQL local
- define("DB_PASS", "Senac@olimpo01"); // Geralmente a senha do root está em branco
+ define("DB_HOST", "193.203.175.197"); // Ou 127.0.0.1
+ define("DB_NAME", "u230564252_olimpo"); // Substitua pelo nome do banco local
+ define("DB_USER", "u230564252_olimpo"); // Usuário padrão do MySQL local
+ define("DB_PASS", "21566647aA#"); // Geralmente a senha do root está em branco
 
 
 // define("DB_HOST", "smpsistema.com.br");
@@ -30,7 +30,10 @@ define("BASE_URL" ,"http://localhost/guloseimas_do_olimpophp/public/");
 define('HOTS_EMAIL', 'smtp.gmail.com');
 define('PORT_EMAIL', '465');
 define('USER_EMAIL', 'desenvolvedorweb21@gmail.com');
-define('PASS_EMAIL', 'dqay vqmc xpjd yosa');
+define('PASS_EMAIL', 'jwdw enzm mroa kiwk');
+
+
+
 
 
 

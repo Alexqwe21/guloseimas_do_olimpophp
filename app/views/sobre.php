@@ -17,6 +17,7 @@
         // Inclui o cabeçalho
         require('template/header.php');
         ?>
+        
     </header>
     <main>
         <?php

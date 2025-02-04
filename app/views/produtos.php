@@ -6,8 +6,6 @@
     // Inclui o head
     require('head_geral/head.php');
     ?>
-
-
 </head>
 
 <body>
@@ -38,9 +36,8 @@
                                 <h4>Filtrar por preço</h4>
                             </div>
                             <div>
-                                <input type="range" min="0" max="1000" value="250" class="escolher-valor" id="escolher-valor">
-                                <p>Preço : R$ 0 - R$ 140</p>
-                                <!-- <button><img src="img/filtrar.svg" alt="filtro"></button> -->
+                                <input type="range" min="0" max="1000" value="500" class="escolher-valor" id="escolher-valor">
+                                <p>Preço: R$ <span id="preco-atual">500</span></p>
                                 <h3>Filtrar por categoria</h3>
 
                                 <div class="lado_a_lado_lista">
@@ -56,22 +53,20 @@
                                         </li>
                                     <?php endif; ?>
                                 </div>
+                                <div class="lado_a_lado_lista">
+                                    <li id="verTodosProdutos" class="categoria-item">
+                                        <p>Ver todos os produtos</p>
+                                    </li>
+                                </div>
                             </div>
                         </ul>
                     </div>
 
-                    <div class="produtos-container">
-                        <div id="produtos">
-                            <!-- Os produtos irão aparecer aqui após clicar no filtro -->
-                        </div>
-                    </div>
-
-                    <div class="wrap">
-
+                    <div class="wrap" id="produtos"> <!-- Aqui é o contêiner onde os produtos aparecerão -->
                         <?php foreach ($pg_produtos as $PG_produtos): ?>
                             <?php if ($PG_produtos['status_pedido'] === 'Ativo'): ?> <!-- Verifica se o produto está ativo -->
                                 <div class="tamanho_link">
-                                    <a href="<?php echo BASE_URL . 'produtos/detalhe/' . $PG_produtos['link_produto']; ?>"> <!-- Substituindo o link fixo -->
+                                    <a href="<?php echo BASE_URL . 'produtos/detalhe/' . $PG_produtos['link_produto']; ?>">
                                         <div class="produto_a_mostra">
                                             <img src="<?php echo BASE_URL . 'uploads/' . $PG_produtos['foto_produto']; ?>"
                                                 alt="<?php echo htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8'); ?>"
@@ -89,10 +84,7 @@
                                 </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
-
-
-
-                    </div>
+                    </div> <!-- Fecha o wrap -->
                 </div>
             </article>
         </section>
@@ -100,13 +92,12 @@
         <section class="ver_mais">
             <article class="site">
                 <div>
-                    <button>
+                    <button id="verMaisBtn">
                         <h3>Ver mais produtos</h3>
                     </button>
                 </div>
             </article>
         </section>
-
 
     </main>
 
@@ -122,27 +113,143 @@
     require('script_geral/script.php');
     ?>
 
-</body>
+    <!-- Modal de "Todos os produtos carregados" -->
+    <div class="modal fade" id="modal_produtos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Status Produtos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Todos os produtos foram carregados! <!-- Aqui pode ajustar o texto conforme o caso -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+</body>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const categoriaItems = document.querySelectorAll('.categoria-item');
+        let offset = 4;
+        const limite = 4;
+        const produtosContainer = document.getElementById("produtos");
+        const btnVerMais = document.getElementById("verMaisBtn");
+        const precoRange = document.getElementById("escolher-valor");
+        const precoAtual = document.getElementById("preco-atual");
+        const categoriaItems = document.querySelectorAll(".categoria-item");
+        const btnVerTodosProdutos = document.getElementById("verTodosProdutos");
 
-        categoriaItems.forEach(function(item) {
-            item.addEventListener('click', function() {
-                const categoriaId = this.dataset.categoria; // Capturando o ID da categoria
+        /**
+         * Função para carregar mais produtos ao clicar no botão "Ver mais"
+         */
+        function carregarMaisProdutos() {
+            fetch(`<?php echo BASE_URL; ?>produtos/carregarMaisProdutos?offset=${offset}`)
+                .then(response => response.text())
+                .then(data => {
+                    let cleanedData = data.trim(); // Remove espaços extras
 
-                // Fazendo a requisição AJAX
-                fetch(`produtos.php?categoria=${categoriaId}`)
-                    .then(response => response.text())
-                    .then(data => {
-                        document.getElementById('produtos').innerHTML = data;
-                    })
-                    .catch(error => console.error('Erro ao buscar os produtos:', error));
+                    if (cleanedData === "") {
+                        btnVerMais.style.display = "none";
+                        const modal = new bootstrap.Modal(document.getElementById('modal_produtos'));
+                        modal.show();
+                    } else {
+                        produtosContainer.innerHTML += cleanedData; // Adiciona os novos produtos
+                        offset += limite;
+                    }
+                })
+                .catch(error => console.error("Erro ao carregar mais produtos:", error));
+        }
+
+        /**
+         * Função para filtrar produtos por categoria
+         */
+        function filtrarPorCategoria(categoriaId) {
+            btnVerMais.style.display = "none"; // Esconde o botão "Ver mais produtos"
+
+            fetch(`<?php echo BASE_URL; ?>produtos/filtrarPorCategoria?categoria=${categoriaId}&offset=0&limite=100`)
+                .then(response => response.text())
+                .then(data => {
+                    let cleanedData = data.trim(); // Remove espaços extras
+
+                    if (cleanedData === "") {
+                        produtosContainer.innerHTML = "<p class='sem-produtos'>Nenhum produto encontrado para esta categoria.</p>";
+                    } else {
+                        produtosContainer.innerHTML = cleanedData; // Limpa e exibe apenas os produtos filtrados
+                    }
+                })
+                .catch(error => console.error("Erro ao filtrar produtos:", error));
+        }
+
+        /**
+         * Função para filtrar produtos por preço
+         */
+        function filtrarPorPreco(precoMaximo) {
+            precoAtual.textContent = precoMaximo; // Atualiza o texto do preço selecionado
+
+            fetch(`<?php echo BASE_URL; ?>produtos/filtrarPorPreco?preco=${precoMaximo}`)
+                .then(response => response.text())
+                .then(data => {
+                    let cleanedData = data.trim(); // Remove espaços extras
+
+                    if (cleanedData === "") {
+                        produtosContainer.innerHTML = "<p class='sem-produtos'>Nenhum produto encontrado dentro desse preço.</p>";
+                    } else {
+                        produtosContainer.innerHTML = cleanedData; // Substitui os produtos com os filtrados
+                    }
+                })
+                .catch(error => console.error("Erro ao filtrar por preço:", error));
+        }
+        /**
+         * Função para exibir todos os produtos novamente
+         */
+        function mostrarTodosProdutos() {
+            fetch(`<?php echo BASE_URL; ?>produtos/mostrarTodosProdutos?offset=0&limite=100`)
+                .then(response => response.text())
+                .then(data => {
+                    let cleanedData = data.trim(); // Remove espaços extras
+
+                    if (cleanedData === "") {
+                        produtosContainer.innerHTML = "<p class='sem-produtos'>Nenhum produto encontrado.</p>";
+                    } else {
+                        produtosContainer.innerHTML = cleanedData;
+                        btnVerMais.style.display = "block"; // Exibe o botão "Ver mais produtos"
+                    }
+                })
+                .catch(error => console.error("Erro ao carregar todos os produtos:", error));
+        }
+
+        // Eventos
+        if (btnVerMais) {
+            btnVerMais.addEventListener("click", carregarMaisProdutos);
+        }
+
+        if (precoRange) {
+            precoRange.addEventListener("input", function() {
+                filtrarPorPreco(this.value);
+            });
+        }
+
+        categoriaItems.forEach(item => {
+            item.addEventListener("click", function() {
+                const categoriaId = this.dataset.categoria;
+                filtrarPorCategoria(categoriaId);
             });
         });
+
+        if (btnVerTodosProdutos) {
+            btnVerTodosProdutos.addEventListener("click", mostrarTodosProdutos);
+        }
+
+
+
     });
+
+    
 </script>
 
 </html>

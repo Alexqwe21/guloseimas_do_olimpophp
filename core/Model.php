@@ -1,34 +1,28 @@
 <?php
 
 
-class Model{ 
+class Model {
+    protected static $instance;
+    protected $db;
 
-   
-    
-protected $db;
-
-public function __construct(){
-
-    try{
-
-$this-> db = new PDO('mysql:dbname=' . DB_NAME . ';host=' .DB_HOST,DB_USER, DB_PASS);
-
-
-$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    }catch(PDOException $e){
-        echo ("Falha de conexão") . $e->getMessage();
+    public function __construct() {
+        if (!self::$instance) {
+            try {
+                self::$instance = new PDO(
+                    'mysql:dbname=' . DB_NAME . ';host=' . DB_HOST,
+                    DB_USER,
+                    DB_PASS,
+                    [
+                        PDO::ATTR_PERSISTENT => true,
+                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+                    ]
+                );
+            } catch (PDOException $e) {
+                die("Falha de conexão: " . $e->getMessage());
+            }
+        }
+        $this->db = self::$instance;
     }
-    
-
-
 }
 
-
-    
-
-
-
-
-}
 
