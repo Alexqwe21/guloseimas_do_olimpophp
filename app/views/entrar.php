@@ -27,8 +27,10 @@
 <body>
     <header>
         <?php
+        <?php
         // Inclui o cabeçalho
         require('template/header.php');
+        ?>
         ?>
     </header>
 
@@ -60,6 +62,7 @@
                 <div class="lado_a_lado">
                     <div class="forms_contato">
                         <form method="POST" action="http://localhost/guloseimas_do_olimpophp/public/entrar/entrar">
+                        <form method="POST" action="http://localhost/guloseimas_do_olimpophp/public/entrar/entrar">
                             <div class="nome_entrar">
 
                                 <div class="email_entrar">
@@ -67,6 +70,7 @@
                                         <label for="email">
                                         </label>
                                         <!-- Preenche o campo de email com o valor armazenado na sessão -->
+                                        <input type="email" name="email_entrar" id="email_entrar" placeholder="Endereço de email" required>
                                         <input type="email" name="email_entrar" id="email_entrar" placeholder="Endereço de email" required>
                                     </div>
                                     <label for="senha"></label>
@@ -80,6 +84,8 @@
 
                                 </div>
                                 <div class="lembrar">
+
+                                <a href="http://localhost/guloseimas_do_olimpophp/public/Recuperarsenha/index">Esqueceu a senha?</a>
 
                                 <a href="http://localhost/guloseimas_do_olimpophp/public/Recuperarsenha/index">Esqueceu a senha?</a>
 
