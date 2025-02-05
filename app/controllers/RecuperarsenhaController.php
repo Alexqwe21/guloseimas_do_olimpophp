@@ -17,7 +17,16 @@ class RecuperarsenhaController extends Controller
 
     public function index()
     {
-        $dados = ['mensagem' => ''];
+ 
+ 
+        $dados = array();
+        $banner_recuperar_senha = new Banner();
+        $banner_senha_recuperar= $banner_recuperar_senha->getBanner_recuperar_senha();
+
+        $dados['banner'] = $banner_senha_recuperar;
+ 
+ 
+       
         $this->carregarViews('recuperar_senha', $dados);
     }
 

@@ -106,6 +106,19 @@ class Banner extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getBanner_recuperar_senha(){
+
+
+
+        $sql = "SELECT * FROM tbl_banner WHERE id_banner = 8  AND status_banner ='Ativo'";
+
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 
 
    

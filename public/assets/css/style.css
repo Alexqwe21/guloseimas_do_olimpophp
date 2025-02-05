@@ -28,10 +28,11 @@ body {
     width: 100%;
 }
 
-.norton-idsafe-field-logo-imgId{
+.norton-idsafe-field-logo-imgId {
     display: none !important;
 }
-.norton-idsafe-field-styling-divId{
+
+.norton-idsafe-field-styling-divId {
     display: none !important;
 }
 
@@ -262,7 +263,7 @@ footer .site .lado_a_lado,
 }
 
 .qualidade_especial .site .alta_qualidade {
-   
+
     width: 400px;
     height: 420px;
     background-repeat: no-repeat;
@@ -395,7 +396,7 @@ footer .site .lado_a_lado,
     height: 400px;
     align-items: center;
     text-align: center;
-    
+
 }
 
 .box_carousel div img {
@@ -576,7 +577,7 @@ footer .contato {
 .banner_galeria,
 .banner_produtos,
 .banner_contato {
-   
+
     height: 435px;
     background-repeat: no-repeat;
     background-size: cover;
@@ -625,7 +626,7 @@ footer .contato {
 
 /* Pag Sobre */
 .banner_sobre {
-   
+
     height: 500px;
     background-size: cover;
     background-repeat: no-repeat;
@@ -724,7 +725,7 @@ footer .contato {
 .quem_sou_eu .site .lado_a_lado .foto_quem,
 .minha_historia .site .lado_a_lado .foto_quem {
     margin-top: 90px;
-  
+
     height: 600px;
     width: 500px;
     background-size: cover;
@@ -854,7 +855,7 @@ footer .contato {
 
 .minha_historia .site .lado_a_lado .foto_quem {
     margin-top: 90px;
-    
+
     height: 600px;
     width: 500px;
     background-size: cover;
@@ -1180,7 +1181,7 @@ footer .contato {
     width: 300px;
     height: 30px;
     color: #985C41;
-    
+
     font-size: 13pt;
 }
 
@@ -1284,7 +1285,7 @@ footer .contato {
     font-size: 15pt;
     color: white;
     font-family: var(--para_texto);
-    width:200px;
+    width: 200px;
 }
 
 /* STYLE PAGINA RESERVA */
@@ -1685,8 +1686,9 @@ footer .contato {
 
 /* Pagina Compras */
 
-.compras{
-    min-height: calc(100vh - 200px); /* Altura mínima dinâmica considerando o tamanho do cabeçalho e rodapé */
+.compras {
+    min-height: calc(100vh - 200px);
+    /* Altura mínima dinâmica considerando o tamanho do cabeçalho e rodapé */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1695,14 +1697,14 @@ footer .contato {
 
 
 
-.compras .site{
+.compras .site {
     max-width: 1400px;
     display: flex;
     justify-content: center;
     flex-flow: column wrap;
     align-items: center;
 }
- 
+
 .compras .site div {
     margin: 20px 0;
     font-family: var(--font_links);
@@ -1931,26 +1933,26 @@ footer .contato {
 
 /* IMAGENS  DA PAGINA PRODUTOS */
 
-.produto_a_mostra .pg_produto{
+.produto_a_mostra .pg_produto {
 
     width: 230px;
     height: 230px;
     border-radius: 5px;
 }
 
-.ben_vindo_img{
+.ben_vindo_img {
     width: 380px;
     height: 395px;
     border-radius: 10px;
 }
 
-.img_pg_galeria{
+.img_pg_galeria {
     width: 410px;
     height: 360px;
     border-radius: 10px;
 }
 
-img.img_info{
+img.img_info {
     width: 450px;
     height: 440px;
     border-radius: 10px;
@@ -1963,6 +1965,116 @@ img.img_info{
 /* IMAGENS  DA PAGINA PRODUTOS */
 
 /* FORMATAÇÃO DAS IMAGENS ENVIADO PELO PAINEL ADMINISTRATIVO */
+
+
+
+/* ESTILO PAINEL CLIENTE */
+
+section .site .perfil_cliente {
+
+    width: 40%;
+    height: 300px;
+    background-color: white;
+    margin: 30px 0;
+    border-radius: 10px;
+    border: 1px solid #643413;
+    height: auto;
+}
+
+
+section .site .perfil_cliente .perfil_editar {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 30px;
+
+
+}
+
+
+section .site .perfil_cliente .perfil_editar h2 {
+    float: none;
+    font-family: var(--para_texto);
+    font-size: 1.25em;
+    margin-bottom: 20px;
+    width: auto;
+}
+
+
+section .site .perfil_cliente .perfil_editar a {
+    color: #b6d66d;
+    font-family: var(--font_links);
+    font-size: .875em;
+}
+
+section .site .perfil_cliente .perfil_editar a:hover {
+    text-decoration: underline;
+}
+
+
+section .site .perfil_cliente .perfil_informaçoes .informacoes {
+    display: flex;
+    flex-flow: wrap column;
+    margin-left: 67px;
+    margin-bottom: 20px;
+}
+
+section .site .perfil_cliente .perfil_informaçoes .informacoes h3 {
+    margin-bottom: 7px;
+    color: #591f00;
+    font-family: var(--para_texto);
+    font-size: 16px;
+}
+
+section .site .perfil_cliente .perfil_informaçoes .informacoes p{
+    font-size: 16px;
+    font-style: normal;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+
+section .site .perfil_cliente .perfil_informaçoes .informacoes_sair {
+    display: flex;
+    justify-content: center;
+   
+}
+
+section .site .perfil_cliente .perfil_informaçoes .informacoes_sair  a{
+   
+    background: #260801;
+    border-radius: 10px;
+    display: flex
+;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    width: 70%;
+    height: 50px;
+  margin: 20px;
+  align-items: center;
+  color: white;
+  text-transform: uppercase;
+ font-size: 15pt;
+}
+
+section .site .perfil_cliente .perfil_informaçoes .informacoes_sair a:hover {
+    background-color: black;
+    color: white;
+    transition: background-color 0.15s ease-out, color 0.15s ease-out;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ESTILO PAINEL CLIENTE */
+
 
 
 /* MENU HAMBURGUER */
@@ -2263,12 +2375,12 @@ img.img_info{
         text-align: center;
     }
 
-    .compras{
+    .compras {
         height: 800px;
     }
 
-    .compras .site div h3{
-text-align: center;
+    .compras .site div h3 {
+        text-align: center;
     }
 }
 
@@ -2523,39 +2635,40 @@ text-align: center;
     }
 
 
-    .compras{
+    .compras {
         height: 1300px;
     }
 
 
-    .compras .compras_box{
+    .compras .compras_box {
         width: 50%;
         flex-direction: column;
         height: 800px;
         align-items: center;
     }
 
-    .resumo_compras{
+    .resumo_compras {
         width: 50% !important;
     }
 
-    .qtd_box{
+    .qtd_box {
         margin-bottom: 60px !important;
-    }   
+    }
 
-    .compras .compras_box .desc_compras p{
+    .compras .compras_box .desc_compras p {
         text-align: center;
     }
 
-    .compras .compras_box .compras_preco h6, .subtotal h6{
+    .compras .compras_box .compras_preco h6,
+    .subtotal h6 {
         text-align: center;
     }
 
-    .compras .compras_box .desc_compras h6{
+    .compras .compras_box .desc_compras h6 {
         text-align: center;
         margin-top: 10px;
     }
-    
+
 }
 
 
@@ -2920,11 +3033,11 @@ text-align: center;
     }
 
 
-    .compras .compras_box{
+    .compras .compras_box {
         width: 80% !important;
     }
 
-    .resumo_compras{
+    .resumo_compras {
         width: 80% !important;
     }
 

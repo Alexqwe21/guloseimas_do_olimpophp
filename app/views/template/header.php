@@ -105,7 +105,7 @@ margin-left: 10px !important;
             <div class="cliente_logado">
                 <!-- Foto do cliente -->
 
-                <a href="http://localhost/guloseimas_do_olimpophp/public/painel_cliente">
+                <a href="http://localhost/guloseimas_do_olimpophp/public/cliente">
                     <div class="lado_cliente">
                         <i class="fa-regular fa-user"></i>
                         <img src="<?php echo BASE_URL . 'uploads/' . $_SESSION['userFoto']; ?>" alt="Foto de <?php echo $_SESSION['userNome']; ?>" class="foto_cliente">
