@@ -95,7 +95,7 @@
                                 </div>
                                 <div class="lembrar">
 
-                                <a href="http://localhost/guloseimas_do_olimpophp/public/Recuperarsenha/index">Esqueceu a senha?</a>
+                                <a href="http://localhost/guloseimas_do_olimpophp/public/Recuperarsenha/">Esqueceu a senha?</a>
 
                                     <div class="checkbox">
                                         <input type="checkbox" id="lembrar" name="lembrar">

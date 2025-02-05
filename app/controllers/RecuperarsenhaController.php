@@ -28,10 +28,10 @@ class RecuperarsenhaController extends Controller
             
             // Verifica se o e-mail é válido
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $mensagem = "Por favor, insira um e-mail válido.";
+                $mensagem = "⚠️ Oops! Parece que o e-mail informado não é válido. Dá uma conferida e tente novamente! 📧";
             } else {
                 $usuario = $this->usuarioModel->buscarPorEmail($email);
-    
+
                 if ($usuario) {
                     // Gera uma nova senha temporária
                     $novaSenha = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
@@ -43,36 +43,46 @@ class RecuperarsenhaController extends Controller
                         try {
                             // Configurações do servidor SMTP
                             $mail->isSMTP();
-                            $mail->Host = HOTS_EMAIL;  // Servidor SMTP
+                            $mail->Host = HOTS_EMAIL;  
                             $mail->SMTPAuth = true;
-                            $mail->Username = USER_EMAIL; // Seu e-mail
-                            $mail->Password = PASS_EMAIL; // Sua senha do e-mail
+                            $mail->Username = USER_EMAIL; 
+                            $mail->Password = PASS_EMAIL; 
                             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                            $mail->Port = 587; // Porta correta para TLS
-    
+                            $mail->Port = 587; 
+
                             // Remetente e destinatário
-                            $mail->setFrom(USER_EMAIL, 'Sistema de Recuperação de Senha');
+                            $mail->setFrom(USER_EMAIL, 'Suporte Guloseimas do Olimpo 🍬');
                             $mail->addAddress($email);
-    
+
                             // Conteúdo do e-mail
                             $mail->isHTML(true);
-                            $mail->Subject = 'Recuperação de Senha';
-                            $mail->Body    = "Olá, <br><br> Sua nova senha foi gerada com sucesso!<br><strong>Senha temporária:</strong> $novaSenha<br><br>Troque-a assim que possível para garantir a segurança da sua conta.";
-    
+                            $mail->CharSet = 'UTF-8'; // Garante que caracteres especiais e emojis sejam exibidos corretamente
+                            $mail->Subject = '🔑 Acesso - Guloseimas do Olimpo';
+                            $mail->Body    = "
+                                <p>Olá, tudo bem? 😊</p>
+                                <p>Recebemos sua solicitação de recuperação de senha! Aqui está sua nova senha temporária:</p>
+                                <p style='font-size: 18px; font-weight: bold; color: #d35400;'>🔒 $novaSenha </p>
+                                <p>Recomendamos que você altere sua senha assim que possível para garantir a segurança da sua conta. 🔐</p>
+                                <p>Se precisar de ajuda, estamos à disposição! Entre em contato com nosso suporte. 📞</p>
+                                <br>
+                                <p>Atenciosamente,</p>
+                                <p><strong>Equipe Guloseimas do Olimpo 🍭</strong></p>
+                            ";
+
                             // Envia o e-mail
                             $mail->send();
-                            $mensagem = "A nova senha foi enviada para seu e-mail com sucesso. Verifique sua caixa de entrada!";
+                            $mensagem = "🎉 Tudo certo! Acabamos de enviar um e-mail com sua nova senha. Se não encontrar na caixa de entrada, dá uma olhadinha no spam! 📩";
                         } catch (Exception $e) {
-                            $mensagem = "Houve um erro ao enviar o e-mail. Por favor, tente novamente mais tarde.";
+                            $mensagem = "🚨 Ops! Algo deu errado ao enviar o e-mail. Tente novamente mais tarde ou entre em contato com o nosso suporte. 🤝";
                         }
                     } else {
-                        $mensagem = "Ocorreu um erro ao atualizar a senha. Por favor, tente novamente.";
+                        $mensagem = "😕 Houve um probleminha ao atualizar sua senha. Por favor, tente novamente mais tarde ou entre em contato conosco!";
                     }
                 } else {
-                    $mensagem = "E-mail não encontrado em nosso sistema. Verifique se o e-mail está correto ou se você ainda não possui um cadastro.";
+                    $mensagem = "🔍 E-mail não encontrado! Dá uma conferida se digitou corretamente ou aproveite para criar uma nova conta. 😉";
                 }
             }
-    
+
             // Retorna a mensagem para a view
             $dados = ['mensagem' => $mensagem];
             $this->carregarViews('recuperar_senha', $dados);
