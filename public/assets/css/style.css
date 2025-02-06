@@ -1970,7 +1970,7 @@ img.img_info {
 
 /* ESTILO PAINEL CLIENTE */
 
-section .site .perfil_cliente {
+section .site .perfil_cliente, section .site .perfil_favoritos {
 
     width: 40%;
     height: 300px;
@@ -1981,8 +1981,12 @@ section .site .perfil_cliente {
     height: auto;
 }
 
+section .site .perfil_favoritos{
+    height: 250px;
+}
 
-section .site .perfil_cliente .perfil_editar {
+
+section .site .perfil_cliente .perfil_editar, section .site .perfil_produtos_favortios {
     display: flex;
     justify-content: space-around;
     padding-top: 30px;
@@ -1991,12 +1995,14 @@ section .site .perfil_cliente .perfil_editar {
 }
 
 
-section .site .perfil_cliente .perfil_editar h2 {
+section .site .perfil_cliente .perfil_editar h2 , section .site .perfil_favoritos h2 {
     float: none;
     font-family: var(--para_texto);
     font-size: 1.25em;
     margin-bottom: 20px;
     width: auto;
+    font-weight: bold;
+    color: #591f00;
 }
 
 
@@ -2023,6 +2029,7 @@ section .site .perfil_cliente .perfil_informaçoes .informacoes h3 {
     color: #591f00;
     font-family: var(--para_texto);
     font-size: 16px;
+    font-weight: bold;
 }
 
 section .site .perfil_cliente .perfil_informaçoes .informacoes p{
@@ -2061,6 +2068,15 @@ section .site .perfil_cliente .perfil_informaçoes .informacoes_sair a:hover {
     background-color: black;
     color: white;
     transition: background-color 0.15s ease-out, color 0.15s ease-out;
+}
+
+section .site .perfil_favoritos p {
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #591f00;
 }
 
 

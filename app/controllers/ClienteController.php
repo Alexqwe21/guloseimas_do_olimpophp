@@ -12,7 +12,7 @@ class ClienteController extends Controller
         $dados['banner'] =  $login_banner;
 
         // Carrega a view de login
-        $this->carregarViews('painel_cliente', $dados);
+        $this->carregarViews('painel_cliente/painel_cliente', $dados);
     }
 
     public function login(){
