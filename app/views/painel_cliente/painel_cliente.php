@@ -101,6 +101,16 @@
                     <p>Não há itens em seus Favoritos.</p>
 
                 </div>
+
+
+                <div class="perfil_favoritos">
+                    <div class="perfil_produtos_favortios">
+                        <h2>Favoritos</h2>
+                    </div>
+
+                    <p>Não há itens em seus Favoritos.</p>
+
+                </div>
             </article>
         </section>
 
