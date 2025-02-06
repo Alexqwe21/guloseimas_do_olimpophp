@@ -4,14 +4,33 @@ class ClienteController extends Controller
 {
     public function index()
     {
-        // Variável para armazenar os dados que serão passados para as views
-        $dados = array();
-        $banner_login = new Banner();
-        $login_banner = $banner_login->getBanner_login();
+      
 
-        $dados['banner'] =  $login_banner;
+        // Verifica se o usuário está logado
+        if (!isset($_SESSION['userEmail'])) {
+            header('Location: ' . BASE_URL . 'login');
+            exit;
+        }
 
-        // Carrega a view de login
+        $email = $_SESSION['userEmail']; // Pega o email do usuário logado
+        $clienteModel = new Cliente();
+        $cliente = $clienteModel->buscarCliente($email); // Busca no banco os dados do cliente
+
+        if (!$cliente) {
+            header('Location: ' . BASE_URL . 'login');
+            exit;
+        }
+
+        $dados = [
+            'nome' => $cliente['nome_cliente'],
+        
+            'cpf' => $cliente['cpf_cliente'],
+            'email' => $cliente['email_cliente'],
+            'telefone' => $cliente['telefone_cliente'],
+            'senha' => $cliente['senha_cliente'], // A senha deve ser tratada com segurança
+        ];
+
+        // Carrega a view do painel do cliente com os dados
         $this->carregarViews('painel_cliente/painel_cliente', $dados);
     }
 
@@ -84,4 +103,8 @@ class ClienteController extends Controller
         header('Location: ' . BASE_URL);
         exit;
     }
+
+
+
+    
 }

@@ -1970,6 +1970,15 @@ img.img_info {
 
 /* ESTILO PAINEL CLIENTE */
 
+
+section .site .perfils_lado_a_lado{
+    display: flex;
+    /* flex-flow:  wrap column; */
+    justify-content: space-evenly;
+}
+
+
+
 section .site .perfil_cliente, section .site .perfil_favoritos {
 
     width: 40%;
@@ -1982,7 +1991,9 @@ section .site .perfil_cliente, section .site .perfil_favoritos {
 }
 
 section .site .perfil_favoritos{
-    height: 250px;
+    height: auto;
+    width: 120%;
+    min-height: 350px;
 }
 
 
@@ -2006,13 +2017,13 @@ section .site .perfil_cliente .perfil_editar h2 , section .site .perfil_favorito
 }
 
 
-section .site .perfil_cliente .perfil_editar a {
+section .site .perfil_cliente .perfil_editar a , section .site  .perfil_favoritos a  {
     color: #b6d66d;
     font-family: var(--font_links);
     font-size: .875em;
 }
 
-section .site .perfil_cliente .perfil_editar a:hover {
+section .site .perfil_cliente .perfil_editar a:hover, section .site  .perfil_favoritos a:hover  {
     text-decoration: underline;
 }
 
@@ -2077,6 +2088,12 @@ section .site .perfil_favoritos p {
     font-weight: bold;
     text-transform: uppercase;
     color: #591f00;
+}
+
+
+section .site .perfils_lado_a_lado .perfil_favoritos_reservas{
+    display: flex;
+    flex-flow: wrap column;
 }
 
 
