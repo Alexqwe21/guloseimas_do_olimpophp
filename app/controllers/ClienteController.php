@@ -274,27 +274,5 @@ class ClienteController extends Controller
         exit;
     }
 
-    public function adicionarFavorito($id_produto)
-    {
-        $id_cliente = $_SESSION['user_id']; // Supondo que você tenha o ID do cliente na sessão
-
-        if ($this->favoritosModel->adicionarFavorito($id_cliente, $id_produto)) {
-            echo json_encode(['sucesso' => true]);
-        } else {
-            echo json_encode(['sucesso' => false, 'erro' => 'Erro ao adicionar aos favoritos.']);
-        }
-    }
-
-    public function removerFavorito($id_produto)
-    {
-        $id_cliente = $_SESSION['user_id']; // Supondo que você tenha o ID do cliente na sessão
-
-        if ($this->favoritosModel->removerFavorito($id_cliente, $id_produto)) {
-            echo json_encode(['sucesso' => true]);
-        } else {
-            echo json_encode(['sucesso' => false, 'erro' => 'Erro ao remover dos favoritos.']);
-        }
-    }
-
-    
+   
 }

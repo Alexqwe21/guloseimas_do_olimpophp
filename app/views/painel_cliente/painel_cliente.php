@@ -99,15 +99,19 @@
                                 <h2>Favoritos</h2>
                             </div>
 
-                            <?php if (!empty($dados['favoritos'])): ?>
-                                
+                            <?php var_dump($dados['favoritos_cliente']); ?> <!-- Corrigido -->
+
+                            <?php if (!empty($dados['favoritos_cliente'])): ?> <!-- Corrigido -->
                                 <div class="favoritos-lista">
-                                    <?php foreach ($dados['favoritos'] as $favorito): ?>
+                                    <?php foreach ($dados['favoritos_cliente'] as $favorito): ?> <!-- Corrigido -->
                                         <div class="produto-favorito">
-                                            <img src="<?php echo BASE_URL . 'uploads/' . $favorito['foto_produto']; ?>" alt="<?php echo htmlspecialchars($favorito['nome_produto'], ENT_QUOTES, 'UTF-8'); ?>">
+                                            <img src="<?php echo BASE_URL . 'uploads/' . $favorito['foto_produto']; ?>"
+                                                alt="<?php echo htmlspecialchars($favorito['nome_produto'], ENT_QUOTES, 'UTF-8'); ?>">
                                             <h3><?php echo htmlspecialchars($favorito['nome_produto'], ENT_QUOTES, 'UTF-8'); ?></h3>
                                             <p>R$ <?php echo number_format($favorito['preco_produto'], 2, ',', '.'); ?></p>
-                                            <button class="remover-favorito" data-id-produto="<?php echo $favorito['id_produto']; ?>">Remover</button>
+                                            <button class="remover-favorito" data-id-produto="<?php echo $favorito['id_produto']; ?>">
+                                                Remover
+                                            </button>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
@@ -115,6 +119,9 @@
                                 <p>Não há itens em seus Favoritos.</p>
                             <?php endif; ?>
                         </div>
+
+
+
 
                         <div class="perfil_favoritos">
                             <div class="perfil_produtos_favortios">
