@@ -47,7 +47,7 @@ class FavoritosController extends Controller
         // Carrega a view de painel do cliente
         $this->carregarViews('painel_cliente/painel_cliente', $dados);
     }
-    <A></A>
+   
     
 
    
