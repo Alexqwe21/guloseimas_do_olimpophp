@@ -1609,7 +1609,8 @@ footer .contato {
     background-color: #9BE79E;
     letter-spacing: 3px;
     font-weight: 600;
-    width: 200px;
+    width: 230px;
+    height: 50px;
 }
 
 .email_entrar {
@@ -1971,7 +1972,7 @@ img.img_info {
 /* ESTILO PAINEL CLIENTE */
 
 
-section .site .perfils_lado_a_lado{
+section .site .perfils_lado_a_lado {
     display: flex;
     /* flex-flow:  wrap column; */
     justify-content: space-evenly;
@@ -1979,7 +1980,8 @@ section .site .perfils_lado_a_lado{
 
 
 
-section .site .perfil_cliente, section .site .perfil_favoritos {
+section .site .perfil_cliente,
+section .site .perfil_favoritos {
 
     width: 40%;
     height: 300px;
@@ -1990,14 +1992,15 @@ section .site .perfil_cliente, section .site .perfil_favoritos {
     height: auto;
 }
 
-section .site .perfil_favoritos{
+section .site .perfil_favoritos {
     height: auto;
     width: 120%;
     min-height: 350px;
 }
 
 
-section .site .perfil_cliente .perfil_editar, section .site .perfil_produtos_favortios {
+section .site .perfil_cliente .perfil_editar,
+section .site .perfil_produtos_favortios {
     display: flex;
     justify-content: space-around;
     padding-top: 30px;
@@ -2006,7 +2009,8 @@ section .site .perfil_cliente .perfil_editar, section .site .perfil_produtos_fav
 }
 
 
-section .site .perfil_cliente .perfil_editar h2 , section .site .perfil_favoritos h2 {
+section .site .perfil_cliente .perfil_editar h2,
+section .site .perfil_favoritos h2 {
     float: none;
     font-family: var(--para_texto);
     font-size: 1.25em;
@@ -2017,13 +2021,15 @@ section .site .perfil_cliente .perfil_editar h2 , section .site .perfil_favorito
 }
 
 
-section .site .perfil_cliente .perfil_editar a , section .site  .perfil_favoritos a  {
+section .site .perfil_cliente .perfil_editar a,
+section .site .perfil_favoritos a {
     color: #b6d66d;
     font-family: var(--font_links);
     font-size: .875em;
 }
 
-section .site .perfil_cliente .perfil_editar a:hover, section .site  .perfil_favoritos a:hover  {
+section .site .perfil_cliente .perfil_editar a:hover,
+section .site .perfil_favoritos a:hover {
     text-decoration: underline;
 }
 
@@ -2043,7 +2049,7 @@ section .site .perfil_cliente .perfil_informaçoes .informacoes h3 {
     font-weight: bold;
 }
 
-section .site .perfil_cliente .perfil_informaçoes .informacoes p{
+section .site .perfil_cliente .perfil_informaçoes .informacoes p {
     font-size: 16px;
     font-style: normal;
     font-weight: bold;
@@ -2054,25 +2060,24 @@ section .site .perfil_cliente .perfil_informaçoes .informacoes p{
 section .site .perfil_cliente .perfil_informaçoes .informacoes_sair {
     display: flex;
     justify-content: center;
-   
+
 }
 
-section .site .perfil_cliente .perfil_informaçoes .informacoes_sair  a{
-   
+section .site .perfil_cliente .perfil_informaçoes .informacoes_sair a {
+
     background: #260801;
     border-radius: 10px;
-    display: flex
-;
+    display: flex;
     justify-content: center;
     overflow: hidden;
     position: relative;
     width: 70%;
     height: 50px;
-  margin: 20px;
-  align-items: center;
-  color: white;
-  text-transform: uppercase;
- font-size: 15pt;
+    margin: 20px;
+    align-items: center;
+    color: white;
+    text-transform: uppercase;
+    font-size: 15pt;
 }
 
 section .site .perfil_cliente .perfil_informaçoes .informacoes_sair a:hover {
@@ -2091,17 +2096,40 @@ section .site .perfil_favoritos p {
 }
 
 
-section .site .perfils_lado_a_lado .perfil_favoritos_reservas{
+section .site .perfils_lado_a_lado .perfil_favoritos_reservas {
     display: flex;
     flex-flow: wrap column;
 }
 
 
+.voltar_painel {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    margin-top: 25px;
+}
 
+.voltar_painel a {
+    width: 230px;
+    height: 50px;
+    color: white;
+    background-color: #241810;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    letter-spacing: 3px;
+    font-weight: 600;
+    font-size: 15pt;
+}
 
-
-
-
+.voltar_salvar{
+    display: flex;
+ flex-direction: column;
+ align-items: center;
+   
+}
 
 
 

@@ -75,4 +75,32 @@ class Cliente extends Model
         $stmt = $this->db->prepare("UPDATE tbl_cliente SET senha_cliente = ? WHERE email_cliente = ?");
         return $stmt->execute([$novaSenha, $email]); // Passa os parâmetros corretamente
     }
+
+
+    public function atualizarCliente($email, $nome, $cpf, $telefone, $data_nascimento)
+    {
+        $sql = "UPDATE tbl_cliente SET nome_cliente = :nome, cpf_cliente = :cpf, telefone_cliente = :telefone , data_nasc_cliente = :data_nasc_cliente WHERE email_cliente = :email";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':nome', $nome);
+        $stmt->bindValue(':cpf', $cpf);
+        $stmt->bindValue(':telefone', $telefone);
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':data_nasc_cliente', $data_nascimento);
+
+        return $stmt->execute();
+    }
+
+    public function editar_Senha_cliente($email, $nova_senha)
+    {
+        $sql = "UPDATE tbl_cliente SET senha_cliente = :senha WHERE email_cliente = :email";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':senha', $nova_senha);
+        $stmt->bindParam(':email', $email);
+    
+        return $stmt->execute();
+    }
+
+
+    
 }

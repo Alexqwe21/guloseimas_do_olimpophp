@@ -34,7 +34,7 @@
                     <div class="perfil_cliente">
                         <div class="perfil_editar">
                             <h2>Perfil</h2>
-                            <a href="#">Editar</a>
+                            <a href="http://localhost/guloseimas_do_olimpophp/public/Cliente/editar_cliente/">Editar</a>
                         </div>
 
                         <div class="perfil_informaçoes">
@@ -45,7 +45,7 @@
                             </div>
 
 
-                           
+
 
                             <div class="informacoes">
                                 <h3>CPF</h3>
@@ -72,7 +72,7 @@
 
                             <div class="perfil_editar">
                                 <h2>Senha</h2>
-                                <a href="#">Editar</a>
+                                <a href="http://localhost/guloseimas_do_olimpophp/public/Cliente/editar_senha_cliente/">Editar</a>
                             </div>
 
                             <div class="informacoes">
@@ -99,10 +99,22 @@
                                 <h2>Favoritos</h2>
                             </div>
 
-                            <p>Não há itens em seus Favoritos.</p>
-
+                            <?php if (!empty($dados['favoritos'])): ?>
+                                
+                                <div class="favoritos-lista">
+                                    <?php foreach ($dados['favoritos'] as $favorito): ?>
+                                        <div class="produto-favorito">
+                                            <img src="<?php echo BASE_URL . 'uploads/' . $favorito['foto_produto']; ?>" alt="<?php echo htmlspecialchars($favorito['nome_produto'], ENT_QUOTES, 'UTF-8'); ?>">
+                                            <h3><?php echo htmlspecialchars($favorito['nome_produto'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                                            <p>R$ <?php echo number_format($favorito['preco_produto'], 2, ',', '.'); ?></p>
+                                            <button class="remover-favorito" data-id-produto="<?php echo $favorito['id_produto']; ?>">Remover</button>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php else: ?>
+                                <p>Não há itens em seus Favoritos.</p>
+                            <?php endif; ?>
                         </div>
-
 
                         <div class="perfil_favoritos">
                             <div class="perfil_produtos_favortios">
@@ -137,5 +149,32 @@
     ?>
 
 </body>
+
+<script>
+    document.querySelectorAll('.remover-favorito').forEach(button => {
+        button.addEventListener('click', function() {
+            const idProduto = this.getAttribute('data-id-produto');
+
+            fetch('<?php echo BASE_URL; ?>favoritos/remover', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id_produto: idProduto
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.sucesso) {
+                        alert('Produto removido dos favoritos!');
+                        location.reload(); // Recarrega a página para atualizar a lista de favoritos
+                    } else {
+                        alert(data.erro || 'Erro ao remover dos favoritos.');
+                    }
+                });
+        });
+    });
+</script>
 
 </html>

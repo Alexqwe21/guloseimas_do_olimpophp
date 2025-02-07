@@ -62,9 +62,9 @@
                         </ul>
                     </div>
 
-                    <div class="wrap" id="produtos"> <!-- Aqui é o contêiner onde os produtos aparecerão -->
+                    <div class="wrap" id="produtos">
                         <?php foreach ($pg_produtos as $PG_produtos): ?>
-                            <?php if ($PG_produtos['status_pedido'] === 'Ativo'): ?> <!-- Verifica se o produto está ativo -->
+                            <?php if ($PG_produtos['status_pedido'] === 'Ativo'): ?>
                                 <div class="tamanho_link">
                                     <a href="<?php echo BASE_URL . 'produtos/detalhe/' . $PG_produtos['link_produto']; ?>">
                                         <div class="produto_a_mostra">
@@ -75,16 +75,16 @@
                                         <div class="preco_produto">
                                             <h3><?php echo htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8'); ?></h3>
                                             <p>R$ <?php echo number_format($PG_produtos['preco_produto'], 2, ',', '.'); ?></p>
-                                            <button>
-                                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg"
-                                                    alt="adicionar_favoritos">
+                                            <button class="adicionar-favorito" data-id-produto="<?php echo $PG_produtos['id_produto']; ?>">
+                                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg" alt="adicionar_favoritos">
                                             </button>
                                         </div>
                                     </a>
                                 </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
-                    </div> <!-- Fecha o wrap -->
+                    </div>
+
                 </div>
             </article>
         </section>
@@ -247,9 +247,36 @@
 
 
 
-    });
+        document.querySelectorAll('.adicionar-favorito').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
 
-    
+                const idProduto = this.getAttribute('data-id-produto');
+                console.log(idProduto); // Verifique se está retornando o ID correto do produto
+
+                fetch('<?php echo BASE_URL; ?>favoritos/adicionarFavorito', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id_produto: idProduto
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.sucesso) {
+                            alert('Produto adicionado aos favoritos!');
+                        } else {
+                            alert(data.erro || 'Erro ao adicionar aos favoritos.');
+                        }
+                    });
+            });
+        });
+
+
+
+    });
 </script>
 
 </html>
