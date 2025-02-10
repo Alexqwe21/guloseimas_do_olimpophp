@@ -28,28 +28,40 @@ class Reserva extends Model
     public function finalizarReserva()
     {
         if (isset($_SESSION['carrinho']) && !empty($_SESSION['carrinho'])) {
+            $id_cliente = $_SESSION['userId'];
+
             // Calcula o total da reserva
             $total = array_sum(array_map(function ($produto) {
                 return $produto['quantidade'] * $produto['preco'];
             }, $_SESSION['carrinho']));
-    
+
             $dataReserva = date('Y-m-d H:i:s'); // Data atual para a reserva
-    
-            // Prepara a consulta SQL para inserir a reserva no banco
-            $sql = "INSERT INTO tbl_reserva (id_cliente, valor_total, data_reserva) VALUES (:id_cliente, :valor_total, :data_reserva)";
-            $stmt = $this->db->prepare($sql);
-    
-            // Parâmetros da consulta
-            $stmt->bindParam(':id_cliente', $_SESSION['userId']);
-            $stmt->bindParam(':valor_total', $total);
-            $stmt->bindParam(':data_reserva', $dataReserva);
-    
-          
+
+            try {
+                // Prepara a consulta SQL para inserir a reserva no banco
+                $sql = "INSERT INTO tbl_reserva (id_cliente, valor_total, data_reserva) VALUES (:id_cliente, :valor_total, :data_reserva)";
+                $stmt = $this->db->prepare($sql);
+
+                // Parâmetros da consulta
+                $stmt->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
+                $stmt->bindParam(':valor_total', $total);
+                $stmt->bindParam(':data_reserva', $dataReserva);
+
+                // Executa a consulta
+                if ($stmt->execute()) {
+                    // Limpa o carrinho após a reserva ser concluída
+                    unset($_SESSION['carrinho']);
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (PDOException $e) {
+                $_SESSION['erro'] = 'Erro no banco de dados: ' . $e->getMessage();
+                return false;
+            }
         } else {
-            // Caso o carrinho esteja vazio
             $_SESSION['erro'] = 'Carrinho vazio. Não é possível realizar a reserva.';
-            header("Location: " . BASE_URL . "compras");
-            exit();
+            return false;
         }
     }
     

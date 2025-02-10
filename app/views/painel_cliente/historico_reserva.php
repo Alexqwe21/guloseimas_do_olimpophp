@@ -30,35 +30,40 @@
                                     <span><?php echo $reserva['id_reserva']; ?></span>
                                 </div>
 
-
                                 <div class="colum">
                                     <span>Produto</span>
                                     <img src="<?php echo BASE_URL . 'uploads/' . $reserva['foto_produto']; ?>" alt="<?php echo htmlspecialchars($reserva['nome_produto']); ?>">
 
                                 </div>
-
-
+<!-- 
                                 <div class="colum">
                                     <span>Pedido feito em</span>
-                                    <span><?php echo date('d/m/Y', strtotime($reserva['data_reserva'])); ?></span>
-                                </div>
-
-                                <!-- <div class="colum">
-                                    <span>Pagamento</span>
+                                    <span><?php echo isset($_SESSION['data_pedido']) ? date('d/m/Y', strtotime($_SESSION['data_pedido'])) : 'Data não disponível'; ?></span>
                                 </div> -->
+
 
                                 <div class="colum">
                                     <span>Status</span>
-                                    <span><?php echo htmlspecialchars($reserva['status_reserva']); ?></span>
+                                    <span>Pedido Reservado</span>
                                 </div>
 
-                                <div class="card_total_pago">
+                                <!-- <div class="card_total_pago">
                                     <div class="colum">
                                         <span>Total pago</span>
-                                        <span>R$ <?php echo number_format($reserva['valor_total'], 2, ',', '.'); ?></span>
+                                        <span>
+                                            <?php
+                                            // Verifica se o total pago está salvo na sessão
+                                            if (isset($_SESSION['total_pago'])) {
+                                                echo 'R$ ' . number_format($_SESSION['total_pago'], 2, ',', '.');
+                                                // Não faça unset aqui se precisar do valor em outras partes
+                                            } else {
+                                                echo 'R$ 0,00';
+                                            }
+                                            ?>
+                                        </span>
                                     </div>
+                                </div> -->
 
-                                </div>
 
 
 
@@ -70,8 +75,6 @@
                         <p>Você ainda não tem reservas.</p>
                     <?php endif; ?>
                 </div>
-
-
 
             </article>
         </section>
