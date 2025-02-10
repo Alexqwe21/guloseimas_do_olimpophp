@@ -51,11 +51,11 @@
 
                         <div class="reserva_preco">
                             <p>R$35</p>
-                            <p>Quantidade em estoque  <?php echo number_format($detalheServico['qtd_info_produto'], ); ?> </p>
+                            <p>Quantidade em estoque  <?php echo number_format($detalheServico['qtd_info_produto'],); ?> </p>
                         </div> -->
 
-                        <div class="reserva_acoes">
-                            <!-- <div class="qtd_produto">
+                            <div class="reserva_acoes">
+                                <!-- <div class="qtd_produto">
                                 <div class="number">
                                     <p id="number-display">1</p>
                                 </div>
@@ -64,19 +64,20 @@
                                     <button id="decrement-button"><i class="fa-solid fa-arrow-down"></i></button>
                                 </div>
                             </div> -->
-                            <div class="carrinho_produto">
-                                <div class="car">
-                                    <i class="fa-solid fa-cart-shopping"></i>
+                                <div class="carrinho_produto">
+                                    <div class="car">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </div>
+                                    <div>
+                                        <a href="<?php echo BASE_URL . 'info_produtos/adicionarReserva/' . $detalheServico['id_produto']; ?>">
+                                            <p>RESERVE AGORA</p>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div>
-                                    <a href="<?php echo BASE_URL . 'info_produtos/adicionarReserva/' . $detalheServico['id_produto']; ?>">
-                                        <p>RESERVE AGORA</p>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="fav_produto">
-                                <div>
-                                    <i id="heart-icon" class="fa-solid fa-heart"></i>
+                                <div class="fav_produto">
+                                    <div>
+                                        <i id="heart-icon" class="fa-solid fa-heart"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -134,6 +135,26 @@
                 </div>
             </article>
         </section>
+
+
+        <div class="modal fade" id="modal_adicionado_favorito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Produto Adicionado aos Favoritos</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        O produto foi adicionado à sua lista de favoritos com sucesso!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </main>
 
 
@@ -151,5 +172,48 @@
     ?>
 
 </body>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const heartIcon = document.getElementById("heart-icon");
+
+        // Verifica se o ícone de coração está presente na página
+        if (heartIcon) {
+            heartIcon.addEventListener("click", function(event) {
+                event.preventDefault();
+
+                const idProduto = '<?php echo $detalheServico['id_produto']; ?>'; // Pega o ID do produto da variável PHP
+                console.log("ID do produto a ser adicionado aos favoritos:", idProduto); // Verifique o ID
+
+                fetch('<?php echo BASE_URL; ?>favoritos/adicionarFavorito', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id_produto: idProduto
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.sucesso) {
+                            // Exibe o modal de sucesso quando o produto for adicionado aos favoritos
+                            const modal = new bootstrap.Modal(document.getElementById('modal_adicionado_favorito'));
+                            modal.show();
+                        } else {
+                          
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro ao adicionar o produto aos favoritos:", error);
+                        alert('Erro ao adicionar o produto aos favoritos.');
+                    });
+            });
+        }
+
+    });
+</script>
 
 </html>

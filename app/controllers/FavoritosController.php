@@ -10,44 +10,40 @@ class FavoritosController extends Controller
     }
 
     public function index()
-    {
-        echo "<pre>Index do FavoritosController foi chamado</pre>";
-    
-        $dados = array(); // Inicializando o array para evitar erros
-    
-        if (!isset($_SESSION['userEmail'])) {
-            echo "<pre>Usuário não autenticado</pre>";
-            header('Location: ' . BASE_URL . 'login');
-            exit;
-        }
-    
-        $email = $_SESSION['userEmail'];
-        $clienteModel = new Cliente();
-        $cliente = $clienteModel->buscarCliente($email);
-    
-        if (!$cliente) {
-            echo "<pre>Cliente não encontrado</pre>";
-            header('Location: ' . BASE_URL . 'login');
-            exit;
-        }
-    
-        $id_cliente = $cliente['id_cliente'];
-    
-        echo "<pre>ID do cliente: " . $id_cliente . "</pre>";
-    
-        // Chama o método para obter os favoritos
-        $favoritos = $this->favoritosModel->getFavoritosByCliente($id_cliente);
-    
-        echo "<pre>Favoritos encontrados:</pre>";
-        var_dump($favoritos); // Verifica se há favoritos sendo retornados
-    
-        // Passa os dados necessários para a view
-        $dados['favoritos_cliente'] = $favoritos;
-    
-        // Carrega a view de painel do cliente
-        $this->carregarViews('painel_cliente/painel_cliente', $dados);
+{
+    if (!isset($_SESSION['userEmail'])) {
+        header('Location: ' . BASE_URL . 'login');
+        exit;
     }
-   
+
+    $email = $_SESSION['userEmail'];
+    $clienteModel = new Cliente();
+    $cliente = $clienteModel->buscarCliente($email);
+
+    if (!$cliente) {
+        header('Location: ' . BASE_URL . 'login');
+        exit;
+    }
+
+    $id_cliente = $cliente['id_cliente'];
+
+    // 🔹 TESTE 1: Verificar ID do cliente
+    echo "<h3>ID Cliente:</h3>";
+    var_dump($id_cliente);
+
+    // 🔹 TESTE 2: Chamar a função do modelo diretamente
+    $favoritos = $this->favoritosModel->getFavoritosByCliente($id_cliente);
+    
+    // 🔹 TESTE 3: Mostrar os favoritos diretamente no navegador
+    echo "<h3>Favoritos do Cliente:</h3>";
+    echo "<pre>";
+    var_dump($favoritos);
+    echo "</pre>";
+
+    exit; // 🔴 Parar a execução para analisar os dados
+}
+
+    
     
 
    
@@ -60,31 +56,52 @@ class FavoritosController extends Controller
     
         // Captura os dados recebidos
         $input = file_get_contents('php://input');
-        echo "<pre>Dados Recebidos:</pre>";
-        var_dump($input); // Verifica se os dados estão chegando
-        exit;
+        $data = json_decode($input, true); // Converte para array associativo
     
-        $data = json_decode($input, true);
+        // Verifica se os dados foram recebidos corretamente
         if (!$data || !isset($data['id_produto'])) {
             echo json_encode(['sucesso' => false, 'erro' => 'Dados inválidos']);
             exit;
         }
+    
+        $id_produto = $data['id_produto'];
+        $id_cliente = $_SESSION['user_id']; // Pegando ID do usuário logado
+    
+        // Tenta adicionar aos favoritos
+        if ($this->favoritosModel->adicionarFavorito($id_cliente, $id_produto)) {
+            echo json_encode(['sucesso' => true]);
+        } else {
+            echo json_encode(['sucesso' => false, 'erro' => 'Erro ao adicionar aos favoritos']);
+        }
     }
     
+    
 
-    public function removerFavorito($id_produto)
+    public function removerFavorito()
     {
         if (!isset($_SESSION['user_id'])) { // Verificar se o id_cliente está na sessão
             echo json_encode(['sucesso' => false, 'erro' => 'Usuário não autenticado']);
             exit;
         }
-
-        $id_cliente = $_SESSION['user_id']; // Supondo que você tenha o ID do cliente na sessão
-
+    
+        // Captura os dados recebidos
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true); // Converte para array associativo
+    
+        if (!$data || !isset($data['id_produto'])) {
+            echo json_encode(['sucesso' => false, 'erro' => 'Dados inválidos']);
+            exit;
+        }
+    
+        $id_produto = $data['id_produto'];
+        $id_cliente = $_SESSION['user_id']; // Pega o ID do cliente da sessão
+    
         if ($this->favoritosModel->removerFavorito($id_cliente, $id_produto)) {
             echo json_encode(['sucesso' => true]);
         } else {
             echo json_encode(['sucesso' => false, 'erro' => 'Erro ao remover dos favoritos.']);
         }
     }
+    
+    
 }

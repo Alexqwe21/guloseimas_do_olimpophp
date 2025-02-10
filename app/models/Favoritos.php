@@ -53,7 +53,8 @@ class Favoritos extends Model
     public function getFavoritosByCliente($id_cliente)
     {
         // Seleciona todos os favoritos de um cliente
-        $sql = "SELECT p.id_produto, p.nome_produto, p.preco_produto, p.foto_produto 
+        $sql = "SELECT p.id_produto, p.nome_produto, p.preco_produto, p.foto_produto , p.alt_foto_produto
+        , p.link_produto
                 FROM tbl_favoritos f 
                 JOIN tbl_produtos p ON f.id_produto = p.id_produto
                 WHERE f.id_cliente = :id_cliente";

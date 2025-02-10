@@ -2131,9 +2131,70 @@ section .site .perfils_lado_a_lado .perfil_favoritos_reservas {
    
 }
 
+.link_favorito{
+    color:  black !important;
+    text-transform: normal !important;
+}
 
 
+.favorito-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 40px 0;
+}
 
+
+.favorito-item img {
+    width: 230px;
+    height: 230px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.favorito-item h3{
+    text-align: center;
+    font-size: 15pt;
+    margin-bottom: 10px;
+}
+
+.favorito-item p {
+    margin-bottom: 20px;
+    font-size: 20pt !important;
+}
+
+
+.perfil_favoritos h3{
+    text-align: center;
+    color: #591f00;
+    font-weight: bold;
+    font-size: 15pt;
+}
+
+.remover-favorito{
+    background: #260801;
+    border-radius: 10px;
+    display: flex
+;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    width: 70%;
+    height: 50px;
+    margin: 20px;
+    align-items: center;
+    color: white;
+    text-transform: uppercase;
+    font-size: 15pt;
+}
+
+
+.remover-favorito:hover{
+    background-color: black;
+    color: white;
+    transition: background-color 0.15s ease-out, color 0.15s ease-out;
+}
 /* ESTILO PAINEL CLIENTE */
 
 

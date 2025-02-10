@@ -13,11 +13,13 @@
 
 <body>
 
+
+
     <header>
 
 
         <?php
-        // Inclui o cabeçalho
+   // Inclui o cabeçalho
         require(__DIR__ . '/../template/header.php')
         ?>
     </header>
@@ -99,25 +101,29 @@
                                 <h2>Favoritos</h2>
                             </div>
 
-                            <?php var_dump($dados['favoritos_cliente']); ?> <!-- Corrigido -->
-
-                            <?php if (!empty($dados['favoritos_cliente'])): ?> <!-- Corrigido -->
-                                <div class="favoritos-lista">
-                                    <?php foreach ($dados['favoritos_cliente'] as $favorito): ?> <!-- Corrigido -->
-                                        <div class="produto-favorito">
-                                            <img src="<?php echo BASE_URL . 'uploads/' . $favorito['foto_produto']; ?>"
-                                                alt="<?php echo htmlspecialchars($favorito['nome_produto'], ENT_QUOTES, 'UTF-8'); ?>">
-                                            <h3><?php echo htmlspecialchars($favorito['nome_produto'], ENT_QUOTES, 'UTF-8'); ?></h3>
-                                            <p>R$ <?php echo number_format($favorito['preco_produto'], 2, ',', '.'); ?></p>
-                                            <button class="remover-favorito" data-id-produto="<?php echo $favorito['id_produto']; ?>">
-                                                Remover
-                                            </button>
+                            <?php if (isset($favoritos) && !empty($favoritos)): ?>
+                                <h3>Seus Produtos Favoritos:</h3>
+                                <ul>
+                                    <?php foreach ($favoritos as $favorito): ?>
+                                        <div class="favorito-item">
+                                            <!-- Envolvendo todo o item com o link para a página de detalhes -->
+                                            <a  class="link_favorito" href="<?php echo BASE_URL . 'produtos/detalhe/' . $favorito['link_produto']; ?>">
+                                                <img src="<?php echo BASE_URL . 'uploads/' . $favorito['foto_produto']; ?>" alt="<?php echo htmlspecialchars($favorito['alt_foto_produto'], ENT_QUOTES, 'UTF-8'); ?>" class="pg_produto">
+                                                <h3><?php echo htmlspecialchars($favorito['nome_produto'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                                                <p>Preço: R$ <?php echo number_format($favorito['preco_produto'], 2, ',', '.'); ?></p>
+                                            </a>
+                                            <button class="remover-favorito" data-produto-id="<?php echo $favorito['id_produto']; ?>">Remover</button>
                                         </div>
                                     <?php endforeach; ?>
-                                </div>
+                                </ul>
                             <?php else: ?>
-                                <p>Não há itens em seus Favoritos.</p>
+                                <p>Você ainda não tem produtos favoritos.</p>
                             <?php endif; ?>
+
+
+
+
+
                         </div>
 
 
@@ -141,6 +147,25 @@
 
 
 
+        <div class="modal fade" id="modalRemoverFavorito" tabindex="-1" aria-labelledby="modalRemoverFavoritoLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalRemoverFavoritoLabel">Remover Produto dos Favoritos</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Tem certeza que deseja remover este produto dos seus favoritos?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="confirmarRemoverFavorito">Remover</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </main>
 
     <footer>
@@ -158,28 +183,48 @@
 </body>
 
 <script>
-    document.querySelectorAll('.remover-favorito').forEach(button => {
-        button.addEventListener('click', function() {
-            const idProduto = this.getAttribute('data-id-produto');
+    document.addEventListener('DOMContentLoaded', function() {
+        let produtoId;
 
-            fetch('<?php echo BASE_URL; ?>favoritos/remover', {
+        const buttons = document.querySelectorAll('.remover-favorito');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                produtoId = this.getAttribute('data-produto-id');
+
+                // Exibe o modal de confirmação
+                const modal = new bootstrap.Modal(document.getElementById('modalRemoverFavorito'));
+                modal.show();
+            });
+        });
+
+        // Evento de confirmação no modal
+        document.getElementById('confirmarRemoverFavorito').addEventListener('click', function() {
+            fetch('<?php echo BASE_URL; ?>favoritos/removerFavorito', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        id_produto: idProduto
-                    })
+                        id_produto: produtoId
+                    }) // Passando o ID do produto
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.sucesso) {
-                        alert('Produto removido dos favoritos!');
-                        location.reload(); // Recarrega a página para atualizar a lista de favoritos
+
+                        location.reload(); // Recarrega a página para atualizar a lista
                     } else {
-                        alert(data.erro || 'Erro ao remover dos favoritos.');
+
                     }
+                })
+                .catch(error => {
+                    alert('Erro ao tentar remover o produto.');
                 });
+
+            // Fecha o modal após a confirmação
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalRemoverFavorito'));
+            modal.hide();
         });
     });
 </script>
