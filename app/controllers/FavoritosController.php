@@ -27,20 +27,7 @@ class FavoritosController extends Controller
 
     $id_cliente = $cliente['id_cliente'];
 
-    // 🔹 TESTE 1: Verificar ID do cliente
-    echo "<h3>ID Cliente:</h3>";
-    var_dump($id_cliente);
-
-    // 🔹 TESTE 2: Chamar a função do modelo diretamente
-    $favoritos = $this->favoritosModel->getFavoritosByCliente($id_cliente);
-    
-    // 🔹 TESTE 3: Mostrar os favoritos diretamente no navegador
-    echo "<h3>Favoritos do Cliente:</h3>";
-    echo "<pre>";
-    var_dump($favoritos);
-    echo "</pre>";
-
-    exit; // 🔴 Parar a execução para analisar os dados
+   
 }
 
     

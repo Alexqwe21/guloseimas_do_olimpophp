@@ -132,10 +132,10 @@
                         <div class="perfil_favoritos">
                             <div class="perfil_produtos_favortios">
                                 <h2>Historico de reserva</h2>
-                                <a href="#">Visualizar</a>
+                                <a href="http://localhost/guloseimas_do_olimpophp/public/Cliente/historico_reserva/">Visualizar</a>
                             </div>
 
-                            <p>Não há pedidos de reserva</p>
+                          
 
                         </div>
 

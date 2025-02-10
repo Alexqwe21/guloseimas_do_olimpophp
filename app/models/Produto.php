@@ -155,8 +155,7 @@ class Produto extends Model
     }
 
 
-    public function atualizar_info_Produto($id, $dados)
-    {
+    public function atualizar_info_Produto($id, $dados){
         // Definindo a query SQL
         $sql = "UPDATE tbl_produtos AS p
     INNER JOIN tbl_info_produtos AS ip ON p.id_produto = ip.id_produto
@@ -500,8 +499,7 @@ class Produto extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getProdutosPorPreco($precoMax)
-    {
+    public function getProdutosPorPreco($precoMax){
         $sql = "SELECT * FROM tbl_produtos WHERE preco_produto <= :precoMax AND status_pedido = 'Ativo' ORDER BY preco_produto ASC";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':precoMax', $precoMax, PDO::PARAM_STR);

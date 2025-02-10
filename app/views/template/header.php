@@ -117,7 +117,7 @@ margin-left: 10px !important;
                 <!-- Nome do cliente -->
 
                 <!-- Botão de logout -->
-                <a href="http://localhost/guloseimas_do_olimpophp/public/login/sair" class="logout">Sair</a>
+                
             </div>
         <?php else: ?>
             <!-- Link para login se não estiver logado -->

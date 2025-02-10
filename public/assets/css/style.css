@@ -1979,6 +1979,10 @@ section .site .perfils_lado_a_lado {
 }
 
 
+section .site .perfil_cliente{
+    height: 700px  !important;
+}
+
 
 section .site .perfil_cliente,
 section .site .perfil_favoritos {
@@ -1995,7 +1999,7 @@ section .site .perfil_favoritos {
 section .site .perfil_favoritos {
     height: auto;
     width: 120%;
-    min-height: 350px;
+    min-height: 250px;
 }
 
 
@@ -2195,9 +2199,92 @@ section .site .perfils_lado_a_lado .perfil_favoritos_reservas {
     color: white;
     transition: background-color 0.15s ease-out, color 0.15s ease-out;
 }
+
+
+
+
+
 /* ESTILO PAINEL CLIENTE */
 
 
+/* HISTORICO DE RESERVAS  */
+
+section .site .historico_pedido{
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+section .site .historico_pedido h2 , section .site .historico_pedido p {
+    margin: 20px 0 ;
+    color: #352727;
+    font-size: 1.5rem;
+}
+
+section .site .historico_pedido p{
+    color: #8e7d75;
+    
+}
+
+section .site .card_title{
+    width: 100%;
+    min-height: 100px;
+    background-color: white;
+    border: 1px solid #241810;
+    margin-bottom: 50px;
+    display: flex;
+    flex-flow: wrap column;
+    border-radius: 10px;
+}
+
+section .site .card_title span{
+    font-size: 1.3rem;
+    color: #352727;
+    font-family: var(--para_texto);
+   
+}
+
+
+section .site .card_title .card_informacoes {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin: 30px 0 ;
+    
+    
+    
+}
+
+section .site .card_title .card_informacoes span , section .site .card_title  .card_total_pago span{
+    margin-top: 20px;
+}
+
+
+section .site .card_title .card_informacoes img{
+    width: 100px;
+    height: 100px;
+    margin-top: 20px;
+}
+
+section .site .card_title .card_informacoes .colum , section .site .card_title  .card_total_pago .colum{
+    display: flex;
+    flex-flow: wrap column;
+}
+
+section .site .card_title .card_total_pago{
+
+    margin-left: 50px;
+    font-size: 1rem;
+    color: #352727;
+    width: 20%;
+}
+
+
+
+
+
+
+
+/* HISTORICO DE RESERVAS  */
 
 /* MENU HAMBURGUER */
 @media (max-width: 1024px) {

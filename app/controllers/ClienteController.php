@@ -15,41 +15,41 @@ class ClienteController extends Controller
 
 
     public function index()
-{
-    // Verifica se o usuário está logado
-    if (!isset($_SESSION['userEmail'])) {
-        header('Location: ' . BASE_URL . 'login');
-        exit;
+    {
+        // Verifica se o usuário está logado
+        if (!isset($_SESSION['userEmail'])) {
+            header('Location: ' . BASE_URL . 'login');
+            exit;
+        }
+
+        $email = $_SESSION['userEmail']; // Pega o email do usuário logado
+        $clienteModel = new Cliente();
+        $cliente = $clienteModel->buscarCliente($email); // Busca no banco os dados do cliente
+
+        if (!$cliente) {
+            header('Location: ' . BASE_URL . 'login');
+            exit;
+        }
+
+        $id_cliente = $cliente['id_cliente']; // ID do cliente
+
+        // Obtém os favoritos com os dados dos produtos diretamente
+        $favoritosModel = new Favoritos();
+        $favoritos = $favoritosModel->getFavoritosByCliente($id_cliente);
+
+        // Dados a serem passados para a view
+        $dados = [
+            'nome' => $cliente['nome_cliente'],
+            'cpf' => $cliente['cpf_cliente'],
+            'email' => $cliente['email_cliente'],
+            'telefone' => $cliente['telefone_cliente'],
+            'senha' => $cliente['senha_cliente'], // A senha deve ser tratada com segurança
+            'favoritos' => $favoritos // Passando os favoritos para a view
+        ];
+
+        // Carrega a view do painel do cliente com os dados
+        $this->carregarViews('painel_cliente/painel_cliente', $dados);
     }
-
-    $email = $_SESSION['userEmail']; // Pega o email do usuário logado
-    $clienteModel = new Cliente();
-    $cliente = $clienteModel->buscarCliente($email); // Busca no banco os dados do cliente
-
-    if (!$cliente) {
-        header('Location: ' . BASE_URL . 'login');
-        exit;
-    }
-
-    $id_cliente = $cliente['id_cliente']; // ID do cliente
-
-    // Obtém os favoritos com os dados dos produtos diretamente
-    $favoritosModel = new Favoritos();
-    $favoritos = $favoritosModel->getFavoritosByCliente($id_cliente);
-
-    // Dados a serem passados para a view
-    $dados = [
-        'nome' => $cliente['nome_cliente'],
-        'cpf' => $cliente['cpf_cliente'],
-        'email' => $cliente['email_cliente'],
-        'telefone' => $cliente['telefone_cliente'],
-        'senha' => $cliente['senha_cliente'], // A senha deve ser tratada com segurança
-        'favoritos' => $favoritos // Passando os favoritos para a view
-    ];
-
-    // Carrega a view do painel do cliente com os dados
-    $this->carregarViews('painel_cliente/painel_cliente', $dados);
-}
 
 
 
@@ -116,6 +116,42 @@ class ClienteController extends Controller
 
         $this->carregarViews('painel_cliente/editar_senha_cliente', $dados);
     }
+
+    public function historico_reserva()
+    {
+        // Verifica se o usuário está logado
+        if (!isset($_SESSION['userEmail'])) {
+            header('Location: ' . BASE_URL . 'login');
+            exit;
+        }
+    
+        $email = $_SESSION['userEmail']; // Pega o email do usuário logado
+        $cliente = $this->clienteModel->buscarCliente($email); // Busca no banco os dados do cliente
+    
+        if (!$cliente) {
+            header('Location: ' . BASE_URL . 'login');
+            exit;
+        }
+    
+        $id_cliente = $cliente['id_cliente'];
+    
+        // Obtém as reservas do cliente
+        $reservasModel = new Reserva();
+        $reservas = $reservasModel->listarReservasPorCliente($id_cliente);
+    
+        // Passa os dados para a view
+        $dados = [
+            'reservas' => $reservas
+        ];
+    
+        // Carrega a view do histórico de reservas
+        $this->carregarViews('painel_cliente/historico_reserva', $dados);
+    }
+    
+
+
+
+
 
 
     public function salvarEdicaoCliente()
@@ -279,6 +315,4 @@ class ClienteController extends Controller
         header('Location: ' . BASE_URL);
         exit;
     }
-
-   
 }
