@@ -1,14 +1,9 @@
 <?php
-// Verifica se há erro de login na sessão
-$erroLogin = isset($_SESSION['login-erro']) ? $_SESSION['login-erro'] : null;
-unset($_SESSION['login-erro']); // Limpa a variável após usar
 
-// Caso haja erro de login, redireciona para a página de login com o parâmetro erro=true
-if ($erroLogin) {
-    header("Location: http://localhost/guloseimas_do_olimpophp/public/entrar/entrar?erro=true");
-    exit();
-}
+$erroLogin = isset($_SESSION['login-erro']) ? $_SESSION['login-erro'] : null;
+unset($_SESSION['login-erro']); // Limpa a sessão para não mostrar sempre
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -84,7 +79,7 @@ if ($erroLogin) {
                                     <div style="position: relative; display: flex; align-items: center;">
                                         <input type="password" id="senha_entrar" name="senha_entrar" required placeholder="Senha" style="text-transform: none; padding-right: 40px;">
                                         <button type="button" id="toggleSenha" style="position: absolute; right: 10px; background: none; border: none; cursor: pointer;">
-                                            👁️
+                                            🙈
                                         </button>
                                     </div>
                                 </div>
@@ -105,22 +100,7 @@ if ($erroLogin) {
                             </div>
 
                             <!-- Modal de Erro -->
-                            <div class="modal fade" id="modalErro" tabindex="-1" aria-labelledby="modalErroLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="modalErroLabel">Erro</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>O email ou a senha estão incorretos. Por favor, tente novamente.</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                         </form>
                     </div>
                 </div>
@@ -152,6 +132,27 @@ if ($erroLogin) {
     require('script_geral/script.php');
     ?>
 
+
+    <!-- Modal de Erro -->
+    <div class="modal fade" id="modalErro" tabindex="-1" aria-labelledby="modalErroLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalErroLabel">Erro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="mensagemErro"><?php echo $erroLogin ?? ''; ?></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </body>
 
 <script>
@@ -165,25 +166,18 @@ if ($erroLogin) {
             this.textContent = '🙈'; // Ícone para esconder a senha
         }
     });
+</script>
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const form = document.querySelector('form'); // Seleciona o formulário
-        const modalErro = new bootstrap.Modal(document.getElementById('modalErro')); // Seleciona o modal de erro
 
-        // Verifica se existe o parâmetro 'erro' na URL
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('erro') && urlParams.get('erro') === 'true') {
-            modalErro.show(); // Exibe o modal de erro se o login falhou
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let erroLogin = "<?php echo $erroLogin; ?>";
+        if (erroLogin) {
+            let modalErro = new bootstrap.Modal(document.getElementById('modalErro'));
+            modalErro.show();
         }
-
-        // Adiciona o evento de submit no formulário de login
-        form.addEventListener('submit', (e) => {
-            e.preventDefault(); // Impede o envio tradicional do formulário
-
-            // Aqui você pode colocar o código para enviar via AJAX, se necessário, ou redirecionar
-            form.submit(); // Submete o formulário após a execução do código
-        });
     });
 </script>
+
 
 </html>

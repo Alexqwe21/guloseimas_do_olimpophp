@@ -94,7 +94,7 @@ margin-top: 10px;
                      alt="<?php echo htmlspecialchars($foto['alt_foto_galeria']); ?>" 
                      style="max-width: 200px; display: block; margin-bottom: 10px;">
             </div>
-<!-- PAREI AQUI; -->
+
             <div class="form-group">
                 <label for="foto_galeria">Nova Foto</label>
                 <input type="file" id="foto_galeria" name="foto_galeria" class="form-control">
@@ -102,7 +102,7 @@ margin-top: 10px;
             </div>
 
             <button type="submit" class="btn btn-success">Salvar Alterações</button>
-            <a href="<?php echo BASE_URL . 'galeria'; ?>" class="btn btn-danger">Cancelar</a>
+            <a href="<?php echo BASE_URL . 'dashboard'; ?>" class="btn btn-danger">Cancelar</a>
         </form>
     <?php else: ?>
         <p>Foto não encontrada.</p>

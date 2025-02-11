@@ -46,9 +46,10 @@ class CriarcontaController extends Controller
 
                     if ($resultado) {
                         $_SESSION['sucesso'] = "Conta criada com sucesso!";
-                        header('Location: ' . BASE_URL . 'login');
+                        header('Location: ' . BASE_URL . 'criarconta'); // Agora volta para a página de criação
                         exit;
-                    } else {
+                    }
+                     else {
                         $_SESSION['erro'] = "Erro ao criar conta. Verifique os dados.";
                     }
                 } else {

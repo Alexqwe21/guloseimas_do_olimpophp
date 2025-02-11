@@ -56,7 +56,7 @@ class LoginController extends Controller
                 }
     
                 // Se o email não for encontrado em nenhum dos modelos, redireciona para criar conta
-                $_SESSION['login-erro'] = 'Email não encontrado. Crie sua conta!';
+                // $_SESSION['login-erro'] = 'Email não encontrado. Crie sua conta!';
                 header('Location: ' . BASE_URL . 'criarconta');
                 exit;
             } else {

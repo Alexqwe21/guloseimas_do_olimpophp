@@ -149,6 +149,41 @@
     // Inclui o script
     require('script_geral/script.php');
     ?>
+
+
+<div class="modal fade" id="modalSucesso" tabindex="-1" aria-labelledby="modalSucessoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalSucessoLabel">Sucesso!</h5>
+              
+            </div>
+            <div class="modal-body">
+                Conta criada com sucesso!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnFecharModal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        <?php if (!empty($_SESSION['sucesso'])): ?>
+            var modal = new bootstrap.Modal(document.getElementById('modalSucesso'));
+            modal.show();
+            <?php unset($_SESSION['sucesso']); ?>
+            
+            // Quando o usuário clicar em "OK", redireciona para login
+            document.getElementById("btnFecharModal").addEventListener("click", function () {
+                window.location.href = "<?php echo BASE_URL . 'login'; ?>";
+            });
+        <?php endif; ?>
+    });
+</script>
+
+
 </body>
 
 </html>
