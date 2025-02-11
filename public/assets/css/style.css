@@ -267,6 +267,7 @@ footer .site .lado_a_lado,
     width: 400px;
     height: 420px;
     background-repeat: no-repeat;
+    border-radius: 10px;
 }
 
 .qualidade_especial .site .alta_qualidade .verde {
@@ -370,6 +371,12 @@ footer .site .lado_a_lado,
     margin-left: 30px;
 }
 
+
+ .foto_pessoa{
+    display: flex;
+    align-items: center;
+}
+
 .banner_chocolate {
     padding: var(--para_separar_a_secoes);
 }
@@ -400,8 +407,8 @@ footer .site .lado_a_lado,
 }
 
 .box_carousel div img {
-    width: 330px;
-    height: 330px;
+    width: 320px;
+    height: 320px;
     display: flex;
 }
 
@@ -706,6 +713,11 @@ footer .contato {
     color: #18764F33;
 }
 
+/* .minha_historia{
+    background-image: url(../img/Fundo_site.png);
+} */
+
+
 .minha_historia .site div h3::after {
     content: "HISTORIA";
 }
@@ -715,7 +727,7 @@ footer .contato {
 }
 
 .carrosel_produtos .site div h3::after {
-    content: "PERSONALIZADOS";
+    content: "CASEIROS";
 }
 
 .especialidades .site h3::after {
