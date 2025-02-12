@@ -8,17 +8,53 @@
 
     ?>
 </head>
+<style>
+    body , html{
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
+    h1{
+        font-size: 30pt;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+      
+    }
+
+
+    main{
+      width: 100vh;
+    
+    }
+
+    label{
+        margin: 10px 0;
+        font-size: 15pt;
+        font-weight: bold;
+    }
+
+    
+input{
+    margin: 10px 0;
+}
+
+button{
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+a{
+margin-top: 10px;
+}
+
+</style>
 
 <body>
-    <header>
-
-
-        <?php
-        // Inclui o cabeçalho
-        require(__DIR__ . '/../../template/header.php');
-        ?>
-    </header>
+    
     <main>
         <?php
         // Verifica se o produto foi carregado corretamente
@@ -65,13 +101,7 @@
 
     </main>
 
-    <footer>
-        <?php
-        // Inclui o cabeçalho
-        require(__DIR__ . '/../../template/footer.php');
-
-        ?>
-    </footer>
+    
 
 
     </main>

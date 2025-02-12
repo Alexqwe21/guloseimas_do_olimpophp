@@ -165,7 +165,7 @@ class GaleriaController extends Controller
         ];
 
         // Carrega a view do formulário
-        $this->carregarViews('dash/galeria/statusG', $dados);
+        $this->carregarViews('dash/sobre/status_S_G', $dados);
     }
 
 

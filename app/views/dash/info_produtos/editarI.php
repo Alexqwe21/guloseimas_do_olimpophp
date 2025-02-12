@@ -8,17 +8,53 @@
 
     ?>
 </head>
+<style>
+    body , html{
+        
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
+    h1{
+        font-size: 30pt;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+      
+    }
+
+
+    main{
+      width: 100vh;
+    
+    }
+
+    label{
+        margin: 10px 0;
+        font-size: 15pt;
+        font-weight: bold;
+    }
+
+    
+input{
+    margin: 10px 0;
+}
+
+button{
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+a{
+margin-top: 10px;
+}
+
+</style>
 
 <body>
-    <header>
-
-
-        <?php
-        // Inclui o cabeçalho
-        require(__DIR__ . '/../../template/header.php');
-        ?>
-    </header>
+    
     <main>
         <?php
         // Verifica se o produto foi carregado corretamente
@@ -34,7 +70,7 @@
                 
                     <div class="form-group">
                         <label for="nome_info_produtos">Nome do Produto</label>
-                        <input type="text" id="nome_info_produtos" name="nome_info_produtos" value="<?php echo htmlspecialchars($info_produto['nome_info_produtos']); ?>" required class="form-control">
+                        <input type="text" id="nome_info_produtos" name="nome_info_produtos" value="<?php echo htmlspecialchars($info_produto['nome_produto']); ?>" required class="form-control">
                     </div>
 
                      <div class="form-group">
@@ -49,7 +85,7 @@
 
                     <div class="form-group">
                         <label for="info_alt_foto_produto">Texto Alternativo</label>
-                        <input type="text"  id="info_alt_foto_produto" name="info_alt_foto_produto" value="<?php echo htmlspecialchars($info_produto['info_alt_foto_produto']); ?>" required class="form-control">
+                        <input type="text"  id="info_alt_foto_produto" name="info_alt_foto_produto" value="<?php echo htmlspecialchars($info_produto['alt_foto_produto']); ?>" required class="form-control">
                     </div>
 
                     <div class="form-group">
@@ -84,7 +120,7 @@
                     <input type="hidden" name="foto_produto_antiga" value="<?php echo htmlspecialchars($info_produto['foto_info_produto']); ?>">
                     <button type="submit" class="btn btn-primary">Salvar alterações</button>
                     <input type="hidden" name="id_info_produtos" value="<?php echo $info_produto['id_info_produtos']; ?>">
-                    <a href="<?php echo BASE_URL . 'produtos/listar'; ?>" class="btn btn-secondary">Cancelar</a>
+                    <a href="<?php echo BASE_URL . 'info_produtos/info_produtos'; ?>" class="btn btn-secondary">Cancelar</a>
                 </form>
             </div>
         <?php else: ?>
@@ -94,13 +130,7 @@
 
     </main>
 
-    <footer>
-        <?php
-        // Inclui o cabeçalho
-        require(__DIR__.'/../../template/footer.php');
-      
-        ?>
-    </footer>
+   
 
 
     </main>

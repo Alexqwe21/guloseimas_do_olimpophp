@@ -11,16 +11,52 @@
 
     ?>
 </head>
+<style>
+    body , html{
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
+    h1{
+        font-size: 30pt;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+      
+    }
+
+
+    main{
+      width: 100vh;
+    
+    }
+
+    label{
+        margin: 10px 0;
+        font-size: 15pt;
+        font-weight: bold;
+    }
+
+    
+input{
+    margin: 10px 0;
+}
+
+button{
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+a{
+margin-top: 10px;
+}
+
+</style>
 <body>
-    <header>
-
-
-        <?php
-        // Inclui o cabeçalho
-        require(__DIR__ . '/../../template/header.php');
-        ?>
-    </header>
+   
 
     <main>
         <form action="<?php echo BASE_URL . 'home/atualizarStatusC'; ?>" method="POST" class="form-group">
@@ -36,18 +72,12 @@
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Salvar alterações</button>
-                <a href="<?php echo BASE_URL . 'produtos/listar'; ?>" class="btn btn-secondary">Cancelar</a>
+                <a href="<?php echo BASE_URL . 'home/carrosel'; ?>" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
     </main>
 
-    <footer>
-        <?php
-        // Inclui o cabeçalho
-        require(__DIR__ . '/../../template/footer.php');
-
-        ?>
-    </footer>
+   
 
 
     </main>

@@ -1,4 +1,4 @@
-<h1>PG LISTAR</h1>
+
 
 <style>
   button {
@@ -13,9 +13,7 @@
   }
 </style>
 
-<a href="http://localhost/Kioficina/public/servicos/adicionar">ADICIONAR</a>
-<a href="http://localhost/Kioficina/public/servicos/editar">EDITAR</a>
-<a href="http://localhost/Kioficina/public/servicos/desativar">DESATIVAR</a>
+
 
 <table class="table table-hover">
   <thead>
@@ -27,7 +25,7 @@
       <th scope="col">Email contato</th>
       <th scope="col">Mensagem contato</th>
       <th scope="col">Data de envio</th>
-      <th scope="col">Status contato</th>
+
 
     </tr>
   </thead>
