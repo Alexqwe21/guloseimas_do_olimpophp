@@ -21,7 +21,7 @@ class Servicos extends Model
 
 
     public function getServicoPorId($id){
-        $sql = "SELECT * FROM tbl_servico WHERE status_servico ='Ativo' AND id_servico = :id";
+      $sql = "SELECT * FROM tbl_servico WHERE id_servico = :id"; // Remova o filtro de status
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
@@ -66,6 +66,7 @@ class Servicos extends Model
         }
     }
 
+
     public function atualizarStatusServico($id, $status){
         $sql = "UPDATE tbl_servico 
                 SET status_servico = :status 
@@ -76,4 +77,8 @@ class Servicos extends Model
 
         return $stmt->execute();
     }
+
+
+
+
 }

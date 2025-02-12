@@ -203,11 +203,7 @@ class SobreController extends Controller
         // Busca os dados da galeria
         $galeria_pg = $this->servicos->getServicoPorId($id);
 
-        if (!$galeria_pg) {
-            $_SESSION['erro'] = "Produto não encontrado.";
-            header('Location: ' . BASE_URL . 'produtos/banners');
-            exit();
-        }
+       
 
         // Prepara os dados para a view
         $dados = [

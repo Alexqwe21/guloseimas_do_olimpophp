@@ -20,6 +20,7 @@
         // Inclui o cabeçalho
         require(__DIR__ . '/../../template/header.php');
         ?>
+        
     </header>
 
     <main>
