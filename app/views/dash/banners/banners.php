@@ -7,7 +7,7 @@
   }
 
   .pg_produto {
-    width: 230px;
+    width: 500px;
     height: 230px;
     border-radius: 5px;
   }

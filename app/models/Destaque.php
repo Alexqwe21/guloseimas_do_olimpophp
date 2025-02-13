@@ -11,7 +11,7 @@ class Destaque extends Model
 
 
 
-        $sql = "SELECT  id_produto, foto_produto , alt_foto_produto ,nome_produto , preco_produto, link_produto FROM tbl_produtos  WHERE status_pedido = 'Destaque' LIMIT 3";
+        $sql = "SELECT  id_produto, foto_produto , alt_foto_produto ,nome_produto , preco_produto, link_produto FROM tbl_produtos  WHERE status_pedido = 'Ativo' LIMIT 3";
 
 
         $stmt = $this->db->prepare($sql);
