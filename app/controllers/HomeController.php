@@ -12,8 +12,6 @@ class HomeController extends Controller
     private $carrosel_home;
     private $produtoModel;
 
-
-
     public function __construct()
     {
         $this->destaqueModel = new Destaque();
