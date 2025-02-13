@@ -105,7 +105,7 @@ class info_produtosController extends Controller
             $novoCaminhoImagem = $_POST['foto_produto_antiga']; // Caminho antigo por padrão
             if (!empty($_FILES['foto_info_produto']['name'])) {
                 // Diretório de upload
-                $diretorioUploads = __DIR__ . '/../../public/uploads/info_produto/';
+                $diretorioUploads = __DIR__ . '/../../public/uploads/produto/';
 
                 // Certifica-se de que o diretório existe
                 if (!is_dir($diretorioUploads)) {
@@ -119,7 +119,7 @@ class info_produtosController extends Controller
                 // Move a imagem para o diretório
                 if (move_uploaded_file($_FILES['foto_info_produto']['tmp_name'], $caminhoCompleto)) {
                     // Atualiza o caminho da imagem para salvar no banco
-                    $novoCaminhoImagem = 'info_produto/' . $nomeArquivo;
+                    $novoCaminhoImagem = 'produto/' . $nomeArquivo;
                 } else {
                     $_SESSION['erro'] = "Erro ao fazer upload da imagem.";
                     header('Location: ' . BASE_URL . 'produtos/editarI/' . $id);

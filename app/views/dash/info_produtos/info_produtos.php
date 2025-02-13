@@ -51,7 +51,7 @@
 
       <tr>
         <th scope="row"><?php echo $linha['id_info_produtos'] ?></th>
-        <td><img src="<?php echo BASE_URL . 'uploads/' . $linha['foto_produto'] ?>" alt="<?php echo $linha['alt_foto_produto'] ?>" class="pg_produto"></td>
+        <td><img src="<?php echo BASE_URL . 'uploads/' . $linha['foto_info_produto'] ?>" alt="<?php echo $linha['alt_foto_produto'] ?>" class="pg_produto"></td>
 
         <td><?php echo $linha['nome_produto'] ?></td>
        

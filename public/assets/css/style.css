@@ -1379,7 +1379,7 @@ footer .contato {
     font-size: 18pt;
     font-weight: bold;
     font-family: var(--font_links);
-    margin: 5px;
+    margin: 35px 5px 5px 5px;
     padding: 5px;
 
 }
@@ -1389,10 +1389,12 @@ footer .contato {
     font-size: 16pt;
     padding: 20px;
     margin: 5px;
-    height: 60px;
+    
+    line-height: 40px;
 }
 
 .desc hr {
+    margin-top: 20px;
     height: 1px;
     color: black;
     background-color: black;

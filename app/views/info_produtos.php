@@ -39,8 +39,8 @@
 
                         <div class="reseva_personalizao">
                             <div class="inf_txt">
-                                <p>O valor é equivalente a <span class="pers">personalização</span> <?php echo htmlspecialchars($detalheServico['personalizacao_info_produtos'], ENT_QUOTES, 'UTF-8'); ?></p>
-
+                                <p>O valor é equivalente a <span class="pers">personalização</span> </p>
+                                <p style="margin-top: 20px;">Produto <?php echo htmlspecialchars($detalheServico['personalizacao_info_produtos'], ENT_QUOTES, 'UTF-8'); ?> </p>
                             </div>
                             <!-- <div class="tipos_personalizacoes">
                                 <button></button>
@@ -203,7 +203,7 @@
                             const modal = new bootstrap.Modal(document.getElementById('modal_adicionado_favorito'));
                             modal.show();
                         } else {
-                          
+
                         }
                     })
                     .catch(error => {
