@@ -69,5 +69,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// loader
+document.addEventListener("DOMContentLoaded", function () {
+    const loader = document.querySelector(".loader-container");
 
+    document.addEventListener("click", function (event) {
+        if (event.target.tagName === "A" && event.target.href) {
+            loader.style.display = "flex"; 
+        }
+    });
 
+    window.addEventListener("load", function () {
+        setTimeout(() => {
+            loader.style.display = "none";
+        }, 9000); 
+    });
+});
