@@ -11,6 +11,9 @@
 <body>
     <header>
         <?php
+        // loader
+        require('template/loader.php');
+
         // Inclui o cabeçalho
         require('template/header.php');
         ?>
