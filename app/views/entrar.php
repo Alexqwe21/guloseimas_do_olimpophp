@@ -32,6 +32,9 @@ unset($_SESSION['login-erro']); // Limpa a sessão para não mostrar sempre
 <body>
     <header>
         <?php
+        // loader
+        require('template/loader.php');
+        
         // Inclui o cabeçalho
         require('template/header.php');
         ?>
