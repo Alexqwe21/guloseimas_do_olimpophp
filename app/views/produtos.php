@@ -31,7 +31,7 @@
                 <div class="lado_a_lado">
 
                     <div class="filtro-de-preco">
-                        <ul>
+                        <ul><a href=""></a>
                             <div>
                                 <h4>Filtrar por preço</h4>
                             </div>
