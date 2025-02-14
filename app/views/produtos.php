@@ -11,6 +11,9 @@
 <body>
     <header>
         <?php
+        // loader
+        require('template/loader.php');
+
         // Inclui o cabeçalho
         require('template/header.php');
         ?>
@@ -133,24 +136,24 @@
 
 
 
-<!-- Modal de "Produto Adicionado aos Favoritos" -->
-<!-- Modal de "Produto Adicionado aos Favoritos" -->
-<div class="modal fade" id="modal_adicionado_favorito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Produto Adicionado aos Favoritos</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                O produto foi adicionado à sua lista de favoritos com sucesso!
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+    <!-- Modal de "Produto Adicionado aos Favoritos" -->
+    <!-- Modal de "Produto Adicionado aos Favoritos" -->
+    <div class="modal fade" id="modal_adicionado_favorito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Produto Adicionado aos Favoritos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    O produto foi adicionado à sua lista de favoritos com sucesso!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
@@ -272,44 +275,42 @@
 
 
         document.querySelectorAll('.adicionar-favorito').forEach(button => {
-    button.addEventListener('click', function(event) {
-        event.preventDefault();
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
 
-        const idProduto = this.getAttribute('data-id-produto');
-        console.log(idProduto); // Verifique se está retornando o ID correto do produto
+                const idProduto = this.getAttribute('data-id-produto');
+                console.log(idProduto); // Verifique se está retornando o ID correto do produto
 
-        fetch('<?php echo BASE_URL; ?>favoritos/adicionarFavorito', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id_produto: idProduto
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.sucesso) {
-                    // Exibe o modal de sucesso
-                    const modal = new bootstrap.Modal(document.getElementById('modal_adicionado_favorito'));
-                    modal.show();
-                } else {
-                    alert(data.erro || 'Erro ao adicionar aos favoritos.');
-                }
-            })
-            .catch(error => {
-                console.error("Erro ao adicionar o produto aos favoritos:", error);
-                alert('Erro ao adicionar o produto aos favoritos.');
+                fetch('<?php echo BASE_URL; ?>favoritos/adicionarFavorito', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id_produto: idProduto
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.sucesso) {
+                            // Exibe o modal de sucesso
+                            const modal = new bootstrap.Modal(document.getElementById('modal_adicionado_favorito'));
+                            modal.show();
+                        } else {
+                            alert(data.erro || 'Erro ao adicionar aos favoritos.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erro ao adicionar o produto aos favoritos:", error);
+                        alert('Erro ao adicionar o produto aos favoritos.');
+                    });
             });
-    });
-});
+        });
 
 
 
 
     });
-
-    
 </script>
 
 </html>
