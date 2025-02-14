@@ -1,6 +1,3 @@
-
-
-
 <div class="site">
     <div class="lado_a_lado">
         <div>

@@ -15,6 +15,9 @@
 
     <header>
         <?php
+        // loader
+        require('template/loader.php');
+        
         // Inclui o cabeçalho
         require('template/header.php');
         ?>
@@ -198,37 +201,37 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-       document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('formContato');
-    const modal = new bootstrap.Modal(document.getElementById('exampleModalFormContato'));  // Usando o ID do modal
-    const modalMessage = document.getElementById('modalMessageFormContato');  // Usando o ID da mensagem do modal
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('formContato');
+            const modal = new bootstrap.Modal(document.getElementById('exampleModalFormContato')); // Usando o ID do modal
+            const modalMessage = document.getElementById('modalMessageFormContato'); // Usando o ID da mensagem do modal
 
-    // Verificar se há um parâmetro indicando erro ou sucesso na URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const sucesso = urlParams.get('sucesso'); // Este é o parâmetro que indicará sucesso no envio
+            // Verificar se há um parâmetro indicando erro ou sucesso na URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const sucesso = urlParams.get('sucesso'); // Este é o parâmetro que indicará sucesso no envio
 
-    // Exibir o modal com a mensagem correspondente
-    if (sucesso) {
-        modalMessage.textContent = 'O formulário foi enviado com sucesso!';
-        modal.show();
-    }
+            // Exibir o modal com a mensagem correspondente
+            if (sucesso) {
+                modalMessage.textContent = 'O formulário foi enviado com sucesso!';
+                modal.show();
+            }
 
-    // Prevenir o envio duplo do formulário
-    form.addEventListener('submit', (e) => {
-        e.preventDefault(); // Previne o envio imediato
+            // Prevenir o envio duplo do formulário
+            form.addEventListener('submit', (e) => {
+                e.preventDefault(); // Previne o envio imediato
 
-        // Enviar o formulário via AJAX ou outra forma
-        // Exemplo:
-        // fetch('/caminho/do/servidor', {
-        //     method: 'POST',
-        //     body: new FormData(form)
-        // }).then(response => {
-        //     if (response.ok) {
-        //         window.location.search = '?sucesso=true'; // Redirecionar com o parâmetro de sucesso
-        //     }
-        // });
-    });
-});
+                // Enviar o formulário via AJAX ou outra forma
+                // Exemplo:
+                // fetch('/caminho/do/servidor', {
+                //     method: 'POST',
+                //     body: new FormData(form)
+                // }).then(response => {
+                //     if (response.ok) {
+                //         window.location.search = '?sucesso=true'; // Redirecionar com o parâmetro de sucesso
+                //     }
+                // });
+            });
+        });
     </script>
 
 

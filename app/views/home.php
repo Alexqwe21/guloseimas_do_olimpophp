@@ -17,8 +17,10 @@
         ?>
     </header>
     <main>
-
-        <?php
+    <?php
+        // loader
+        require('template/loader.php');
+        
         // Inclui  a pagina ben_vindo
         require('pagina_home/ben_vindo.php');
 

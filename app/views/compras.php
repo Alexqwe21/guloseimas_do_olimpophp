@@ -97,6 +97,9 @@ if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($
 <body>
     <header>
         <?php
+        // loader
+        require('template/loader.php');
+        
         // Inclui o cabeçalho
         require('template/header.php');
         ?>
