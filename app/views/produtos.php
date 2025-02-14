@@ -69,7 +69,7 @@
                         <?php foreach ($pg_produtos as $PG_produtos): ?>
                             <?php if ($PG_produtos['status_pedido'] === 'Ativo'): ?>
                                 <div class="tamanho_link">
-                                    <a href="<?php echo BASE_URL . 'produtos/detalhe/' . $PG_produtos['link_produto']; ?>">
+                                    <a href="<?php echo BASE_URL . 'produtos/detalhe/' . $PG_produtos['link_produto']; ?>" class="produtos_link_a">
                                         <div class="produto_a_mostra">
                                             <img src="<?php echo BASE_URL . 'uploads/' . $PG_produtos['foto_produto']; ?>"
                                                 alt="<?php echo htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8'); ?>"
@@ -162,7 +162,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let offset = 4;
+        let offset = 4; // Inicializa com o valor correto do offset
         const limite = 4;
         const produtosContainer = document.getElementById("produtos");
         const btnVerMais = document.getElementById("verMaisBtn");
@@ -174,23 +174,28 @@
         /**
          * Função para carregar mais produtos ao clicar no botão "Ver mais"
          */
-        function carregarMaisProdutos() {
-            fetch(`<?php echo BASE_URL; ?>produtos/carregarMaisProdutos?offset=${offset}`)
-                .then(response => response.text())
-                .then(data => {
-                    let cleanedData = data.trim(); // Remove espaços extras
 
-                    if (cleanedData === "") {
-                        btnVerMais.style.display = "none";
-                        const modal = new bootstrap.Modal(document.getElementById('modal_produtos'));
-                        modal.show();
-                    } else {
-                        produtosContainer.innerHTML += cleanedData; // Adiciona os novos produtos
-                        offset += limite;
-                    }
-                })
-                .catch(error => console.error("Erro ao carregar mais produtos:", error));
-        }
+
+// Função para carregar mais produtos
+function carregarMaisProdutos() {
+    fetch(`<?php echo BASE_URL; ?>produtos/carregarMaisProdutos?offset=${offset}`)
+        .then(response => response.text())
+        .then(data => {
+            let cleanedData = data.trim(); // Remove espaços extras
+
+            if (cleanedData === "") {
+                btnVerMais.style.display = "none";
+                const modal = new bootstrap.Modal(document.getElementById('modal_produtos'));
+                modal.show();
+            } else {
+                // Adiciona os novos produtos ao final da lista
+                produtosContainer.innerHTML += cleanedData;
+                offset += limite; // Atualiza o offset para o próximo carregamento
+            }
+        })
+        .catch(error => console.error("Erro ao carregar mais produtos:", error));
+}
+
 
         /**
          * Função para filtrar produtos por categoria

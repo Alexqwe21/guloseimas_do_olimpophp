@@ -1064,10 +1064,11 @@ footer .contato {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+    width: 100%;
 }
 
 .produtos .site .tamanho_link {
-    width: 260px;
+    width: 300px;
     height: 300px;
     margin-bottom: 50px;
 }
@@ -1086,6 +1087,13 @@ footer .contato {
     justify-content: center;
 }
 
+.produtos .site .tamanho_link .produtos_link_a{
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: center;
+    align-items: center;
+}
+
 .produtos .site .tamanho_link a .preco_produto {
     display: flex;
     align-items: center;
@@ -1093,10 +1101,12 @@ footer .contato {
 }
 
 .produtos .site .tamanho_link a .preco_produto h3 {
-    font-size: 19pt;
+    font-size: 15pt;
     font-family: var(--para_texto);
     font-weight: var(--negrito_normal);
     margin: 10px 0;
+    text-align: center;
+    
 }
 
 .produtos .site .tamanho_link a .preco_produto p {

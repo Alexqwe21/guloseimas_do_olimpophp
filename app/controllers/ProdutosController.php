@@ -540,20 +540,26 @@ class ProdutosController extends Controller
         if (!empty($produtos)) {
             foreach ($produtos as $PG_produtos) {
                 echo '<div class="tamanho_link">
-                        <a href="' . BASE_URL . 'produtos/detalhe/' . htmlspecialchars($PG_produtos['link_produto']) . '">
+                        <a href="' . BASE_URL . 'produtos/detalhe/' . htmlspecialchars($PG_produtos['link_produto']) . '" class="produtos_link_a">
                             <div class="produto_a_mostra">
                                 <img src="' . BASE_URL . 'uploads/' . htmlspecialchars($PG_produtos['foto_produto']) . '" 
-                                    alt="' . htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8') . '" 
-                                    class="pg_produto">
+                                     alt="' . htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8') . '" 
+                                     class="pg_produto">
                             </div>
                             <div class="preco_produto">
                                 <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
                                 <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
+                                 <button class="adicionar-favorito" data-id-produto="' . $PG_produtos['id_produto'] . '">
+                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg" alt="Adicionar aos favoritos">
+                            </button>
                             </div>
                         </a>
+                        <script src="<?php echo BASE_URL; ?>public/assets/js/favoritos.js"></script>
+
                     </div>';
             }
         }
+        
 
        
     }
@@ -573,7 +579,7 @@ class ProdutosController extends Controller
         if (!empty($produtos)) {
             foreach ($produtos as $PG_produtos) {
                 echo '<div class="tamanho_link">
-                    <a href="' . BASE_URL . 'produtos/detalhe/' . htmlspecialchars($PG_produtos['link_produto']) . '">
+                    <a href="' . BASE_URL . 'produtos/detalhe/' . htmlspecialchars($PG_produtos['link_produto']) . '" class="produtos_link_a">
                         <div class="produto_a_mostra">
                             <img src="' . BASE_URL . 'uploads/' . htmlspecialchars($PG_produtos['foto_produto']) . '" 
                                 alt="' . htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8') . '" 
@@ -582,11 +588,13 @@ class ProdutosController extends Controller
                         <div class="preco_produto">
                             <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
                             <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
-                            <button>
-                               <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg">
+                             <button class="adicionar-favorito" data-id-produto="' . $PG_produtos['id_produto'] . '">
+                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg" alt="Adicionar aos favoritos">
                             </button>
                         </div>
                     </a>    
+                    <script src="<?php echo BASE_URL; ?>public/assets/js/favoritos.js"></script>
+
                 </div>';
             }
         } else {
@@ -617,11 +625,13 @@ class ProdutosController extends Controller
                             <div class="preco_produto">
                                 <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
                                 <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
-                                 <button>
-                               <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg">
+                                  <button class="adicionar-favorito" data-id-produto="' . $PG_produtos['id_produto'] . '">
+                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg" alt="Adicionar aos favoritos">
                             </button>
                             </div>
                         </a>    
+                        <script src="<?php echo BASE_URL; ?>public/assets/js/favoritos.js"></script>
+
                     </div>';
             }
         } else {
@@ -650,25 +660,29 @@ class ProdutosController extends Controller
         if (!empty($produtos)) {
             foreach ($produtos as $PG_produtos) {
                 echo '<div class="tamanho_link">
-                <a href="' . BASE_URL . 'produtos/detalhe/' . htmlspecialchars($PG_produtos['link_produto']) . '">
-                    <div class="produto_a_mostra">
-                        <img src="' . BASE_URL . 'uploads/' . htmlspecialchars($PG_produtos['foto_produto']) . '" 
-                            alt="' . htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8') . '" 
-                            class="pg_produto">
-                    </div>
-                    <div class="preco_produto">
-                        <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
-                        <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
-                         <button>
-                               <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg">
+                    <a href="' . BASE_URL . 'produtos/detalhe/' . htmlspecialchars($PG_produtos['link_produto']) . '" class="produtos_link_a">
+                        <div class="produto_a_mostra">
+                            <img src="' . BASE_URL . 'uploads/' . htmlspecialchars($PG_produtos['foto_produto']) . '" 
+                                alt="' . htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8') . '" 
+                                class="pg_produto">
+                        </div>
+                        <div class="preco_produto">
+                            <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
+                            <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
+                            <button class="adicionar-favorito" data-id-produto="' . $PG_produtos['id_produto'] . '">
+                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg" alt="Adicionar aos favoritos">
                             </button>
-                    </div>
-                </a>
-            </div>';
+                        </div>
+                    </a>
+                </div>';
             }
         } else {
             echo '<p class="sem-produtos">Nenhum produto encontrado para esta categoria.</p>';
         }
+        
+
+
+        
 
        
     }
