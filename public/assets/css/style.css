@@ -203,7 +203,7 @@ footer .site .lado_a_lado,
 }
 
 .box {
-    width: 330px;
+    /* width: 330px; */
     margin: 20px;
 }
 
@@ -372,7 +372,7 @@ footer .site .lado_a_lado,
 }
 
 
- .foto_pessoa{
+.foto_pessoa {
     display: flex;
     align-items: center;
 }
@@ -908,7 +908,8 @@ footer .contato {
     align-items: center;
     margin-top: 50px;
 }
-.especialidades .site .especialidade_produto  .pd img{
+
+.especialidades .site .especialidade_produto .pd img {
     width: 350px;
     height: 300px;
     border-radius: 10px;
@@ -1389,7 +1390,7 @@ footer .contato {
     font-size: 16pt;
     padding: 20px;
     margin: 5px;
-    
+
     line-height: 40px;
 }
 
@@ -1999,8 +2000,8 @@ section .site .perfils_lado_a_lado {
 }
 
 
-section .site .perfil_cliente{
-    height: 700px  !important;
+section .site .perfil_cliente {
+    height: 700px !important;
 }
 
 
@@ -2148,20 +2149,20 @@ section .site .perfils_lado_a_lado .perfil_favoritos_reservas {
     font-size: 15pt;
 }
 
-.voltar_salvar{
+.voltar_salvar {
     display: flex;
- flex-direction: column;
- align-items: center;
-   
+    flex-direction: column;
+    align-items: center;
+
 }
 
-.link_favorito{
-    color:  black !important;
+.link_favorito {
+    color: black !important;
     text-transform: normal !important;
 }
 
 
-.favorito-item{
+.favorito-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2177,7 +2178,7 @@ section .site .perfils_lado_a_lado .perfil_favoritos_reservas {
     margin-bottom: 10px;
 }
 
-.favorito-item h3{
+.favorito-item h3 {
     text-align: center;
     font-size: 15pt;
     margin-bottom: 10px;
@@ -2189,18 +2190,17 @@ section .site .perfils_lado_a_lado .perfil_favoritos_reservas {
 }
 
 
-.perfil_favoritos h3{
+.perfil_favoritos h3 {
     text-align: center;
     color: #591f00;
     font-weight: bold;
     font-size: 15pt;
 }
 
-.remover-favorito{
+.remover-favorito {
     background: #260801;
     border-radius: 10px;
-    display: flex
-;
+    display: flex;
     justify-content: center;
     overflow: hidden;
     position: relative;
@@ -2214,7 +2214,7 @@ section .site .perfils_lado_a_lado .perfil_favoritos_reservas {
 }
 
 
-.remover-favorito:hover{
+.remover-favorito:hover {
     background-color: black;
     color: white;
     transition: background-color 0.15s ease-out, color 0.15s ease-out;
@@ -2229,23 +2229,24 @@ section .site .perfils_lado_a_lado .perfil_favoritos_reservas {
 
 /* HISTORICO DE RESERVAS  */
 
-section .site .historico_pedido{
+section .site .historico_pedido {
     text-align: center;
     padding-bottom: 50px;
 }
 
-section .site .historico_pedido h2 , section .site .historico_pedido p {
-    margin: 20px 0 ;
+section .site .historico_pedido h2,
+section .site .historico_pedido p {
+    margin: 20px 0;
     color: #352727;
     font-size: 1.5rem;
 }
 
-section .site .historico_pedido p{
+section .site .historico_pedido p {
     color: #8e7d75;
-    
+
 }
 
-section .site .card_title{
+section .site .card_title {
     width: 100%;
     min-height: 100px;
     background-color: white;
@@ -2256,11 +2257,11 @@ section .site .card_title{
     border-radius: 10px;
 }
 
-section .site .card_title span{
+section .site .card_title span {
     font-size: 1.3rem;
     color: #352727;
     font-family: var(--para_texto);
-   
+
 }
 
 
@@ -2268,40 +2269,85 @@ section .site .card_title .card_informacoes {
     display: flex;
     width: 100%;
     justify-content: space-around;
-    margin: 30px 0 ;
-    
-    
-    
+    margin: 30px 0;
+
+
+
 }
 
-section .site .card_title .card_informacoes span , section .site .card_title  .card_total_pago span{
+section .site .card_title .card_informacoes span,
+section .site .card_title .card_total_pago span {
     margin-top: 20px;
 }
 
 
-section .site .card_title .card_informacoes img{
+section .site .card_title .card_informacoes img {
     width: 100px;
     height: 100px;
     margin-top: 20px;
 }
 
-section .site .card_title .card_informacoes .colum , section .site .card_title  .card_total_pago .colum{
+section .site .card_title .card_informacoes .colum,
+section .site .card_title .card_total_pago .colum {
     display: flex;
     flex-flow: wrap column;
 }
 
-section .site .card_title .card_total_pago{
-
+section .site .card_title .card_total_pago {
     margin-left: 50px;
     font-size: 1rem;
     color: #352727;
     width: 20%;
 }
 
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(65, 75, 65, 0.226);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    display: none;
+    /* Oculto por padrão */
+}
 
+/* Estilos do Loader */
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    display: grid;
+    -webkit-mask: conic-gradient(from 15deg, #0000, #000);
+    animation: l26 9s infinite steps(12);
+}
 
+.loader,
+.loader:before,
+.loader:after {
+    background:
+        radial-gradient(closest-side at 50% 12.5%, #107210 96%, #0000) 50% 0/20% 80% repeat-y,
+        radial-gradient(closest-side at 12.5% 50%, #107210 96%, #0000) 0 50%/80% 20% repeat-x;
+}
 
+.loader:before,
+.loader:after {
+    content: "";
+    grid-area: 1/1;
+    transform: rotate(30deg);
+}
 
+.loader:after {
+    transform: rotate(60deg);
+}
+
+@keyframes l26 {
+    100% {
+        transform: rotate(1turn);
+    }
+}
 
 
 /* HISTORICO DE RESERVAS  */
@@ -2373,7 +2419,9 @@ section .site .card_title .card_total_pago{
         }
     }
 
-
+    /* .destaque .box {
+        width: 260px;
+    } */
 
     .ben_vindo .site .lado_a_lado .img_01 img,
     .ben_vindo .site .lado_a_lado .img_02 img {
@@ -2605,7 +2653,7 @@ section .site .card_title .card_total_pago{
     }
 
     .compras {
-        height: 800px;
+        height: auto;
     }
 
     .compras .site div h3 {
@@ -3117,7 +3165,7 @@ section .site .card_title .card_total_pago{
 
     .especialidades .site .especialidade_produto .pd img {
         width: 100%;
-        
+
     }
 
 
@@ -3138,7 +3186,7 @@ section .site .card_title .card_total_pago{
     }
 
 
-    
+
 
     .desc p {
         height: auto;
@@ -3405,7 +3453,7 @@ section .site .card_title .card_total_pago{
     }
 
 
-   
+
     .banner_sobre .site .mais_sobre_mim h2::after {
         font-size: 22pt;
         top: -150px;
