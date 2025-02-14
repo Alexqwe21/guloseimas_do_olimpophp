@@ -80,7 +80,8 @@
             <div class="mb-3" id="lado_a_lado">
                 <div>
                     <label for="preco_produto" class="form-label">Preço base</label>
-                    <input type="text" class="form-control" name="preco_produto" id="preco_produto" placeholder="Preço base do produto">
+                    <input type="number" class="form-control" name="preco_produto" id="preco_produto" placeholder="Preço base do produto" step="0.01">
+
                 </div>
                 <div>
                     <label for="status_pedido" class="form-label">Status do produto</label>

@@ -36,8 +36,8 @@
                                 <h4>Filtrar por preço</h4>
                             </div>
                             <div>
-                                <input type="range" min="0" max="1000" value="500" class="escolher-valor" id="escolher-valor">
-                                <p>Preço: R$ <span id="preco-atual">500</span></p>
+                                <input type="range" min="0" max="100" value="50" class="escolher-valor" id="escolher-valor">
+                                <p>Preço: R$ <span id="preco-atual">0</span></p>
                                 <h3>Filtrar por categoria</h3>
 
                                 <div class="lado_a_lado_lista">

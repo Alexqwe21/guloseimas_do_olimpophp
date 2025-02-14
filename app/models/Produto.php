@@ -396,8 +396,8 @@ class Produto extends Model
             $id_produto = $this->db->lastInsertId();
 
             // Inserção na tabela de informações do produto
-            $sql_info_produto = "INSERT INTO tbl_info_produtos(id_produto, descricao_info_produto, personalizacao_info_produtos, forma_pagamento_info_produto, entrega_info_produtos, reserva_info_produtos, status_info_produtos)
-            VALUES(:id_produto, :descricao_info_produto, :personalizacao_info_produtos, :forma_pagamento_info_produto, :entrega_info_produtos, :reserva_info_produtos, :status_info_produtos)";
+            $sql_info_produto = "INSERT INTO tbl_info_produtos(id_produto, descricao_info_produto, personalizacao_info_produtos, forma_pagamento_info_produto, entrega_info_produtos, reserva_info_produtos, status_info_produtos, foto_info_produto)
+            VALUES(:id_produto, :descricao_info_produto, :personalizacao_info_produtos, :forma_pagamento_info_produto, :entrega_info_produtos, :reserva_info_produtos, :status_info_produtos , :foto_info_produto)";
 
             $stmt_info_produto = $this->db->prepare($sql_info_produto);
             $stmt_info_produto->bindValue(':id_produto', $id_produto);
@@ -406,6 +406,7 @@ class Produto extends Model
             $stmt_info_produto->bindValue(':forma_pagamento_info_produto', $informacoes_produto['forma_pagamento_info_produto']);
             $stmt_info_produto->bindValue(':entrega_info_produtos', $informacoes_produto['entrega_info_produtos']);
             $stmt_info_produto->bindValue(':reserva_info_produtos', $informacoes_produto['reserva_info_produtos']);
+            $stmt_info_produto->bindValue(':foto_info_produto', $arquivo);
             $stmt_info_produto->bindValue(':status_info_produtos', 'Ativo'); 
             $stmt_info_produto->execute();
             // Confirma a transação

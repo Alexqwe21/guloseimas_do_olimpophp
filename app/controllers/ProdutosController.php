@@ -111,7 +111,8 @@ class ProdutosController extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Filtra os inputs corretamente
             $nome_produto = filter_input(INPUT_POST, 'nome_produto', FILTER_SANITIZE_SPECIAL_CHARS);
-            $preco_produto = filter_input(INPUT_POST, 'preco_produto', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+            $preco_produto = str_replace(',', '.', filter_input(INPUT_POST, 'preco_produto', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION));
+
             $alt_foto_produto = filter_input(INPUT_POST, 'alt_foto_produto', FILTER_SANITIZE_SPECIAL_CHARS);
             $id_categoria = filter_input(INPUT_POST, 'id_categoria', FILTER_SANITIZE_NUMBER_INT);
             $status_pedido = filter_input(INPUT_POST, 'status_pedido', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -554,7 +555,7 @@ class ProdutosController extends Controller
             }
         }
 
-        echo trim(ob_get_clean()); // Enviar a saída limpa
+       
     }
 
 
@@ -591,19 +592,19 @@ class ProdutosController extends Controller
         } else {
             echo '<p class="sem-produtos">Nenhum produto encontrado.</p>';
         }
-        echo trim(ob_get_clean()); // Enviar a saída limpa
+        
     }
 
 
     public function filtrarPorPreco()
     {
-        $precoMax = isset($_GET['preco']) ? floatval($_GET['preco']) : 1000;
-    
+        $precoMax = isset($_GET['preco']) ? floatval($_GET['preco']) : 100 ;
+
         // Buscar produtos até o preço máximo no banco de dados
         $produtos = $this->produtoModel->getProdutosPorPreco($precoMax);
-    
-        ob_start(); // Iniciar buffer de saída
-    
+
+       
+
         if (!empty($produtos)) {
             foreach ($produtos as $PG_produtos) {
                 echo '<div class="tamanho_link">
@@ -626,29 +627,29 @@ class ProdutosController extends Controller
         } else {
             echo '<p class="sem-produtos">Nenhum produto encontrado dentro desse preço.</p>';
         }
-    
-        echo trim(ob_get_clean()); // Enviar a saída limpa
+
+       
     }
 
     public function filtrarPorCategoria()
-{
-    $categoriaId = isset($_GET['categoria']) ? intval($_GET['categoria']) : 0;
-    $limite = isset($_GET['limite']) ? intval($_GET['limite']) : 10;
-    $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+    {
+        $categoriaId = isset($_GET['categoria']) ? intval($_GET['categoria']) : 0;
+        $limite = isset($_GET['limite']) ? intval($_GET['limite']) : 10;
+        $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
 
-    if ($categoriaId <= 0) {
-        echo '<p class="sem-produtos">Categoria inválida.</p>';
-        return;
-    }
+        if ($categoriaId <= 0) {
+            echo '<p class="sem-produtos">Categoria inválida.</p>';
+            return;
+        }
 
-    // Recupera os produtos da categoria no Model
-    $produtos = $this->produtoModel->getProdutosPorCategoria($categoriaId, $limite, $offset);
+        // Recupera os produtos da categoria no Model
+        $produtos = $this->produtoModel->getProdutosPorCategoria($categoriaId, $limite, $offset);
 
-    ob_start(); // Inicia buffer de saída
+      
 
-    if (!empty($produtos)) {
-        foreach ($produtos as $PG_produtos) {
-            echo '<div class="tamanho_link">
+        if (!empty($produtos)) {
+            foreach ($produtos as $PG_produtos) {
+                echo '<div class="tamanho_link">
                 <a href="' . BASE_URL . 'produtos/detalhe/' . htmlspecialchars($PG_produtos['link_produto']) . '">
                     <div class="produto_a_mostra">
                         <img src="' . BASE_URL . 'uploads/' . htmlspecialchars($PG_produtos['foto_produto']) . '" 
@@ -664,11 +665,11 @@ class ProdutosController extends Controller
                     </div>
                 </a>
             </div>';
+            }
+        } else {
+            echo '<p class="sem-produtos">Nenhum produto encontrado para esta categoria.</p>';
         }
-    } else {
-        echo '<p class="sem-produtos">Nenhum produto encontrado para esta categoria.</p>';
-    }
 
-    echo trim(ob_get_clean()); // Enviar a saída limpa
-}
+       
+    }
 }
