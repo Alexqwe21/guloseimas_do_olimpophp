@@ -2321,7 +2321,7 @@ section .site .card_title .card_total_pago {
     aspect-ratio: 1;
     display: grid;
     -webkit-mask: conic-gradient(from 15deg, #0000, #000);
-    animation: l26 9s infinite steps(12);
+    animation: l26 3s infinite steps(12);
 }
 
 .loader,
@@ -2679,6 +2679,27 @@ section .site .card_title .card_total_pago {
         margin-top: 70px;
     }
 
+    .box .img_01 {
+        justify-content: center;
+    }
+
+    .sobre_pessoa {
+        padding: 15px;
+    }
+
+    .sobre_pessoa .site .lado_a_lado .foto_pessoa a img {
+        width: 100%;
+    }
+
+    .sobre_pessoa .site .sobre p {
+        font-size: 13pt;
+    }
+
+    .sobre_pessoa .site .sobre h2 {
+        margin-bottom: 0px;
+    }
+
+
     .destaques .site .highlights {
         flex-flow: column wrap;
         align-items: center;
@@ -2747,7 +2768,11 @@ section .site .card_title .card_total_pago {
     footer .site .lado_a_lado .contato h3,
     footer .site .lado_a_lado .nav_footer ul li a {
         font-size: 18pt;
-        margin-bottom: 30px;
+        margin-bottom: 30px;  
+    }
+
+    footer .site .lado_a_lado .contato .nav_footer ul {
+        display: flex;
     }
 
     footer .site nav ul li {
@@ -2760,17 +2785,13 @@ section .site .card_title .card_total_pago {
         align-items: center;
     }
 
-
     footer .site .lado_a_lado .newsletter p {
         text-align: center;
     }
 
-
     footer .site .lado_a_lado .newsletter form button {
         top: 2px;
     }
-
-
 
     .banner_sobre .site .mais_sobre_mim h2::after {
         right: 100px;
@@ -2779,7 +2800,6 @@ section .site .card_title .card_total_pago {
 
     .banner_sobre .site .mais_sobre_mim h2 {
         font-size: 70pt;
-
     }
 
 
@@ -2913,7 +2933,7 @@ section .site .card_title .card_total_pago {
 
 
     .compras {
-        height: 1300px;
+        height: auto;
     }
 
 
