@@ -2931,11 +2931,9 @@ section .site .card_title .card_total_pago {
         justify-content: space-around;
     }
 
-
     .compras {
         height: auto;
     }
-
 
     .compras .compras_box {
         width: 50%;
@@ -2964,6 +2962,10 @@ section .site .card_title .card_total_pago {
     .compras .compras_box .desc_compras h6 {
         text-align: center;
         margin-top: 10px;
+    }
+
+    .compras .site .lado_a_lado {
+        width: 100%;
     }
 
 }
