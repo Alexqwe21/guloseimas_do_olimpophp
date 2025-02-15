@@ -1317,6 +1317,16 @@ footer .contato {
     width: 200px;
 }
 
+.button_forms button{
+    width: 250px !important;
+}
+
+.button_forms  button:hover{
+    background-color: black !important;
+    color: white !important;
+    transition: background-color 0.15s ease-out, color 0.15s ease-out !important;
+}
+
 /* STYLE PAGINA RESERVA */
 .reserva_produto h3,
 .reserva_produto p {

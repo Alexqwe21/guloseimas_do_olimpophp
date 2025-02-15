@@ -162,8 +162,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let offset = 4; // Inicializa com o valor correto do offset
-        const limite = 4;
+      
         const produtosContainer = document.getElementById("produtos");
         const btnVerMais = document.getElementById("verMaisBtn");
         const precoRange = document.getElementById("escolher-valor");
@@ -176,25 +175,28 @@
          */
 
 
-// Função para carregar mais produtos
-function carregarMaisProdutos() {
-    fetch(`<?php echo BASE_URL; ?>produtos/carregarMaisProdutos?offset=${offset}`)
-        .then(response => response.text())
-        .then(data => {
-            let cleanedData = data.trim(); // Remove espaços extras
+        // Função para carregar mais produtos
+        let offset = 2; // Começa do primeiro offset (ajuste conforme necessário)
+        const limite = 2; // Define o limite de produtos carregados por vez
 
-            if (cleanedData === "") {
-                btnVerMais.style.display = "none";
-                const modal = new bootstrap.Modal(document.getElementById('modal_produtos'));
-                modal.show();
-            } else {
-                // Adiciona os novos produtos ao final da lista
-                produtosContainer.innerHTML += cleanedData;
-                offset += limite; // Atualiza o offset para o próximo carregamento
-            }
-        })
-        .catch(error => console.error("Erro ao carregar mais produtos:", error));
-}
+        function carregarMaisProdutos() {
+            fetch(`<?php echo BASE_URL; ?>produtos/carregarMaisProdutos?offset=${offset}&limite=${limite}`)
+
+                .then(response => response.text())
+                .then(data => {
+                    let cleanedData = data.trim(); // Remove espaços extras
+
+                    if (cleanedData === "") {
+                        btnVerMais.style.display = "none";
+                        const modal = new bootstrap.Modal(document.getElementById('modal_produtos'));
+                        modal.show();
+                    } else {
+                        produtosContainer.innerHTML += cleanedData; // Adiciona os novos produtos
+                        offset += limite; // 🔥 ATUALIZA O OFFSET APÓS O CARREGAMENTO
+                    }
+                })
+                .catch(error => console.error("Erro ao carregar mais produtos:", error));
+        }
 
 
         /**
@@ -212,10 +214,48 @@ function carregarMaisProdutos() {
                         produtosContainer.innerHTML = "<p class='sem-produtos'>Nenhum produto encontrado para esta categoria.</p>";
                     } else {
                         produtosContainer.innerHTML = cleanedData; // Limpa e exibe apenas os produtos filtrados
+                        reatribuirEventosFavoritos(); // 🔥 REATRIBUIR EVENTOS AOS NOVOS BOTÕES
                     }
                 })
                 .catch(error => console.error("Erro ao filtrar produtos:", error));
         }
+
+        function reatribuirEventosFavoritos() {
+            document.querySelectorAll('.adicionar-favorito').forEach(button => {
+                button.removeEventListener('click', adicionarAosFavoritos); // Remove event listener duplicado
+                button.addEventListener('click', adicionarAosFavoritos);
+            });
+        }
+
+        function adicionarAosFavoritos(event) {
+            event.preventDefault();
+            const idProduto = this.getAttribute('data-id-produto');
+
+            fetch('<?php echo BASE_URL; ?>favoritos/adicionarFavorito', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id_produto: idProduto
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.sucesso) {
+                        const modal = new bootstrap.Modal(document.getElementById('modal_adicionado_favorito'));
+                        modal.show();
+                    } else {
+                        alert(data.erro || 'Erro ao adicionar aos favoritos.');
+                    }
+                })
+                .catch(error => {
+                    console.error("Erro ao adicionar o produto aos favoritos:", error);
+                    alert('Erro ao adicionar o produto aos favoritos.');
+                });
+        }
+
+
 
         /**
          * Função para filtrar produtos por preço
@@ -232,10 +272,12 @@ function carregarMaisProdutos() {
                         produtosContainer.innerHTML = "<p class='sem-produtos'>Nenhum produto encontrado dentro desse preço.</p>";
                     } else {
                         produtosContainer.innerHTML = cleanedData; // Substitui os produtos com os filtrados
+                        reatribuirEventosFavoritos(); // 🔥 REATRIBUIR EVENTOS AOS NOVOS BOTÕES
                     }
                 })
                 .catch(error => console.error("Erro ao filtrar por preço:", error));
         }
+
         /**
          * Função para exibir todos os produtos novamente
          */
@@ -243,17 +285,19 @@ function carregarMaisProdutos() {
             fetch(`<?php echo BASE_URL; ?>produtos/mostrarTodosProdutos?offset=0&limite=100`)
                 .then(response => response.text())
                 .then(data => {
-                    let cleanedData = data.trim(); // Remove espaços extras
+                    let cleanedData = data.trim();
 
                     if (cleanedData === "") {
                         produtosContainer.innerHTML = "<p class='sem-produtos'>Nenhum produto encontrado.</p>";
                     } else {
                         produtosContainer.innerHTML = cleanedData;
-                        btnVerMais.style.display = "block"; // Exibe o botão "Ver mais produtos"
+                        btnVerMais.style.display = "block";
+                        reatribuirEventosFavoritos(); // 🔥 REATRIBUIR EVENTOS AOS NOVOS BOTÕES
                     }
                 })
                 .catch(error => console.error("Erro ao carregar todos os produtos:", error));
         }
+
 
         // Eventos
         if (btnVerMais) {

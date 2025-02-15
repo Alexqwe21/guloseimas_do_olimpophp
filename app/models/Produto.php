@@ -155,7 +155,8 @@ class Produto extends Model
     }
 
 
-    public function atualizar_info_Produto($id, $dados){
+    public function atualizar_info_Produto($id, $dados)
+    {
         // Definindo a query SQL
         $sql = "UPDATE tbl_produtos AS p
     INNER JOIN tbl_info_produtos AS ip ON p.id_produto = ip.id_produto
@@ -373,7 +374,8 @@ class Produto extends Model
         exit();
     }
 
-    public function addproduto($dados, $arquivo, $informacoes_produto){
+    public function addproduto($dados, $arquivo, $informacoes_produto)
+    {
         try {
             // Inicia a transação
             $this->db->beginTransaction();
@@ -407,7 +409,7 @@ class Produto extends Model
             $stmt_info_produto->bindValue(':entrega_info_produtos', $informacoes_produto['entrega_info_produtos']);
             $stmt_info_produto->bindValue(':reserva_info_produtos', $informacoes_produto['reserva_info_produtos']);
             $stmt_info_produto->bindValue(':foto_info_produto', $arquivo);
-            $stmt_info_produto->bindValue(':status_info_produtos', 'Ativo'); 
+            $stmt_info_produto->bindValue(':status_info_produtos', 'Ativo');
             $stmt_info_produto->execute();
             // Confirma a transação
             $this->db->commit();
@@ -454,12 +456,18 @@ class Produto extends Model
     }
 
 
-    public function getVerMaisProdutos($limite, $offset){
-        $sql = "SELECT * FROM tbl_produtos WHERE status_pedido = 'Ativo' LIMIT :limite OFFSET :offset";
+    public function getVerMaisProdutos($limite, $offset)
+    {
+        $sql = "SELECT * FROM tbl_produtos 
+                WHERE status_pedido = 'Ativo' 
+                ORDER BY id_produto ASC 
+                LIMIT :limite OFFSET :offset";
+
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -482,7 +490,8 @@ class Produto extends Model
     }
 
 
-    public function getTodosProdutos($limite = 2, $offset = 0){
+    public function getTodosProdutos($limite = 2, $offset = 0)
+    {
         // Query para buscar todos os produtos com limite e offset
         $sql = "SELECT * FROM tbl_produtos WHERE status_pedido = 'Ativo' LIMIT :limite OFFSET :offset";
 
@@ -500,14 +509,12 @@ class Produto extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getProdutosPorPreco($precoMax){
+    public function getProdutosPorPreco($precoMax)
+    {
         $sql = "SELECT * FROM tbl_produtos WHERE preco_produto <= :precoMax AND status_pedido = 'Ativo' ORDER BY preco_produto ASC";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':precoMax', $precoMax, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
-
-    
 }
