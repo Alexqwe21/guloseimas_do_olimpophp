@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
+<?php
+if (isset($_GET['pedido']) && $_GET['pedido'] === 'sucesso') {
+    echo '';
+}
+?>
 <head>
     <?php require(__DIR__ . '/../head_geral/head.php'); ?>
 </head>
@@ -80,6 +84,27 @@
         </section>
     </main>
 
+
+    <!-- Modal Bootstrap -->
+<div class="modal fade" id="pedidoModal" tabindex="-1" aria-labelledby="pedidoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pedidoModalLabel">Pedido Confirmado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Pedido realizado com sucesso! Obrigado por comprar conosco.
+            </div>
+            <div class="modal-footer">
+                <a href="http://localhost/guloseimas_do_olimpophp/public/Cliente/historico_reserva/" class="btn btn-success">Ver Histórico</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
     <footer>
         <?php require(__DIR__ . '/../template/footer.php'); ?>
     </footer>
@@ -87,5 +112,16 @@
     <?php require(__DIR__ . '/../script_geral/script.php'); ?>
 
 </body>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("pedido") === "sucesso") {
+            var pedidoModal = new bootstrap.Modal(document.getElementById("pedidoModal"));
+            pedidoModal.show();
+        }
+    });
+</script>
 
 </html>

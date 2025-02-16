@@ -79,7 +79,8 @@ if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($
     unset($_SESSION['carrinho']);
 
     // Redireciona para a mesma página com a mensagem de sucesso
-    header("Location: " . BASE_URL . "compras?pedido=sucesso");
+    // Redireciona para a página de histórico de reservas com mensagem de sucesso
+    header("Location: " . BASE_URL . "Cliente/historico_reserva?pedido=sucesso");
     exit;
 }
 
@@ -99,7 +100,7 @@ if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($
         <?php
         // loader
         require('template/loader.php');
-        
+
         // Inclui o cabeçalho
         require('template/header.php');
         ?>
@@ -258,22 +259,43 @@ if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($
 
     const numeroWhatsApp = '5511968812993'; // Número do WhatsApp no formato internacional
     let mensagem = "Olá, gostaria de reservar os seguintes produtos:\n\n";
-    let total = 0; // Total inicial
-    let numProdutos = 0; // Número total de produtos
+    let total = 0;
+    let numProdutos = 0;
+    
+    // Seleciona o carrinho
+    const carrinhoElement = document.querySelector('.compras');
+    if (!carrinhoElement) {
+        alert("Erro: Carrinho não encontrado.");
+        return;
+    }
+
+    // Captura os produtos no carrinho
+    const produtosNoCarrinho = document.querySelectorAll('.compras_box');
+
+    // Se não houver produtos, exibir alerta e não prosseguir
+    if (produtosNoCarrinho.length === 0) {
+        alert("Seu carrinho está vazio.");
+        return;
+    }
 
     // Percorre os produtos do carrinho
-    document.querySelectorAll('.compras_box').forEach(function(box) {
+    produtosNoCarrinho.forEach(function(box) {
         const nomeProduto = box.querySelector('.desc_compras p').textContent;
         const quantidade = parseInt(box.querySelector('.number-display').textContent);
         const preco = parseFloat(box.querySelector('.number-display').dataset.preco);
 
-        // Calcula o subtotal
-        total += quantidade * preco;
-        numProdutos += quantidade;
-
-        // Adiciona o produto e quantidade à mensagem
-        mensagem += `- ${nomeProduto}: ${quantidade} x R$${preco.toFixed(2).replace('.', ',')}\n`;
+        if (quantidade > 0) {
+            total += quantidade * preco;
+            numProdutos += quantidade;
+            mensagem += `- ${nomeProduto}: ${quantidade} x R$${preco.toFixed(2).replace('.', ',')}\n`;
+        }
     });
+
+    // Se nenhum produto foi adicionado corretamente, exibir alerta e não prosseguir
+    if (numProdutos === 0) {
+        alert("Adicione produtos ao carrinho antes de reservar.");
+        return;
+    }
 
     // Adiciona o total ao final da mensagem
     mensagem += `\nTotal: R$${total.toFixed(2).replace('.', ',')}`;
@@ -281,9 +303,13 @@ if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($
     // Captura a data do pedido
     const dataPedido = new Date().toLocaleString(); // Data e hora atual
 
-    // Adiciona a data ao histórico de pedidos no localStorage (para persistência local)
+    // Adiciona a data ao histórico de pedidos no localStorage
     let historicoPedidos = JSON.parse(localStorage.getItem('historicoPedidos')) || [];
-    historicoPedidos.push({ data: dataPedido, total: total, mensagem: mensagem });
+    historicoPedidos.push({
+        data: dataPedido,
+        total: total,
+        mensagem: mensagem
+    });
     localStorage.setItem('historicoPedidos', JSON.stringify(historicoPedidos));
 
     // Codifica a mensagem para a URL
@@ -293,20 +319,31 @@ if (isset($_POST['reservar_pedido']) && isset($_SESSION['carrinho']) && !empty($
     // Abre o WhatsApp em uma nova aba
     window.open(linkWhatsApp, '_blank');
 
+    // Remove os itens do carrinho após um pequeno tempo
+    setTimeout(() => {
+        // Limpa o carrinho somente se a página ainda estiver carregada
+        if (document.querySelector('.compras')) {
+            document.querySelector('.compras').innerHTML = `  
+                <div class="carrinho-vazio">
+                    <h3>Seu carrinho está vazio</h3>
+                    <p>Que tal dar uma olhada nos nossos <a href="${BASE_URL}produtos">produtos?</a></p>
+                </div>
+            `;
+        }
+    }, 500); // Limpa o carrinho após 500ms
+
+    // Aguarda um tempo e redireciona para a página de histórico
+    setTimeout(() => {
+        window.location.href = "http://localhost/guloseimas_do_olimpophp/public/Cliente/historico_reserva?pedido=sucesso";
+    }, 2000); // Redireciona após 2 segundos
+
     // Exibe a mensagem de pedido confirmado
     const mensagemConfirmacao = document.createElement('div');
     mensagemConfirmacao.className = 'pedido-confirmado';
     mensagemConfirmacao.textContent = 'Pedido feito com sucesso! Obrigado por comprar conosco.';
     document.body.insertBefore(mensagemConfirmacao, document.body.firstChild);
-
-    // Limpa o carrinho na página
-    document.querySelector('.compras').innerHTML = `  
-        <div class="carrinho-vazio">
-            <h3>Seu carrinho está vazio</h3>
-            <p>Que tal dar uma olhada nos nossos <a href="${BASE_URL}produtos">produtos?</a></p>
-        </div>
-    `;
 }
+
 
     document.querySelectorAll('.qtd_box').forEach(function(qtdBox) {
         const decrementButton = qtdBox.querySelector('.decrement-button');

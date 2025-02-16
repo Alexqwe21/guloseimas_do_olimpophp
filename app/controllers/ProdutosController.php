@@ -530,13 +530,13 @@ class ProdutosController extends Controller
 
     public function carregarMaisProdutos()
     {
-        $limite = 2;
+        $limite = isset($_GET['limite']) ? intval($_GET['limite']) : 2; // Garantindo que o limite seja definido
         $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
-
+    
         $produtos = $this->produtoModel->getVerMaisProdutos($limite, $offset);
-
+    
         ob_start(); // Inicia o buffer de saída
-
+    
         if (!empty($produtos)) {
             foreach ($produtos as $PG_produtos) {
                 echo '<div class="tamanho_link">
@@ -549,21 +549,20 @@ class ProdutosController extends Controller
                             <div class="preco_produto">
                                 <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
                                 <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
-                                 <button class="adicionar-favorito" data-id-produto="' . $PG_produtos['id_produto'] . '">
-                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg" alt="Adicionar aos favoritos">
-                            </button>
+                                <button class="adicionar-favorito" data-id-produto="' . $PG_produtos['id_produto'] . '">
+                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg" alt="adicionar_favoritos">
+                                </button>
                             </div>
                         </a>
-                        <script src="<?php echo BASE_URL; ?>public/assets/js/favoritos.js"></script>
-
                     </div>';
             }
+        } else {
+            echo ""; // Se não houver mais produtos, retorna uma string vazia
         }
-        
-
-       
+    
+        ob_end_flush(); // Envia o buffer de saída
     }
-
+    
 
     // Função para mostrar todos os produtos (sem filtro de categoria)
     public function mostrarTodosProdutos()

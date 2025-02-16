@@ -457,19 +457,20 @@ class Produto extends Model
 
 
     public function getVerMaisProdutos($limite, $offset)
-    {
-        $sql = "SELECT * FROM tbl_produtos 
-                WHERE status_pedido = 'Ativo' 
-                ORDER BY id_produto ASC 
-                LIMIT :limite OFFSET :offset";
+{
+    $sql = "SELECT * FROM tbl_produtos 
+            WHERE status_pedido = 'Ativo' 
+            ORDER BY id_produto ASC 
+            LIMIT :limite OFFSET :offset";
 
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-        $stmt->execute();
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
 
     public function getProdutosPorCategoria($categoriaId, $limite = 10, $offset = 0)

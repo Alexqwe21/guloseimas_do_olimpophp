@@ -162,7 +162,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-      
+
         const produtosContainer = document.getElementById("produtos");
         const btnVerMais = document.getElementById("verMaisBtn");
         const precoRange = document.getElementById("escolher-valor");
@@ -176,28 +176,38 @@
 
 
         // Função para carregar mais produtos
-        let offset = 2; // Começa do primeiro offset (ajuste conforme necessário)
-        const limite = 2; // Define o limite de produtos carregados por vez
+        let produtosIniciais = 0; // Agora o offset começa com 16
+        let offset = produtosIniciais;
+        const limite = 2; // Define quantos produtos carregar por clique
 
         function carregarMaisProdutos() {
             fetch(`<?php echo BASE_URL; ?>produtos/carregarMaisProdutos?offset=${offset}&limite=${limite}`)
-
                 .then(response => response.text())
                 .then(data => {
                     let cleanedData = data.trim(); // Remove espaços extras
 
                     if (cleanedData === "") {
-                        btnVerMais.style.display = "none";
+                        btnVerMais.style.display = "none"; // Esconde o botão se não houver mais produtos
                         const modal = new bootstrap.Modal(document.getElementById('modal_produtos'));
                         modal.show();
                     } else {
                         produtosContainer.innerHTML += cleanedData; // Adiciona os novos produtos
-                        offset += limite; // 🔥 ATUALIZA O OFFSET APÓS O CARREGAMENTO
+                        offset += limite; // 🔥 Atualiza corretamente o offset
+
+                        // 🔥 REATRIBUIR EVENTOS AOS NOVOS BOTÕES DE FAVORITOS
+                        reatribuirEventosFavoritos();
                     }
                 })
                 .catch(error => console.error("Erro ao carregar mais produtos:", error));
         }
 
+        // 🔥 Função para reatribuir eventos aos botões de favoritos nos produtos carregados dinamicamente
+        function reatribuirEventosFavoritos() {
+            document.querySelectorAll(".adicionar-favorito").forEach(botao => {
+                botao.removeEventListener("click", adicionarAosFavoritos); // Remove eventos anteriores
+                botao.addEventListener("click", adicionarAosFavoritos); // Adiciona novamente o evento
+            });
+        }
 
         /**
          * Função para filtrar produtos por categoria
