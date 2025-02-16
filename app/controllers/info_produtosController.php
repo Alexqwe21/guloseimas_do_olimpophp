@@ -152,25 +152,30 @@ class info_produtosController extends Controller
     }
 
 
-    public function adicionarReserva($idProduto){
+    public function adicionarReserva($idProduto) {
         // Verifica se o cliente está logado
-        if (!isset($_SESSION['userId'])) {  // Alterar para $_SESSION['userId']
+        if (!isset($_SESSION['userId'])) {
             $_SESSION['erro'] = 'Faça login para reservar.';
             header('Location: ' . BASE_URL . 'login');
             exit();
         }
-
+    
         // Obtém o id do cliente a partir da sessão
-        $id_cliente = $_SESSION['userId'];  // Alterar para $_SESSION['userId']
-
-        // Cria uma instância do modelo Produto (assumindo que o método adicionar está lá)
+        $id_cliente = $_SESSION['userId'];
+    
+        // **Zera o carrinho completamente**
+        $_SESSION['carrinho'] = [];  // Garante que o carrinho esteja vazio
+    
+        // Cria uma instância do modelo Produto
         $produtoModel = new Produto();
-
-        // Chama o método de adicionar do modelo Produto para fazer a reserva, passando o $id_cliente
+    
+        // Chama o método adicionar do modelo Produto para fazer a reserva
         $produtoModel->adicionar($idProduto, $id_cliente);
-
+    
         // Redireciona o usuário para a página de reservas
         header('Location: ' . BASE_URL . 'reservas');
         exit();
     }
+    
+    
 }

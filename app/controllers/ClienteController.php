@@ -305,6 +305,42 @@ class ClienteController extends Controller
         $this->carregarViews('login', $dados);
     }
 
+    public function limpar_carrinho()
+    {
+        // Inicia a sessão caso ainda não esteja iniciada
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+    
+        // Remove os itens do carrinho completamente
+        $_SESSION['carrinho'] = [];
+    
+        // Retorna uma resposta JSON para o JavaScript
+        echo json_encode(["status" => "success", "message" => "Carrinho completamente esvaziado"]);
+        exit;
+    }
+
+
+    public function esvaziar_carrinho()
+    {
+        // Inicia a sessão caso ainda não esteja iniciada
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+    
+        // Remove os itens do carrinho completamente
+        $_SESSION['carrinho'] = [];
+    
+        // Redireciona para a página de produtos
+        header("Location: " . BASE_URL . "produtos"); 
+        exit;
+    }
+    
+    
+    
+    
+
+
     public function sair()
     {
         // Destrói a sessão para logout
