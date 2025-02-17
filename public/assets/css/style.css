@@ -3331,7 +3331,7 @@ section .site .card_title .card_total_pago {
     footer .site .redes_footer {
         display: flex;
         padding: 5px;
-        justify-content: end;
+        justify-content: center;
     }
 
     footer .site .lado_a_lado .newsletter form {
