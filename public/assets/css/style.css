@@ -1087,7 +1087,7 @@ footer .contato {
     justify-content: center;
 }
 
-.produtos .site .tamanho_link .produtos_link_a{
+.produtos .site .tamanho_link .produtos_link_a {
     display: flex;
     flex-flow: wrap column;
     justify-content: center;
@@ -1106,7 +1106,7 @@ footer .contato {
     font-weight: var(--negrito_normal);
     margin: 10px 0;
     text-align: center;
-    
+
 }
 
 .produtos .site .tamanho_link a .preco_produto p {
@@ -1317,11 +1317,11 @@ footer .contato {
     width: 200px;
 }
 
-.button_forms button{
+.button_forms button {
     width: 250px !important;
 }
 
-.button_forms  button:hover{
+.button_forms button:hover {
     background-color: black !important;
     color: white !important;
     transition: background-color 0.15s ease-out, color 0.15s ease-out !important;
@@ -2326,49 +2326,33 @@ section .site .card_title .card_total_pago {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(65, 75, 65, 0.226);
+    background: rgba(190, 196, 190, 0.493);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
     display: none;
-    /* Oculto por padrão */
 }
 
-/* Estilos do Loader */
 .loader {
-    width: 50px;
-    aspect-ratio: 1;
-    display: grid;
-    -webkit-mask: conic-gradient(from 15deg, #0000, #000);
-    animation: l26 3s infinite steps(12);
+    width: fit-content;
+    font-weight: bold;
+    font-family: var(--font_links);
+    font-size: 21pt;
+    clip-path: inset(0 0.5s 0 0);
+    animation: l4 3s steps(11) infinite;
+    white-space: nowrap;
 }
 
-.loader,
-.loader:before,
-.loader:after {
-    background:
-        radial-gradient(closest-side at 50% 12.5%, #107210 96%, #0000) 50% 0/20% 80% repeat-y,
-        radial-gradient(closest-side at 12.5% 50%, #107210 96%, #0000) 0 50%/80% 20% repeat-x;
+.loader:before {
+    content: "Carregando..."
 }
 
-.loader:before,
-.loader:after {
-    content: "";
-    grid-area: 1/1;
-    transform: rotate(30deg);
-}
-
-.loader:after {
-    transform: rotate(60deg);
-}
-
-@keyframes l26 {
-    100% {
-        transform: rotate(1turn);
+@keyframes l4 {
+    to {
+        clip-path: inset(0 -2ch 0 0)
     }
 }
-
 
 /* HISTORICO DE RESERVAS  */
 
@@ -2788,7 +2772,7 @@ section .site .card_title .card_total_pago {
     footer .site .lado_a_lado .contato h3,
     footer .site .lado_a_lado .nav_footer ul li a {
         font-size: 18pt;
-        margin-bottom: 30px;  
+        margin-bottom: 30px;
     }
 
     footer .site .lado_a_lado .contato .nav_footer ul {
