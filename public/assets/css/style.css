@@ -674,9 +674,10 @@ footer .contato {
 }
 
 .banner_sobre .site .mais_sobre_mim h2 {
-    font-size: 100pt;
+    font-size: 80pt;
     text-transform: uppercase;
-    font-family: var(--para_texto);
+    /* font-family: var(--para_texto); */
+    font-family: var(--font_pg_sobre);
     position: relative;
     top: 50px;
 }
@@ -688,17 +689,19 @@ footer .contato {
     position: relative;
     bottom: 185px;
     right: 162px;
-    font-family: var(--font_titulo);
+    /* font-family: var(--font_titulo); */
+    font-family: var(--font_pg_sobre);
     color: #ffbb00;
 }
 
 .banner_sobre .site .mais_sobre_mim h2::before {
     content: "Mim";
-    font-size: 50pt;
+    font-size: 60pt;
     position: relative;
     top: 62px;
     left: 580px;
-    font-family: var(--font_titulo);
+    /* font-family: var(--font_titulo); */
+    font-family: var(--font_pg_sobre);
     color: #DAA522;
 }
 
@@ -820,6 +823,8 @@ footer .contato {
 
 .sobre_mim .box_txt .title h3 {
     font-family: var(--para_texto);
+    position: relative;
+    right: 100px;
 }
 
 .sobre_mim .box_txt .subtitle {
@@ -2448,6 +2453,11 @@ section .site .card_title .card_total_pago {
     .ben_vindo .site .lado_a_lado .img_02 img {
         width: 300px;
         margin: 20px;
+    }
+
+    .ben_vindo .lado_a_lado{
+        flex-direction: column;
+        align-items: center;
     }
 
     .ben_vindo .guloseimas h2,

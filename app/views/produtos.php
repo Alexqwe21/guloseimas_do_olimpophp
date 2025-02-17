@@ -156,7 +156,25 @@
     </div>
 
 
-
+<!-- Modal de Login Necessário -->
+<!-- Modal de Login -->
+<div class="modal fade" id="modal_fazer_login" tabindex="-1" aria-labelledby="modal_fazer_loginLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_fazer_loginLabel">Login Necessário</h5>
+               
+            </div>
+            <div class="modal-body">
+                <p>Você precisa estar logado para adicionar produtos aos favoritos. Clique no botão abaixo para fazer login.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="<?php echo BASE_URL; ?>login" class="btn btn-primary">Fazer Login</a>
+               
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 
@@ -238,32 +256,42 @@
         }
 
         function adicionarAosFavoritos(event) {
-            event.preventDefault();
-            const idProduto = this.getAttribute('data-id-produto');
+    event.preventDefault();
+    const idProduto = event.target.closest(".adicionar-favorito").getAttribute("data-id-produto");
 
-            fetch('<?php echo BASE_URL; ?>favoritos/adicionarFavorito', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        id_produto: idProduto
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.sucesso) {
-                        const modal = new bootstrap.Modal(document.getElementById('modal_adicionado_favorito'));
-                        modal.show();
-                    } else {
-                        alert(data.erro || 'Erro ao adicionar aos favoritos.');
-                    }
-                })
-                .catch(error => {
-                    console.error("Erro ao adicionar o produto aos favoritos:", error);
-                    alert('Erro ao adicionar o produto aos favoritos.');
-                });
+    fetch('<?php echo BASE_URL; ?>favoritos/adicionarFavorito', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id_produto: idProduto })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.sucesso) {
+            // Exibe o modal de sucesso ao adicionar o produto aos favoritos
+            const modalFavorito = new bootstrap.Modal(document.getElementById('modal_adicionado_favorito'));
+            modalFavorito.show();
+        } else if (data.redirect) {
+            // Exibe o modal de login caso o usuário não esteja autenticado
+            const modalLogin = new bootstrap.Modal(document.getElementById('modal_fazer_login'));
+            modalLogin.show();
+        } else {
+            // Não exibe nenhum alerta aqui
+            // Caso não tenha ocorrido erro, mas o favorito não foi adicionado, não é necessário fazer nada
         }
+    })
+   
+}
+
+// Event Listener para os botões
+document.addEventListener("click", function(event) {
+    if (event.target.closest(".adicionar-favorito")) {
+        event.preventDefault();
+        adicionarAosFavoritos(event);
+    }
+});
+
 
 
 

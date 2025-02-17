@@ -549,9 +549,9 @@ class ProdutosController extends Controller
                             <div class="preco_produto">
                                 <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
                                 <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
-                                <button class="adicionar-favorito" data-id-produto="' . $PG_produtos['id_produto'] . '">
-                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg" alt="adicionar_favoritos">
-                                </button>
+                               <button class="adicionar-favorito" data-id-produto="' . htmlspecialchars($PG_produtos['id_produto'], ENT_QUOTES, 'UTF-8') . '">
+                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg" alt="Adicionar aos favoritos">
+                            </button>
                             </div>
                         </a>
                     </div>';
@@ -587,7 +587,7 @@ class ProdutosController extends Controller
                         <div class="preco_produto">
                             <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
                             <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
-                             <button class="adicionar-favorito" data-id-produto="' . $PG_produtos['id_produto'] . '">
+                             <button class="adicionar-favorito" data-id-produto="' . htmlspecialchars($PG_produtos['id_produto'], ENT_QUOTES, 'UTF-8') . '">
                                 <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg" alt="Adicionar aos favoritos">
                             </button>
                         </div>
@@ -624,7 +624,7 @@ class ProdutosController extends Controller
                             <div class="preco_produto">
                                 <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
                                 <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
-                                  <button class="adicionar-favorito" data-id-produto="' . $PG_produtos['id_produto'] . '">
+                                  <button class="adicionar-favorito" data-id-produto="' . htmlspecialchars($PG_produtos['id_produto'], ENT_QUOTES, 'UTF-8') . '">
                                 <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg" alt="Adicionar aos favoritos">
                             </button>
                             </div>
@@ -668,9 +668,11 @@ class ProdutosController extends Controller
                         <div class="preco_produto">
                             <h3>' . htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8') . '</h3>
                             <p>R$ ' . number_format($PG_produtos['preco_produto'], 2, ',', '.') . '</p>
-                            <button class="adicionar-favorito" data-id-produto="' . $PG_produtos['id_produto'] . '">
+                            
+                            <button class="adicionar-favorito" data-id-produto="' . htmlspecialchars($PG_produtos['id_produto'], ENT_QUOTES, 'UTF-8') . '">
                                 <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg" alt="Adicionar aos favoritos">
                             </button>
+        
                         </div>
                     </a>
                 </div>';
