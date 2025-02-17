@@ -11,6 +11,14 @@
 /* Fonte cursiva */
 /* font-family: 'Great Vibes'; */
 
+
+
+@import url('https://fonts.googleapis.com/css2?family=Jacques+Francois&display=swap');
+/* font-family: "Jacques Francois", serif;
+font-weight: 400;
+font-style: normal; */
+
+
 /* Reseta padding e margin */
 * {
     padding: 0;
@@ -52,6 +60,7 @@ body {
     --cor_menu_hambuger: #241810;
     --cor_nav_list: #ccaea0ee;
     --separar_secao_mobilie: 50px 0;
+    --font_pg_sobre : 'Jacques Francois';
 }
 
 /* Header */
@@ -105,6 +114,11 @@ header .site nav ul li a:hover {
 
 .ben_vindo .site {
     max-width: 1400px;
+}
+
+
+.quem_sou_eu, .carrosel_produtos{
+    background-image: url(../img/Fundo_site.png);
 }
 
 .ben_vindo .site .lado_a_lado,
@@ -418,7 +432,7 @@ footer .site .lado_a_lado,
 
 .slick-prev:before,
 .slick-next:before {
-    color: rgb(255, 230, 0);
+    color: #18764F;
     font-size: 28pt;
 }
 
@@ -622,10 +636,18 @@ footer .contato {
     flex-flow: row wrap;
 }
 
+
+.fotos_galeria .site .lado_a_lado_galeria .galeria_pd {
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: center;
+    align-items: center;
+}
+
 .fotos_galeria .site .lado_a_lado_galeria .galeria_pd h3 {
     text-align: center;
-    margin-bottom: 115px;
-    margin-top: 15px;
+    margin-bottom: 50px;
+    margin-top: 30px;
     font-size: 25pt;
     font-family: var(--para_texto);
     font-weight: var(--negrito_normal);
@@ -801,8 +823,10 @@ footer .contato {
 }
 
 .sobre_mim .box_txt .subtitle {
-    width: 58%;
-    color: #18764F90;
+    width: 100%;
+    font-weight: 500;
+    font-size: 40pt;
+    color: #18764F33;
     display: flex;
     justify-content: end;
 }
@@ -820,14 +844,7 @@ footer .contato {
     line-height: 51px;
 }
 
-.sobre_mim .box_txt .subtitle {
-    width: 65%;
-    font-weight: 500;
-    font-size: 50pt;
-    color: #18764F33;
-    display: flex;
-    justify-content: end;
-}
+
 
 .sobre_mim .txt {
     font-family: var(--para_texto);

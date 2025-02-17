@@ -17,7 +17,7 @@
         <?php
         // loader
         require('template/loader.php');
-        
+
         // Inclui o cabeçalho
         require('template/header.php');
         ?>
@@ -132,11 +132,7 @@
 
         <section class="localizacao_contato">
             <article>
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3659.025328309544!2d-46.43443702544899!3d-23.495597178845017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce63dda7be6fb9%3A0xa74e7d5a53104311!2sSenac%20S%C3%A3o%20Miguel%20Paulista!5e0!3m2!1spt-BR!2sbr!4v1732146448998!5m2!1spt-BR!2sbr"
-                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14639.048435535533!2d-46.41369613373925!3d-23.469044011811558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce63ab23be7d87%3A0xfac34fc6598d3ab9!2sItaim%20Paulista%20-%20Pimentas%2C%20Guarulhos%20-%20SP%2C%2007263-010!5e0!3m2!1spt-BR!2sbr!4v1739802271123!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
             </article>
         </section>

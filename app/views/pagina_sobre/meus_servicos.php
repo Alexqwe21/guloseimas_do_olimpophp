@@ -7,11 +7,7 @@
                 <div class="lado_a_lado">
 
                     <div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temp or incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut a liquip ex ea commodo consequat. Duis aute irure dolor in reprehen derit in
-                            voluptate velit esse cillum dolore eu fugiat nulla pariatur ullamco laboris nisi ut a
-                            Excepteur.</p>
+                        <p>O Guloseimas do Olimpo oferece doces artesanais como trufas, brownies, cookies e bolos, feitos com qualidade e carinho. Focando em experiências únicas, a empresa garante produtos deliciosos e um atendimento especial, transformando cada momento em algo inesquecível. ✨</p>
                     </div>
                 </div>
             </article>

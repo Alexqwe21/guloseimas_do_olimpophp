@@ -11,11 +11,9 @@
                     </div>
 
                     <div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temp or incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut a liquip ex ea commodo consequat. Duis aute irure dolor in reprehen derit in
-                            voluptate velit esse cillum dolore eu fugiat nulla pariatur ullamco laboris nisi ut a
-                            Excepteur.</p>
+                        <p>Minha jornada na confeitaria começou como uma renda extra, fazendo trufas, até perceber que havia encontrado minha verdadeira paixão. O Guloseimas do Olimpo surgiu dessa transformação de hobby em negócio. Após me formar no Curso Técnico de Confeitaria do Senac, decidi investir nesse caminho.
+
+Hoje, meu foco é criar experiências especiais para cada cliente, oferecendo doces artesanais como brownies, cookies e bolos, sempre com carinho e qualidade. Confeitar para mim é mais do que vender doces – é criar momentos inesquecíveis. ✨</p>
                     </div>
                 </div>
             </article>

@@ -10,15 +10,15 @@
         <div class="contato">
             <h2>CONTATO</h2>
 
-            <h3>localização:Alemanha - 785 15h Street, Office 478 <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/localizacao.svg"
+            <h3>Localização: Itaim Paulista – SP <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/localizacao.svg"
                     alt="localizacao">
             </h3>
 
-            <h3>Email:loremlorem@gmail.com
+            <h3>Email: guloseimasolimpo@gmail.com
                 <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/email.svg" alt="email">
             </h3>
 
-            <h3>Telefone: (99)9999-9999 <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/telefone.svg" alt="telefone">
+            <h3>WhatsApp: (11)98056-3192 <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/telefone.svg" alt="telefone">
             </h3>
         </div>
         <nav class="nav_footer">
