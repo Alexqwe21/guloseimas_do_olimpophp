@@ -2305,6 +2305,13 @@ section .site .card_title {
     border-radius: 10px;
 }
 
+section .site .card_title p {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 25pt;
+    color: #260801;
+}
+
 section .site .card_title span {
     font-size: 1.3rem;
     color: #352727;
@@ -2376,13 +2383,31 @@ section .site .card_title .card_total_pago {
     content: "Carregando..."
 }
 
+
+
+
+
+
 @keyframes l4 {
     to {
         clip-path: inset(0 -2ch 0 0)
     }
 }
 
-/* HISTORICO DE RESERVAS  */
+
+/* ESTILIZAÇAO BOSSTRAP */
+
+
+
+
+
+
+
+
+/* ESTILIZAÇAO BOSSTRAP */
+
+
+
 
 /* MENU HAMBURGUER */
 @media (max-width: 1024px) {

@@ -12,7 +12,7 @@
     border-radius: 5px;
   }
 </style>
-<a href="<?php echo BASE_URL . 'produtos/adicionar/'  ?>" class="btn btn-primary mb-3" >ADICIONAR</a>
+
 
 
 <table class="table table-hover">

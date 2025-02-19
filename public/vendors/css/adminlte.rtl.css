@@ -6859,6 +6859,7 @@ textarea.form-control-lg {
 }
 
 .text-bg-primary {
+  
   color: #fff !important;
   background-color: RGBA(var(--bs-primary-rgb), var(--bs-bg-opacity, 1)) !important;
 }
@@ -13026,6 +13027,7 @@ textarea.form-control-lg {
 }
 
 .sidebar-wrapper {
+  
   padding-top: 0.5rem;
   padding-left: 0.5rem;
   padding-bottom: 0.5rem;
@@ -14000,11 +14002,11 @@ body:not(.app-loaded) .app-footer {
 }
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header > img {
   z-index: 5;
-  width: 90px;
-  height: 90px;
+  width: 170px;
+  height: 150px;
   border: 3px solid;
-  border-color: transparent;
-  border-color: var(--bs-border-color-translucent);
+  border-color:#ffffff21;
+ 
 }
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header > p {
   z-index: 5;
@@ -14547,6 +14549,7 @@ html.maximized-card {
 }
 
 .small-box {
+ 
   border-radius: 0.375rem;
   box-shadow: 0 0 1px rgba(var(--bs-body-color-rgb), 0.125), 0 1px 3px rgba(var(--bs-body-color-rgb), 0.2);
   position: relative;
