@@ -46,7 +46,7 @@ class ProdutosController extends Controller
 
     public function detalhe($link = null)
     {
-        var_dump($link); // Verifique se o link está correto
+  
         if ($link === null) {
             header("Location: /guloseimas_do_olimpophp/public");
             exit;
@@ -211,7 +211,7 @@ class ProdutosController extends Controller
         $semAcento = iconv('UTF-8', 'ASCII//TRANSLIT', $nome_produto);
 
         $link = strtolower(trim(preg_replace('/[^a-zA-Z0-9]/', '-',  $semAcento)));
-        // var_dump($link);
+       
 
 
         $contador = 1;
@@ -226,7 +226,7 @@ class ProdutosController extends Controller
         }
 
 
-        var_dump($link);
+     
         return $link;
     }
 

@@ -1341,7 +1341,7 @@ footer .contato {
 }
 
 .button_forms button {
-    width: 250px !important;
+    width: 290px !important;
 }
 
 .button_forms button:hover {
@@ -2202,6 +2202,11 @@ section .site .perfils_lado_a_lado .perfil_favoritos_reservas {
 .link_favorito {
     color: black !important;
     text-transform: normal !important;
+    display: flex
+;
+    align-items: center;
+    flex-flow: column wrap;
+    justify-content: center;
 }
 
 
@@ -2720,8 +2725,8 @@ section .site .card_title .card_total_pago {
         width: 30px;
         color: #0B3222;
         position: relative;
-        bottom: 747px;
-        left: 202px;
+        bottom: 700px;
+        left: 138px;
     }
 
     .carrinho-vazio {
@@ -3067,7 +3072,7 @@ section .site .card_title .card_total_pago {
         width: 30px;
         color: #0B3222;
         position: relative;
-        bottom: 746px;
+        bottom: 700px;
         left: 138px;
     }
 
@@ -3129,7 +3134,17 @@ section .site .card_title .card_total_pago {
         font-size: 30pt;
     }
 
+    .especialidades .site .especialidade_informacoes{
+        width: 90%;
+    }
 
+    .especialidades .site .especialidade_produto{
+        width: 90%;
+    }
+    
+    .especialidades .site .especialidade_informacoes p{
+        line-height: 50px;
+    }
 
 
 }
@@ -3518,7 +3533,7 @@ section .site .card_title .card_total_pago {
         width: 30px;
         color: #0B3222;
         position: relative;
-        bottom: 753px;
+        bottom: 725px;
         left: 66px;
     }
 
@@ -3564,6 +3579,30 @@ section .site .card_title .card_total_pago {
     
     top: 8px;
     }
+
+    .forms_contato form .nome_entrar .lembrar .checkbox{
+       align-items: flex-start;
+       
+    }
+
+    .forms_contato form .nome_entrar .lembrar .checkbox p{
+        margin-top: 7px;
+    }
+
+
+    .banner_galeria .site div h2, .banner_produtos .site div h2, .banner_contato .site div h2{
+        font-size: 50pt;
+    }
+
+    .container p{
+        text-align: center;
+        line-height: 30px;
+    }
+
+    .button_forms button{
+        width: 300px !important;
+    }
+
 }
 
 

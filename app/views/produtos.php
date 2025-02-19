@@ -384,12 +384,12 @@ document.addEventListener("click", function(event) {
                             const modal = new bootstrap.Modal(document.getElementById('modal_adicionado_favorito'));
                             modal.show();
                         } else {
-                            alert(data.erro || 'Erro ao adicionar aos favoritos.');
+                          
                         }
                     })
                     .catch(error => {
                         console.error("Erro ao adicionar o produto aos favoritos:", error);
-                        alert('Erro ao adicionar o produto aos favoritos.');
+                       
                     });
             });
         });

@@ -40,9 +40,9 @@
 
                     <div class="detalhes_de_contato">
                         <h2>Detalhes de contato</h2>
-                        <p>Rua 785 15h, Escritór Berlim, De 81566</p>
-                        <p>info@email.com</p>
-                        <p>+1 800 555 25 69</p>
+                        <p>Localização: Itaim Paulista – SP </p>
+                        <p>guloseimasolimpo@gmail.com</p>
+                        <p>(11)98056-3192 </p>
 
 
                         <div class="redes_contato">

@@ -62,7 +62,7 @@ class Produto extends Model
 
     public function getServicoPorlink($link)
     {
-        var_dump($link);
+       
         $sql = "SELECT * 
    FROM tbl_info_produtos AS ip
      INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido = 'Ativo' AND link_produto = :link  AND status_info_produtos = 'Ativo'";
@@ -128,9 +128,9 @@ class Produto extends Model
         // Depuração: Exibe a query e os dados antes da execução
         echo '<pre>';
         echo 'Query SQL antes da execução: ';
-        var_dump($sql); // Exibe a query SQL
+       
         echo 'Dados a serem vinculados: ';
-        var_dump($dados); // Exibe os dados sendo passados para o banco
+      
         echo '</pre>';
 
         // Prepara a query

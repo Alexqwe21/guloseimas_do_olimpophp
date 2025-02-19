@@ -90,6 +90,10 @@ class RecuperarsenhaController extends Controller
                 } else {
                     $mensagem = "🔍 E-mail não encontrado! Dá uma conferida se digitou corretamente ou aproveite para criar uma nova conta. 😉";
                 }
+                header("Location: " . BASE_URL . "entrar");
+                exit();
+                
+
             }
 
             // Retorna a mensagem para a view

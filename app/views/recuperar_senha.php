@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
+
+
 <style>
     .container {
         display: flex;
@@ -160,6 +163,29 @@
         </section>
 
 
+        <!-- Modal do Bootstrap -->
+        <!-- Modal do Bootstrap -->
+
+        <div class="modal fade" id="mensagemModal" tabindex="-1" aria-labelledby="mensagemModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="mensagemModalLabel">Aviso 📢</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                    🎉 Tudo certo! Acabamos de enviar um e-mail com sua nova senha. Se não encontrar na caixa de entrada, dá uma olhadinha no spam! 📩
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
 
     </main>
 
@@ -176,5 +202,32 @@
     ?>
 
 </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var form = document.querySelector(".nova_senha_forms"); // Seleciona o formulário
+        var botaoEnviar = document.querySelector(".enviar_senha"); // Botão de envio
+        var modal = new bootstrap.Modal(document.getElementById("mensagemModal")); // Referência ao modal
+
+        if (form && botaoEnviar) {
+            form.addEventListener("submit", function (event) {
+                event.preventDefault(); // Impede o envio imediato do formulário
+                
+                modal.show(); // Exibe o modal imediatamente
+
+                setTimeout(function () {
+                    form.submit(); // Envia o formulário após 3 segundos
+                }, 3000);
+            });
+        }
+    });
+</script>
+
+
+
+
+
+
+
 
 </html>
