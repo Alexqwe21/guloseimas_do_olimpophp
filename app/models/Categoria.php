@@ -49,7 +49,7 @@ class Categoria extends Model
     public function atualizarCategoria($id, $dados)
 {
     // Query para atualizar apenas nome e descrição
-    $sql = "UPDATE tbl_categorias 
+    $sql = "UPDATE tbl_categoria 
             SET nome_categoria = :nome_categoria, 
                 descricao_categoria = :descricao_categoria
             WHERE id_categoria = :id";
@@ -72,6 +72,18 @@ class Categoria extends Model
     }
     return true;
 }
+
+
+public function atualizarStatusCategoria($id, $status)
+{
+    $sql = "UPDATE tbl_categoria SET status_categoria = :status WHERE id_categoria = :id";
+    $stmt = $this->db->prepare($sql);
+    $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    
+    return $stmt->execute();
+}
+
 
 
 

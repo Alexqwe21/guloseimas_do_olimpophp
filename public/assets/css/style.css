@@ -85,9 +85,11 @@ header .site nav ul li a {
     font-size: 20pt;
     font-weight: 400;
     font-family: var(--para_texto);
-    text-decoration: none; /* Remove sublinhado padrão */
+    text-decoration: none;
+    /* Remove sublinhado padrão */
     position: relative;
-    padding-bottom: 5px; /* Espaço para a linha */
+    padding-bottom: 5px;
+    /* Espaço para a linha */
     transition: color 0.3s ease-in-out;
 }
 
@@ -240,13 +242,16 @@ footer .site .lado_a_lado,
     font-size: 18pt;
     font-weight: var(--negrito_normal);
     transition: color 0.3s ease, transform 0.3s ease;
-    text-decoration: none; /* Remove o sublinhado padrão */
-  
+    text-decoration: none;
+    /* Remove o sublinhado padrão */
+
 }
 
 .ben_vindo .guloseimas a:hover {
-    color: var(--cor_dourado); /* Muda a cor ao passar o mouse */
-    transform: translateY(-3px); /* Move levemente para cima */
+    color: var(--cor_dourado);
+    /* Muda a cor ao passar o mouse */
+    transform: translateY(-3px);
+    /* Move levemente para cima */
 }
 
 .ben_vindo .site .lado_a_lado .lado_a_lado_img {
@@ -367,7 +372,7 @@ footer .site .lado_a_lado,
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-.qualidade_especial .site .alta_qualidade:hover{
+.qualidade_especial .site .alta_qualidade:hover {
 
     transform: translateY(-10px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
@@ -460,16 +465,20 @@ footer .site .lado_a_lado,
     align-items: center;
     border-radius: 10px;
     transition: color 0.3s ease, transform 0.3s ease;
-    text-decoration: none; /* Remove o sublinhado padrão */
-    color: #333; /* Cor inicial */
+    text-decoration: none;
+    /* Remove o sublinhado padrão */
+    color: #333;
+    /* Cor inicial */
 
 }
 
 .sobre_pessoa .site .sobre a:hover {
     background-color: #985C41;
     color: white;
-    color: var(--cor_dourado); /* Muda a cor ao passar o mouse */
-    transform: translateY(-7px); /* Move levemente para cima */
+    color: var(--cor_dourado);
+    /* Muda a cor ao passar o mouse */
+    transform: translateY(-7px);
+    /* Move levemente para cima */
 }
 
 
@@ -487,9 +496,9 @@ footer .site .lado_a_lado,
 }
 
 
-.foto_pessoa:hover{
+.foto_pessoa:hover {
     transform: translateY(-20px);
-    
+
 }
 
 
@@ -620,7 +629,7 @@ footer .site .lado_a_lado .nav_footer ul li a {
 }
 
 
-footer .site .lado_a_lado .nav_footer ul li a:hover{
+footer .site .lado_a_lado .nav_footer ul li a:hover {
     color: var(--cor_dourado);
 }
 
@@ -879,7 +888,7 @@ footer .contato {
 
 
 .quem_sou_eu .site .lado_a_lado .foto_quem:hover,
-.minha_historia .site .lado_a_lado .foto_quem:hover{
+.minha_historia .site .lado_a_lado .foto_quem:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
@@ -1050,12 +1059,13 @@ footer .contato {
     width: 350px;
     height: 300px;
     border-radius: 10px;
-  
+
 }
 
-.especialidades .site .especialidade_produto .pd:hover{
-    transform: translateY(-5px) scale(1.1); /* Move para cima e aumenta a imagem */
-    
+.especialidades .site .especialidade_produto .pd:hover {
+    transform: translateY(-5px) scale(1.1);
+    /* Move para cima e aumenta a imagem */
+
 }
 
 
@@ -1373,10 +1383,10 @@ footer .contato {
     align-items: center;
 }
 
-.email_svg{
+.email_svg {
     width: 25px;
     height: 25px;
-margin-right: 20px;
+    margin-right: 20px;
 }
 
 .contato .site .forms_contato .nome label img,
@@ -1431,8 +1441,10 @@ margin-right: 20px;
     text-transform: uppercase;
     font-size: 13pt;
     margin-top: 10px;
-    overflow: hidden; /* Remove a rolagem */
-  resize: none; /* Impede o redimensionamento */
+    overflow: hidden;
+    /* Remove a rolagem */
+    resize: none;
+    /* Impede o redimensionamento */
 }
 
 .contato .site .forms_contato textarea:focus {
@@ -1819,13 +1831,26 @@ margin-right: 20px;
     display: flex;
 }
 
-#estado{
+
+/* Para navegadores WebKit (Chrome, Edge, Safari) */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+/* Para Firefox */
+input[type="date"] {
+    appearance: textfield;
+}
+
+
+#estado {
     border: none;
     background: none;
     border-bottom: 2px solid #985C4150;
     width: 100%;
-     outline: none; /* Remove a borda preta ao focar */
-     color: #985C41;
+    outline: none;
+    /* Remove a borda preta ao focar */
+    color: #985C41;
 }
 
 .entrar_email {
@@ -2160,12 +2185,15 @@ margin-right: 20px;
     width: 410px;
     height: 360px;
     border-radius: 10px;
-    transition: transform 0.5s ease-in-out; /* Suaviza a transição, com duração maior */
-    transform-origin: center center; /* Foca o zoom no centro da imagem */
+    transition: transform 0.5s ease-in-out;
+    /* Suaviza a transição, com duração maior */
+    transform-origin: center center;
+    /* Foca o zoom no centro da imagem */
 }
 
 .img_pg_galeria:hover {
-    transform: scale(1.05); /* Aumenta a imagem em 5%, criando um efeito mais suave */
+    transform: scale(1.05);
+    /* Aumenta a imagem em 5%, criando um efeito mais suave */
 }
 
 
@@ -2652,7 +2680,7 @@ section .site .card_title .card_total_pago {
         font-size: 20pt;
         margin-left: 20px;
     }
-    
+
 
     .ben_vindo .guloseimas a {
         padding: 20px 40px;

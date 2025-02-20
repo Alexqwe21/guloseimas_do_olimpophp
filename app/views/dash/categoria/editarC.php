@@ -73,27 +73,27 @@
                 </div>
             <?php endif; ?>
 
-            <?php if (isset($categoria)): ?>
+            <?php if (isset($categoria_produto)): ?>
                 <h1>Editar Categoria</h1>
 
                 <form action="<?php echo BASE_URL . 'produtos/atualizarC'; ?>" method="POST">
-                    <input type="hidden" name="id_categoria" value="<?php echo $categoria['id_categoria']; ?>">
+                    <input type="hidden" name="id_categoria" value="<?php echo $categoria_produto['id_categoria']; ?>">
 
                     <div class="form-group">
                         <label for="nome_categoria">Nome da Categoria</label>
                         <input type="text" id="nome_categoria" name="nome_categoria"
-                            value="<?php echo htmlspecialchars($categoria['nome_categoria']); ?>"
+                            value="<?php echo htmlspecialchars($categoria_produto['nome_categoria']); ?>"
                             required class="form-control">
                     </div>
 
                     <div class="form-group">
                         <label for="descricao_categoria">Descrição da Categoria</label>
                         <textarea id="descricao_categoria" name="descricao_categoria"
-                            required class="form-control"><?php echo htmlspecialchars($categoria['descricao_categoria']); ?></textarea>
+                            required class="form-control"><?php echo htmlspecialchars($categoria_produto['descricao_categoria']); ?></textarea>
                     </div>
 
                     <button type="submit" class="btn btn-success">Salvar Alterações</button>
-                    <a href="<?php echo BASE_URL . 'categorias'; ?>" class="btn btn-danger">Cancelar</a>
+                    <a href="<?php echo BASE_URL . 'produtos/listar_categoria'; ?>" class="btn btn-danger">Cancelar</a>
                 </form>
 
             <?php else: ?>

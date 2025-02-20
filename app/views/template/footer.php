@@ -52,7 +52,8 @@
                                     <button style="background-color: transparent;" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    O Email foi enviado com sucesso!
+                                    
+                                    🎉 O Email foi enviado com sucesso! <br> Obrigado por se inscrever! Em breve, você receberá nossas novidades. 😉
                                 </div>
                                 <div class="modal-footer">
                                 <button style="display: flex; align-items: center; justify-content: center;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>

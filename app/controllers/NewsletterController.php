@@ -105,7 +105,7 @@ class NewsletterController extends Controller
 
                     $phpmail->send();
 
-                    $_SESSION['mensagem'] = '🎉 Obrigado por se inscrever! Em breve, você receberá nossas novidades. 😉';
+                   
                     $_SESSION['status'] = 'sucesso';
                     header('Location: ' . BASE_URL);
                     exit;

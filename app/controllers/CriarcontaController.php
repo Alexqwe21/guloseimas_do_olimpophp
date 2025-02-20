@@ -53,7 +53,9 @@ class CriarcontaController extends Controller
                         $_SESSION['erro'] = "Erro ao criar conta. Verifique os dados.";
                     }
                 } else {
-                    $_SESSION['erro'] = "As senhas não coincidem!";
+                    $_SESSION['erro_senha'] = "As senhas não coincidem!";
+                    header('Location: ' . BASE_URL . 'criarconta'); // Agora volta para a página de criação
+                    exit;
                 }
             } else {
                 $_SESSION['erro'] = "Preencha todos os campos!";

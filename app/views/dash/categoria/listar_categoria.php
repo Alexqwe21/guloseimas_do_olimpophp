@@ -44,7 +44,7 @@
         </td>
 
         <td>
-          <a href="<?php echo BASE_URL . 'produtos/statusG/' . $linha['id_categoria']; ?>">
+          <a href="<?php echo BASE_URL . 'produtos/statusC/' . $linha['id_categoria']; ?>">
             <button><i class="bi bi-trash-fill"></i></button>
           </a>
         </td>

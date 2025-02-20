@@ -57,7 +57,7 @@
                                         <!-- Preenche o campo de email com o valor armazenado na sessão ou passado pela URL -->
                                         <input type="email" name="email" id="email" placeholder="Endereço de email"
                                             value=""
-                                            required>
+                                            required autocomplete="off">
                                     </div>
                                 </div>
 
@@ -73,7 +73,7 @@
 
                                 <div class="email_entrar">
                                     <label for="data_nascimento"></label>
-                                    <input type="date" id="data_nascimento" name="data_nascimento" required placeholder="DATA DE NASCIMENTO">
+                                    <input style="text-transform: uppercase;" type="date" id="data_nascimento" name="data_nascimento" required placeholder="DATA DE NASCIMENTO">
                                 </div>
 
                                 <div class="email_entrar">
@@ -99,7 +99,7 @@
                                 <div class="email_entrar">
                                     <label for="estado"></label>
                                     <select name="estado" id="estado" required>
-                                        <option value="">Selecione o Estado</option>
+                                        <option value="">SELECIONE O ESTADO</option>
                                         <?php foreach ($Estado as $estado): ?>
                                             <option value="<?= $estado['sigla_uf']; ?>"><?= $estado['sigla_uf']; ?></option>
                                         <?php endforeach; ?>
@@ -109,12 +109,12 @@
 
                                 <div class="email_entrar">
                                     <label for="senha"></label>
-                                    <input type="password" id="senha" name="senha" required placeholder="SENHA">
+                                    <input type="password" id="senha" name="senha" required placeholder="SENHA" autocomplete="off">
                                 </div>
 
                                 <div class="email_entrar">
                                     <label for="confirmar_senha"></label>
-                                    <input type="password" id="confirmar_senha" name="confirmar_senha" required placeholder="CONFIRMAR SENHA">
+                                    <input type="password" id="confirmar_senha" name="confirmar_senha" required placeholder="CONFIRMAR SENHA" autocomplete="off">
                                 </div>
 
                             </div>
@@ -138,6 +138,30 @@
                 </div>
             </article>
         </section>
+
+        <!-- Modal de Erro -->
+        <div class="modal fade" id="erroModal" tabindex="-1" role="dialog" aria-labelledby="erroModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="erroModalLabel">Erro</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <?php if (isset($_SESSION['erro'])): ?>
+                            <p><?php echo $_SESSION['erro'];
+                                unset($_SESSION['erro']); ?></p>
+                        <?php endif; ?>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </main>
 
@@ -171,6 +195,28 @@
         </div>
     </div>
 
+
+    <div class="modal fade" id="modalerro" tabindex="-1" aria-labelledby="modalerroLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSucessoLabel">erro!</h5>
+
+                </div>
+                <div class="modal-body">
+                    Senhas não conferem
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnFecharModal_erro">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             <?php if (!empty($_SESSION['sucesso'])): ?>
@@ -187,18 +233,34 @@
     </script>
 
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    let links = document.querySelectorAll(".nav-link");
-    let currentUrl = window.location.href;
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            <?php if (!empty($_SESSION['erro_senha'])): ?>
+                var modal = new bootstrap.Modal(document.getElementById('modalerro'));
+                modal.show();
+                <?php unset($_SESSION['erro_senha']); ?>
 
-    links.forEach(link => {
-        if (link.href === currentUrl) {
-            link.classList.add("ativo");
-        }
-    });
-});
-</script>
+                // Quando o usuário clicar em "OK", redireciona para login
+                document.getElementById("btnFecharModal_erro").addEventListener("click", function() {
+                    window.location.href = "<?php echo BASE_URL . 'criarconta'; ?>";
+                });
+            <?php endif; ?>
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let links = document.querySelectorAll(".nav-link");
+            let currentUrl = window.location.href;
+
+            links.forEach(link => {
+                if (link.href === currentUrl) {
+                    link.classList.add("ativo");
+                }
+            });
+        });
+    </script>
 </body>
 
 
