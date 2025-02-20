@@ -16,7 +16,7 @@
         <?php
         // loader
         require('template/loader.php');
-        
+
         // Inclui o cabeçalho
         require('template/header.php');
         ?>
@@ -158,6 +158,25 @@
         </div>
 
 
+        <div class="modal fade" id="modal_fazer_login" tabindex="-1" aria-labelledby="modal_fazer_loginLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_fazer_loginLabel">Login Necessário</h5>
+
+                    </div>
+                    <div class="modal-body">
+                        <p>Você precisa estar logado para adicionar produtos aos favoritos. Clique no botão abaixo para fazer login.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="<?php echo BASE_URL; ?>login" class="btn btn-primary">Fazer Login</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </main>
 
 
@@ -179,16 +198,14 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-
         const heartIcon = document.getElementById("heart-icon");
 
-        // Verifica se o ícone de coração está presente na página
         if (heartIcon) {
             heartIcon.addEventListener("click", function(event) {
                 event.preventDefault();
 
-                const idProduto = '<?php echo $detalheServico['id_produto']; ?>'; // Pega o ID do produto da variável PHP
-                console.log("ID do produto a ser adicionado aos favoritos:", idProduto); // Verifique o ID
+                const idProduto = '<?php echo $detalheServico['id_produto']; ?>';
+                console.log("ID do produto a ser adicionado aos favoritos:", idProduto);
 
                 fetch('<?php echo BASE_URL; ?>favoritos/adicionarFavorito', {
                         method: 'POST',
@@ -202,21 +219,38 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.sucesso) {
-                            // Exibe o modal de sucesso quando o produto for adicionado aos favoritos
-                            const modal = new bootstrap.Modal(document.getElementById('modal_adicionado_favorito'));
-                            modal.show();
+                            const modalFavorito = new bootstrap.Modal(document.getElementById('modal_adicionado_favorito'));
+                            modalFavorito.show();
+                        } else if (data.redirect) {
+                            // Se o backend indicar que o usuário não está autenticado, exibe o modal de login
+                            const modalLogin = new bootstrap.Modal(document.getElementById('modal_fazer_login'));
+                            modalLogin.show();
                         } else {
-
+                            console.log("Nenhuma ação necessária.");
                         }
                     })
                     .catch(error => {
                         console.error("Erro ao adicionar o produto aos favoritos:", error);
-                        alert('Erro ao adicionar o produto aos favoritos.');
                     });
             });
         }
-
     });
 </script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let links = document.querySelectorAll(".nav-link");
+        let currentUrl = window.location.href;
+
+        links.forEach(link => {
+            if (link.href === currentUrl) {
+                link.classList.add("ativo");
+            }
+        });
+    });
+</script>
+</body>
+
 
 </html>

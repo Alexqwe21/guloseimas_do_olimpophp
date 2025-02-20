@@ -5,6 +5,7 @@ class ProdutosController extends Controller
 
     private $produtoModel;
     private $banner_produto;
+    private $categoria_produto;
 
     public function __construct()
     {
@@ -16,6 +17,7 @@ class ProdutosController extends Controller
         // Cria uma instância do modelo Produto e atribui à propriedade $produtoModel
         $this->produtoModel = new Produto();
         $this->banner_produto = new Banner();
+        $this->categoria_produto = new Categoria();
     }
 
 
@@ -687,4 +689,92 @@ class ProdutosController extends Controller
 
        
     }
+
+
+
+
+    public function listar_categoria()
+    {
+
+
+
+
+
+
+        if (!isset($_SESSION['userTipo'])  || $_SESSION['userTipo'] !== 'Funcionario') {
+
+            header('Location:' . BASE_URL);
+            exit;
+        }
+
+        $dados = array();
+        $dados['listar_categoria'] = $this->categoria_produto->listar_getCategoria();
+
+        $dados['conteudo'] = 'dash/categoria/listar_categoria';
+
+
+
+        $this->carregarViews('dash/dashboard', $dados);
+    }
+
+
+    public function editarC($id)
+    {
+        // Verifica se o usuário está logado e tem permissão para editar
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit();
+        }
+
+        // Obtém os dados do produto para edição
+        $categoria_produto = $this->categoria_produto->getCategoriaPorId($id);
+
+        if (!$categoria_produto) {
+            // Se o produto não for encontrado, redireciona para a lista de produtos
+            header('Location: ' . BASE_URL . 'produtos/home');
+            exit();
+        }
+
+        // Prepara os dados para a view
+        $dados = array();
+        $dados['categoria_produto'] = $categoria_produto;
+        $dados['titulo'] = 'Editar Produto - Ki Oficina';
+
+        // Carrega a view de edição
+        $this->carregarViews('dash/categoria/editarC', $dados);
+    }
+
+
+   public function atualizarC()
+{
+    // Verifica se o usuário tem permissão
+    if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+        header('Location: ' . BASE_URL);
+        exit();
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['id_categoria'];
+
+        // Captura os dados enviados pelo formulário
+        $dados = [
+            'nome_categoria' => $_POST['nome_categoria'], // Ajustado para o nome correto
+            'descricao_categoria' => $_POST['descricao_categoria'] // Ajustado para a descrição correta
+        ];
+
+        // Chama o método de atualização no model
+        if ($this->categoria_produto->atualizarCategoria($id, $dados)) {
+            $_SESSION['mensagem'] = "Categoria atualizada com sucesso!";
+            header('Location: ' . BASE_URL . 'dashboard');
+        } else {
+            $_SESSION['erro'] = "Erro ao atualizar a categoria.";
+            header('Location: ' . BASE_URL . 'categorias/editarC/' . $id);
+        }
+        exit();
+    }
+}
+
+
+
+
 }

@@ -57,9 +57,9 @@
 
                     <div class="forms_contato">
                         <form method="POST" action="http://localhost/guloseimas_do_olimpophp/public/login/login">
-                            <div class="email">
+                            <div style="display: flex; align-items: center; justify-content: center;" class="email">
                                 <label for="email">
-                                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/email_forms.svg"
+                                    <img class="email_svg" src="http://localhost/guloseimas_do_olimpophp/public/assets/img/email_forms.svg"
                                         alt="telefone"></label>
                                 <input type="email" name="email" id="email" placeholder="Endereço de email" required>
                             </div>
@@ -115,6 +115,22 @@
     // Inclui o script
     require('script_geral/script.php');
     ?>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let links = document.querySelectorAll(".nav-link");
+    let currentUrl = window.location.href;
+
+    links.forEach(link => {
+        if (link.href === currentUrl) {
+            link.classList.add("ativo");
+        }
+    });
+});
+</script>
+</body>
+
 
 </body>
 

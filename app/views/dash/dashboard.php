@@ -273,6 +273,10 @@
                         <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/info_produtos/info_produtos" class="nav-link"> <i class="bi bi-bag"></i>
                                 <p>Informações produtos</p>
                             </a> </li>
+
+                            <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/produtos/listar_categoria" class="nav-link"> <i class="bi bi-bookmark-check"></i>
+                                <p>Categorias</p>
+                            </a> </li>
                         <!-- <li class="nav-item"> <a href="./docs/faq.html" class="nav-link"> <i class="nav-icon bi bi-question-circle-fill"></i>
                                 <p>FAQ</p>
                             </a> </li>

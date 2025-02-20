@@ -97,7 +97,7 @@
                                 </div>
 
                                 <div class="email_entrar">
-                                    <label for="estado">Estado</label>
+                                    <label for="estado"></label>
                                     <select name="estado" id="estado" required>
                                         <option value="">Selecione o Estado</option>
                                         <?php foreach ($Estado as $estado): ?>
@@ -185,6 +185,21 @@
             <?php endif; ?>
         });
     </script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let links = document.querySelectorAll(".nav-link");
+    let currentUrl = window.location.href;
+
+    links.forEach(link => {
+        if (link.href === currentUrl) {
+            link.classList.add("ativo");
+        }
+    });
+});
+</script>
+</body>
 
 
 </body>

@@ -256,25 +256,25 @@
         ?>
     </body>
 
-<!-- Adicione esse script no final do seu arquivo compras.php -->
-<script>
-// Função para esvaziar o carrinho visualmente
-function esvaziarCarrinhoVisual() {
-    const itensCarrinho = document.querySelectorAll('.lado_a_lado');
-    itensCarrinho.forEach(item => {
-        item.remove(); // Remove cada item do DOM
-    });
-}
+    <!-- Adicione esse script no final do seu arquivo compras.php -->
+    <script>
+        // Função para esvaziar o carrinho visualmente
+        function esvaziarCarrinhoVisual() {
+            const itensCarrinho = document.querySelectorAll('.lado_a_lado');
+            itensCarrinho.forEach(item => {
+                item.remove(); // Remove cada item do DOM
+            });
+        }
 
-// Verifica se a URL contém um parâmetro indicando que o carrinho foi esvaziado
-window.onload = function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('carrinho_esvaziado') && urlParams.get('carrinho_esvaziado') === 'true') {
-        // Se o carrinho foi esvaziado, chama a função para limpar os itens visualmente
-        esvaziarCarrinhoVisual();
-    }
-}
-</script>
+        // Verifica se a URL contém um parâmetro indicando que o carrinho foi esvaziado
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('carrinho_esvaziado') && urlParams.get('carrinho_esvaziado') === 'true') {
+                // Se o carrinho foi esvaziado, chama a função para limpar os itens visualmente
+                esvaziarCarrinhoVisual();
+            }
+        }
+    </script>
 
 
     <script>
@@ -399,7 +399,7 @@ window.onload = function() {
 
 
 
-            
+
 
             // Função para atualizar o resumo e a URL do WhatsApp
             const atualizarResumoEUrlWhatsApp = () => {
@@ -482,6 +482,19 @@ window.onload = function() {
 
 
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let links = document.querySelectorAll(".nav-link");
+            let currentUrl = window.location.href;
+
+            links.forEach(link => {
+                if (link.href === currentUrl) {
+                    link.classList.add("ativo");
+                }
+            });
+        });
+    </script>
+    </body>
 
 
 

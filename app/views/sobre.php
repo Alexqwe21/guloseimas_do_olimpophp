@@ -72,6 +72,21 @@
     require('script_geral/script.php');
     ?>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let links = document.querySelectorAll(".nav-link");
+            let currentUrl = window.location.href;
+
+            links.forEach(link => {
+                if (link.href === currentUrl) {
+                    link.classList.add("ativo");
+                }
+            });
+        });
+    </script>
+</body>
+
+
 </body>
 
 </html>
