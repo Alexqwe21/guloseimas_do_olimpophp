@@ -54,7 +54,7 @@ unset($_SESSION['login-erro']); // Limpa a sessão para não mostrar sempre
         <section class="brigadeiros">
             <article class="site">
                 <div>
-                    <h2>Entrar ou criar conta</h2>
+                    <h2>Entrar</h2>
                 </div>
 
                 <div>
