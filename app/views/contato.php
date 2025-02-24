@@ -46,10 +46,11 @@
 
 
                         <div class="redes_contato">
-                            <a href="#" target="_blank"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/facebook_contato.svg" alt="img"></a>
-                            <a href="#" target="_blank"> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/twiter.svg" alt="img"></a>
-                            <a href="#" target="_blank"> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/instagram_contato.svg"
-                                    alt="img"></a>
+                            <a href="https://www.instagram.com/guloseimas_olimpo?igsh=MTZsZjV1aXU0MWQxNQ==" target="_blank"> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/instagram_contato.svg" alt="img"></a> <!-- instagram -->
+
+                            <!-- <a href="#" target="_blank"> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/ifood_footer.svg" alt="img"></a> ifood  -->
+                            <!-- <a href="#" target="_blank"> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/twiter.svg" alt="img"></a> -->
+
                         </div>
 
                     </div>
