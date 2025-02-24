@@ -4,7 +4,7 @@
 
         </div>
         <div class="logo_footer">
-            <a href="index.html"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/logo_header.svg"
+            <a href="index.php"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/logo_header.svg"
                     alt="logo Guloseimas do Olimpo"></a>
         </div>
         <div class="contato">
@@ -62,7 +62,6 @@
                             </div>
                         </div>
                     </div>
-                  
                 </form>
 
             </div>
@@ -72,23 +71,23 @@
     </div>
     <div class="redes_footer">
         <div>
-            <a href="#"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/instagram_footer.svg" alt="instagram"></a>
+            <a href="https://www.instagram.com/guloseimas_olimpo?igsh=MTZsZjV1aXU0MWQxNQ==" target="_blank"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/instagram_footer.svg" alt="instagram"></a>
         </div>
         <div>
-            <a href="#"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/ifood_footer.svg" alt="ifood"></a>
+            <a href="https://www.ifood.com.br/delivery/sao-paulo-sp/guloseimas-do-olimpo---trufas-brownies-e-bolos-jardim-camargo-novo/a2723d73-19f8-4a51-baec-cf38223b122f?utm_medium=share" target="_blank"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/ifood_footer.svg" alt="ifood"></a>
         </div>
         <div>
-            <a href="#"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/youtube_footer.svg" alt="youtube"></a>
+            <!-- <a href="#"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/youtube_footer.svg" alt="youtube"></a> -->
         </div>
 
         <div>
-            <a href="#"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/wpp_footer.svg" alt="whatsapp"></a>
+            <a href="https://w.app/ladvkq" target="_blank"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/wpp_footer.svg" alt="whatsapp"></a>
         </div>
     </div>
 
     <div class="hr_footer">
         <hr>
-        <h2>© 2024 Senacria. Todos os direitos reservados.</h2>
+        <h2>© 2025 Senacria. Todos os direitos reservados.</h2>
     </div>
 </div>
 
