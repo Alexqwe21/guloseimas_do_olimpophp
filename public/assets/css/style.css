@@ -2278,7 +2278,8 @@ section .site .perfil_favoritos a {
 
 section .site .perfil_cliente .perfil_editar a:hover,
 section .site .perfil_favoritos a:hover {
-    text-decoration: underline;
+    text-decoration: none !important;
+    text-decoration: normal;
 }
 
 
