@@ -17,16 +17,16 @@ class RecuperarsenhaController extends Controller
 
     public function index()
     {
- 
- 
+
+
         $dados = array();
         $banner_recuperar_senha = new Banner();
-        $banner_senha_recuperar= $banner_recuperar_senha->getBanner_recuperar_senha();
+        $banner_senha_recuperar = $banner_recuperar_senha->getBanner_recuperar_senha();
 
         $dados['banner'] = $banner_senha_recuperar;
- 
- 
-       
+
+
+
         $this->carregarViews('recuperar_senha', $dados);
     }
 
@@ -34,7 +34,7 @@ class RecuperarsenhaController extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-            
+
             // Verifica se o e-mail é válido
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $mensagem = "⚠️ Oops! Parece que o e-mail informado não é válido. Dá uma conferida e tente novamente! 📧";
@@ -44,20 +44,26 @@ class RecuperarsenhaController extends Controller
                 if ($usuario) {
                     // Gera uma nova senha temporária
                     $novaSenha = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
-                    
+
                     // Atualiza a senha no banco sem criptografia (NÃO RECOMENDADO!)
                     if ($this->usuarioModel->atualizarSenha($email, $novaSenha)) {
                         // Usando PHPMailer para enviar o e-mail com a nova senha
                         $mail = new PHPMailer(true);
                         try {
                             // Configurações do servidor SMTP
+                            $mail->SMTPDebug = 2;
+                            $mail->Debugoutput = 'html';
+                            
+
                             $mail->isSMTP();
-                            $mail->Host = HOTS_EMAIL;  
+                            $mail->Host = HOTS_EMAIL;
                             $mail->SMTPAuth = true;
-                            $mail->Username = USER_EMAIL; 
-                            $mail->Password = PASS_EMAIL; 
+                            $mail->Username = USER_EMAIL;
+                            $mail->Password = PASS_EMAIL;
+                            $mail->Port = 587;
                             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                            $mail->Port = 587; 
+                            
+                            
 
                             // Remetente e destinatário
                             $mail->setFrom(USER_EMAIL, 'Suporte Guloseimas do Olimpo 🍬');
@@ -90,10 +96,8 @@ class RecuperarsenhaController extends Controller
                 } else {
                     $mensagem = "🔍 E-mail não encontrado! Dá uma conferida se digitou corretamente ou aproveite para criar uma nova conta. 😉";
                 }
-                header("Location: " . BASE_URL . "entrar");
-                exit();
-                
-
+                // header("Location: " . BASE_URL . "entrar");
+                // exit();
             }
 
             // Retorna a mensagem para a view

@@ -30,7 +30,7 @@ define("BASE_URL" ,"http://localhost/guloseimas_do_olimpophp/public/");
 define('HOTS_EMAIL', 'smtp.gmail.com');
 define('PORT_EMAIL', '465');
 define('USER_EMAIL', 'desenvolvedorweb21@gmail.com');
-define('PASS_EMAIL', 'jwdw enzm mroa kiwk');
+define('PASS_EMAIL', 'fgip hdva gvep mdso');
 
 
 
