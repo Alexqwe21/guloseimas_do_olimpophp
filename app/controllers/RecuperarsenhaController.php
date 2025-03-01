@@ -47,9 +47,7 @@ class RecuperarsenhaController extends Controller
                         $mail = new PHPMailer(true);
                         try {
                             // Configurações do servidor SMTP
-                            $mail->SMTPDebug = 3;
-                            $mail->Debugoutput = 'html';
-
+                        
                             $mail->isSMTP();
                             $mail->Host = HOTS_EMAIL;  // Defina o host do servidor SMTP
                             $mail->SMTPAuth = true;
@@ -99,6 +97,9 @@ class RecuperarsenhaController extends Controller
                     $mensagem = "🔍 E-mail não encontrado! Dá uma conferida se digitou corretamente ou aproveite para criar uma nova conta. 😉";
                 }
             }
+            header("Location: " . BASE_URL . "entrar");
+            exit;
+            
 
             // Retorna a mensagem para a view
             $dados = ['mensagem' => $mensagem];
