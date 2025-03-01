@@ -17,15 +17,11 @@ class RecuperarsenhaController extends Controller
 
     public function index()
     {
-
-
         $dados = array();
         $banner_recuperar_senha = new Banner();
         $banner_senha_recuperar = $banner_recuperar_senha->getBanner_recuperar_senha();
 
         $dados['banner'] = $banner_senha_recuperar;
-
-
 
         $this->carregarViews('recuperar_senha', $dados);
     }
@@ -51,19 +47,25 @@ class RecuperarsenhaController extends Controller
                         $mail = new PHPMailer(true);
                         try {
                             // Configurações do servidor SMTP
-                            $mail->SMTPDebug = 2;
+                            $mail->SMTPDebug = 3;
                             $mail->Debugoutput = 'html';
-                            
 
                             $mail->isSMTP();
-                            $mail->Host = HOTS_EMAIL;
+                            $mail->Host = HOTS_EMAIL;  // Defina o host do servidor SMTP
                             $mail->SMTPAuth = true;
-                            $mail->Username = USER_EMAIL;
-                            $mail->Password = PASS_EMAIL;
+                            $mail->Username = USER_EMAIL; // Defina o seu email
+                            $mail->Password = PASS_EMAIL; // Defina a sua senha de app ou senha do email
                             $mail->Port = 587;
                             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                            
-                            
+
+                            // Desativar a verificação de certificados SSL
+                            $mail->SMTPOptions = array(
+                                'ssl' => array(
+                                    'verify_peer' => false,           // Desativa a verificação do certificado
+                                    'verify_peer_name' => false,      // Desativa a verificação do nome do certificado
+                                    'allow_self_signed' => true       // Permite certificados autoassinados
+                                )
+                            );
 
                             // Remetente e destinatário
                             $mail->setFrom(USER_EMAIL, 'Suporte Guloseimas do Olimpo 🍬');
@@ -96,8 +98,6 @@ class RecuperarsenhaController extends Controller
                 } else {
                     $mensagem = "🔍 E-mail não encontrado! Dá uma conferida se digitou corretamente ou aproveite para criar uma nova conta. 😉";
                 }
-                // header("Location: " . BASE_URL . "entrar");
-                // exit();
             }
 
             // Retorna a mensagem para a view
