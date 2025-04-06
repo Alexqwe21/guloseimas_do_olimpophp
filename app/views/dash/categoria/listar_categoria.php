@@ -38,20 +38,21 @@
         </td>
 
         <td>
-          <a href="<?php echo BASE_URL . 'produtos/editarC/' . $linha['id_categoria']; ?>">
+          <a href="/produtos/editarC/<?php echo $linha['id_categoria']; ?>">
             <button><i class="bi bi-pencil-fill"></i></button>
-
+          </a>
         </td>
 
         <td>
-          <a href="<?php echo BASE_URL . 'produtos/statusC/' . $linha['id_categoria']; ?>">
+          <a href="/produtos/statusC/<?php echo $linha['id_categoria']; ?>">
             <button><i class="bi bi-trash-fill"></i></button>
           </a>
         </td>
+
       </tr>
     <?php endforeach; ?>
   </tbody>
 </table>
-<script src="http://localhost/guloseimas_do_olimpophp/public/vendors/dash/js/adminlte.js"></script>
+<script src="/vendors/dash/js/adminlte.js"></script>
 
 </html>

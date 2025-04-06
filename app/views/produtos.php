@@ -21,13 +21,14 @@
 
     <main>
 
-        <section class="banner_produtos" style="background-image: url('<?php echo BASE_URL . 'uploads/' . $banner_produto[0]['foto_banner']; ?>');">
+        <section class="banner_produtos" style="background-image: url('/uploads/<?php echo $banner_produto[0]['foto_banner']; ?>');">
             <article class="site">
                 <div>
                     <h2>Encomende seu produto</h2>
                 </div>
             </article>
         </section>
+
 
         <section class="produtos">
             <article class="site">
@@ -69,9 +70,9 @@
                         <?php foreach ($pg_produtos as $PG_produtos): ?>
                             <?php if ($PG_produtos['status_pedido'] === 'Ativo'): ?>
                                 <div class="tamanho_link">
-                                    <a href="<?php echo BASE_URL . 'produtos/detalhe/' . $PG_produtos['link_produto']; ?>" class="produtos_link_a">
+                                    <a href="/produtos/detalhe/<?php echo $PG_produtos['link_produto']; ?>" class="produtos_link_a">
                                         <div class="produto_a_mostra">
-                                            <img src="<?php echo BASE_URL . 'uploads/' . $PG_produtos['foto_produto']; ?>"
+                                            <img src="/uploads/<?php echo $PG_produtos['foto_produto']; ?>"
                                                 alt="<?php echo htmlspecialchars($PG_produtos['alt_foto_produto'], ENT_QUOTES, 'UTF-8'); ?>"
                                                 class="pg_produto">
                                         </div>
@@ -79,7 +80,7 @@
                                             <h3><?php echo htmlspecialchars($PG_produtos['nome_produto'], ENT_QUOTES, 'UTF-8'); ?></h3>
                                             <p>R$ <?php echo number_format($PG_produtos['preco_produto'], 2, ',', '.'); ?></p>
                                             <button class="adicionar-favorito" data-id-produto="<?php echo $PG_produtos['id_produto']; ?>">
-                                                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/adicionar_favoritos.svg" alt="adicionar_favoritos">
+                                                <img src="/assets/img/adicionar_favoritos.svg" alt="adicionar_favoritos">
                                             </button>
                                         </div>
                                     </a>
@@ -156,25 +157,25 @@
     </div>
 
 
-<!-- Modal de Login Necessário -->
-<!-- Modal de Login -->
-<div class="modal fade" id="modal_fazer_login" tabindex="-1" aria-labelledby="modal_fazer_loginLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modal_fazer_loginLabel">Login Necessário</h5>
-               
-            </div>
-            <div class="modal-body">
-                <p>Você precisa estar logado para adicionar produtos aos favoritos. Clique no botão abaixo para fazer login.</p>
-            </div>
-            <div class="modal-footer">
-                <a href="<?php echo BASE_URL; ?>login" class="btn btn-primary">Fazer Login</a>
-               
+    <!-- Modal de Login Necessário -->
+    <!-- Modal de Login -->
+    <div class="modal fade" id="modal_fazer_login" tabindex="-1" aria-labelledby="modal_fazer_loginLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_fazer_loginLabel">Login Necessário</h5>
+
+                </div>
+                <div class="modal-body">
+                    <p>Você precisa estar logado para adicionar produtos aos favoritos. Clique no botão abaixo para fazer login.</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="/login" class="btn btn-primary">Fazer Login</a>
+                </div>
+
             </div>
         </div>
     </div>
-</div>
 
 </body>
 
@@ -199,7 +200,7 @@
         const limite = 2; // Define quantos produtos carregar por clique
 
         function carregarMaisProdutos() {
-            fetch(`<?php echo BASE_URL; ?>produtos/carregarMaisProdutos?offset=${offset}&limite=${limite}`)
+            fetch(`/produtos/carregarMaisProdutos?offset=${offset}&limite=${limite}`)
                 .then(response => response.text())
                 .then(data => {
                     let cleanedData = data.trim(); // Remove espaços extras
@@ -219,6 +220,7 @@
                 .catch(error => console.error("Erro ao carregar mais produtos:", error));
         }
 
+
         // 🔥 Função para reatribuir eventos aos botões de favoritos nos produtos carregados dinamicamente
         function reatribuirEventosFavoritos() {
             document.querySelectorAll(".adicionar-favorito").forEach(botao => {
@@ -233,7 +235,7 @@
         function filtrarPorCategoria(categoriaId) {
             btnVerMais.style.display = "none"; // Esconde o botão "Ver mais produtos"
 
-            fetch(`<?php echo BASE_URL; ?>produtos/filtrarPorCategoria?categoria=${categoriaId}&offset=0&limite=100`)
+            fetch(`/produtos/filtrarPorCategoria?categoria=${categoriaId}&offset=0&limite=100`)
                 .then(response => response.text())
                 .then(data => {
                     let cleanedData = data.trim(); // Remove espaços extras
@@ -248,6 +250,7 @@
                 .catch(error => console.error("Erro ao filtrar produtos:", error));
         }
 
+
         function reatribuirEventosFavoritos() {
             document.querySelectorAll('.adicionar-favorito').forEach(button => {
                 button.removeEventListener('click', adicionarAosFavoritos); // Remove event listener duplicado
@@ -256,41 +259,44 @@
         }
 
         function adicionarAosFavoritos(event) {
-    event.preventDefault();
-    const idProduto = event.target.closest(".adicionar-favorito").getAttribute("data-id-produto");
+            event.preventDefault();
+            const idProduto = event.target.closest(".adicionar-favorito").getAttribute("data-id-produto");
 
-    fetch('<?php echo BASE_URL; ?>favoritos/adicionarFavorito', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id_produto: idProduto })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.sucesso) {
-            // Exibe o modal de sucesso ao adicionar o produto aos favoritos
-            const modalFavorito = new bootstrap.Modal(document.getElementById('modal_adicionado_favorito'));
-            modalFavorito.show();
-        } else if (data.redirect) {
-            // Exibe o modal de login caso o usuário não esteja autenticado
-            const modalLogin = new bootstrap.Modal(document.getElementById('modal_fazer_login'));
-            modalLogin.show();
-        } else {
-            // Não exibe nenhum alerta aqui
-            // Caso não tenha ocorrido erro, mas o favorito não foi adicionado, não é necessário fazer nada
+            fetch('/favoritos/adicionarFavorito', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id_produto: idProduto
+                    })
+                })
+
+                .then(response => response.json())
+                .then(data => {
+                    if (data.sucesso) {
+                        // Exibe o modal de sucesso ao adicionar o produto aos favoritos
+                        const modalFavorito = new bootstrap.Modal(document.getElementById('modal_adicionado_favorito'));
+                        modalFavorito.show();
+                    } else if (data.redirect) {
+                        // Exibe o modal de login caso o usuário não esteja autenticado
+                        const modalLogin = new bootstrap.Modal(document.getElementById('modal_fazer_login'));
+                        modalLogin.show();
+                    } else {
+                        // Não exibe nenhum alerta aqui
+                        // Caso não tenha ocorrido erro, mas o favorito não foi adicionado, não é necessário fazer nada
+                    }
+                })
+
         }
-    })
-   
-}
 
-// Event Listener para os botões
-document.addEventListener("click", function(event) {
-    if (event.target.closest(".adicionar-favorito")) {
-        event.preventDefault();
-        adicionarAosFavoritos(event);
-    }
-});
+        // Event Listener para os botões
+        document.addEventListener("click", function(event) {
+            if (event.target.closest(".adicionar-favorito")) {
+                event.preventDefault();
+                adicionarAosFavoritos(event);
+            }
+        });
 
 
 
@@ -301,7 +307,7 @@ document.addEventListener("click", function(event) {
         function filtrarPorPreco(precoMaximo) {
             precoAtual.textContent = precoMaximo; // Atualiza o texto do preço selecionado
 
-            fetch(`<?php echo BASE_URL; ?>produtos/filtrarPorPreco?preco=${precoMaximo}`)
+            fetch(`/produtos/filtrarPorPreco?preco=${precoMaximo}`)
                 .then(response => response.text())
                 .then(data => {
                     let cleanedData = data.trim(); // Remove espaços extras
@@ -316,11 +322,12 @@ document.addEventListener("click", function(event) {
                 .catch(error => console.error("Erro ao filtrar por preço:", error));
         }
 
+
         /**
          * Função para exibir todos os produtos novamente
          */
         function mostrarTodosProdutos() {
-            fetch(`<?php echo BASE_URL; ?>produtos/mostrarTodosProdutos?offset=0&limite=100`)
+            fetch(`/produtos/mostrarTodosProdutos?offset=0&limite=100`)
                 .then(response => response.text())
                 .then(data => {
                     let cleanedData = data.trim();
@@ -335,6 +342,7 @@ document.addEventListener("click", function(event) {
                 })
                 .catch(error => console.error("Erro ao carregar todos os produtos:", error));
         }
+
 
 
         // Eventos
@@ -368,7 +376,7 @@ document.addEventListener("click", function(event) {
                 const idProduto = this.getAttribute('data-id-produto');
                 console.log(idProduto); // Verifique se está retornando o ID correto do produto
 
-                fetch('<?php echo BASE_URL; ?>favoritos/adicionarFavorito', {
+                fetch('/favoritos/adicionarFavorito', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -377,6 +385,7 @@ document.addEventListener("click", function(event) {
                             id_produto: idProduto
                         })
                     })
+
                     .then(response => response.json())
                     .then(data => {
                         if (data.sucesso) {
@@ -384,12 +393,12 @@ document.addEventListener("click", function(event) {
                             const modal = new bootstrap.Modal(document.getElementById('modal_adicionado_favorito'));
                             modal.show();
                         } else {
-                          
+
                         }
                     })
                     .catch(error => {
                         console.error("Erro ao adicionar o produto aos favoritos:", error);
-                       
+
                     });
             });
         });
@@ -402,16 +411,16 @@ document.addEventListener("click", function(event) {
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    let links = document.querySelectorAll(".nav-link");
-    let currentUrl = window.location.href;
+    document.addEventListener("DOMContentLoaded", function() {
+        let links = document.querySelectorAll(".nav-link");
+        let currentUrl = window.location.href;
 
-    links.forEach(link => {
-        if (link.href === currentUrl) {
-            link.classList.add("ativo");
-        }
+        links.forEach(link => {
+            if (link.href === currentUrl) {
+                link.classList.add("ativo");
+            }
+        });
     });
-});
 </script>
 </body>
 

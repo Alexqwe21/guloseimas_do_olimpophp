@@ -12,7 +12,8 @@ class FavoritosController extends Controller
     public function index()
 {
     if (!isset($_SESSION['userEmail'])) {
-        header('Location: ' . BASE_URL . 'login');
+   header('Location: /login');
+
         exit;
     }
 
@@ -21,7 +22,8 @@ class FavoritosController extends Controller
     $cliente = $clienteModel->buscarCliente($email);
 
     if (!$cliente) {
-        header('Location: ' . BASE_URL . 'login');
+   header('Location: /login');
+
         exit;
     }
 

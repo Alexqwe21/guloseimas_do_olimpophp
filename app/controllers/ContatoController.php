@@ -34,7 +34,7 @@ class ContatoController extends Controller
             $tel = filter_input(INPUT_POST, 'tel', FILTER_SANITIZE_NUMBER_INT);
             $assunto = filter_input(INPUT_POST, 'assunto', FILTER_SANITIZE_SPECIAL_CHARS);
             $msg = filter_input(INPUT_POST, 'ajudar', FILTER_SANITIZE_SPECIAL_CHARS);
-            
+
             // Substituir novas linhas por um caractere de espaço ou outro marcador
             $msg = str_replace(["\r", "\n"], ' ', $msg);
             $msg = str_replace('&#13;&#10;', "\n", $msg);
@@ -120,18 +120,17 @@ class ContatoController extends Controller
                         // Redirecionar para a página de contato com status de sucesso
                         header('Location: ' . BASE_URL);
                         exit;
-
                     } catch (Exception $e) {
                         error_log('Erro ao enviar o email: ' . $phpmail->ErrorInfo);
 
-                        header('Location: ' . BASE_URL );
+                        header('Location: ' . BASE_URL);
                         exit;
                     }
                 }
             }
         }
 
-        header('Location: ' . BASE_URL );
+        header('Location: ' . BASE_URL);
         exit;
     }
 
@@ -147,5 +146,45 @@ class ContatoController extends Controller
         $dados['conteudo'] = 'dash/contato/contato';
 
         $this->carregarViews('dash/dashboard', $dados);
+    }
+
+
+    public function excluir($id_contato)
+    {
+        // Verifica se o usuário tem permissão para excluir
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location:' . BASE_URL);
+            exit;
+        }
+
+        // Chama o método de exclusão no modelo
+        $resultado = $this->contatos_emails->excluirContato($id_contato);
+
+        if ($resultado) {
+            $_SESSION['mensagem'] = "Contato excluído com sucesso!";
+            $_SESSION['tipo-msg'] = 'sucesso';
+        } else {
+            $_SESSION['mensagem'] = "Erro ao excluir o contato.";
+            $_SESSION['tipo-msg'] = 'erro';
+        }
+
+        // Redireciona de volta para a lista de contatos
+        header('Location: ' . BASE_URL . '/contato/contato');
+        exit;
+    }
+
+    public function excluirTodos()
+    {
+        if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
+            header('Location: ' . BASE_URL);
+            exit;
+        }
+
+        $this->contatos_emails->excluirTodosEmails();
+
+        $_SESSION['mensagem'] = "Todos os contatos foram excluídos com sucesso!";
+        $_SESSION['tipo-msg'] = "sucesso";
+        header("Location: " . BASE_URL . "/contato/contato");
+        exit;
     }
 }

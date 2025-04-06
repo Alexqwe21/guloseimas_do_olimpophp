@@ -7,7 +7,8 @@ class GaleriaController extends Controller
     private $pg_galeria;
     private $sobrehome;
 
-    public function __construct(){
+    public function __construct()
+    {
         // Inicializa a sessão se ainda não estiver iniciada
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -21,7 +22,8 @@ class GaleriaController extends Controller
         $this->pg_galeria = new Galeria();
     }
 
-    public function index(){
+    public function index()
+    {
         $dados = array();
 
         $galeria_banner = new  Banner();
@@ -36,7 +38,8 @@ class GaleriaController extends Controller
         $this->carregarViews('galeria', $dados);
     }
 
-    public function editarG($id){
+    public function editarG($id)
+    {
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -45,7 +48,8 @@ class GaleriaController extends Controller
 
         // Valida o ID
         if (!is_numeric($id)) {
-            header('Location: ' . BASE_URL . 'ben_vindo');
+            header('Location: /ben_vindo');
+
             exit();
         }
 
@@ -56,7 +60,8 @@ class GaleriaController extends Controller
 
         if (!$foto) {
             // Se a foto não for encontrada, redireciona para a lista da galeria
-            header('Location: ' . BASE_URL . 'ben_vindo');
+            header('Location: /ben_vindo');
+
             exit();
         }
 
@@ -77,7 +82,8 @@ class GaleriaController extends Controller
 
 
 
-    public function editarQ($id){
+    public function editarQ($id)
+    {
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -86,7 +92,8 @@ class GaleriaController extends Controller
 
         // Valida o ID
         if (!is_numeric($id)) {
-            header('Location: ' . BASE_URL . 'ben_vindo');
+            header('Location: /ben_vindo');
+
             exit();
         }
 
@@ -115,7 +122,8 @@ class GaleriaController extends Controller
     }
 
 
-    public function statusG($id){
+    public function statusG($id)
+    {
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -142,7 +150,8 @@ class GaleriaController extends Controller
     }
 
 
-    public function status_S_G($id){
+    public function status_S_G($id)
+    {
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -170,7 +179,8 @@ class GaleriaController extends Controller
 
 
 
-    public function atualizarStatusG(){
+    public function atualizarStatusG()
+    {
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -197,7 +207,8 @@ class GaleriaController extends Controller
     }
 
 
-    public function atualizarstatus_S_G(){
+    public function atualizarstatus_S_G()
+    {
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -225,7 +236,8 @@ class GaleriaController extends Controller
 
 
 
-    public function atualizarImagem(){
+    public function atualizarImagem()
+    {
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -245,7 +257,8 @@ class GaleriaController extends Controller
 
             // Verifica se uma nova imagem foi enviada
             if (!empty($_FILES['foto_galeria']['name'])) {
-                $diretorioUploads = __DIR__ . '/../../public/uploads/galeria/';
+                // Define o caminho para o diretório de uploads, considerando a estrutura sem a pasta 'public'
+                $diretorioUploads = __DIR__ . '/../../uploads/galeria/';
 
                 // Certifica-se de que o diretório existe
                 if (!is_dir($diretorioUploads)) {
@@ -261,8 +274,8 @@ class GaleriaController extends Controller
                     $novoCaminhoImagem = 'galeria/' . $nomeArquivo;
 
                     // Remove a imagem antiga, se existir
-                    if (!empty($caminhoAntigoImagem) && file_exists(__DIR__ . '/../../public/uploads/' . $caminhoAntigoImagem)) {
-                        unlink(__DIR__ . '/../../public/uploads/' . $caminhoAntigoImagem);
+                    if (!empty($caminhoAntigoImagem) && file_exists(__DIR__ . '/../../uploads/' . $caminhoAntigoImagem)) {
+                        unlink(__DIR__ . '/../../uploads/' . $caminhoAntigoImagem);
                     }
                 } else {
                     $_SESSION['erro'] = "Erro ao fazer upload da imagem.";
@@ -290,7 +303,8 @@ class GaleriaController extends Controller
         }
     }
 
-    public function atualizarImagem_(){
+    public function atualizarImagem_()
+    {
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -310,7 +324,8 @@ class GaleriaController extends Controller
 
             // Verifica se uma nova imagem foi enviada
             if (!empty($_FILES['foto_galeria']['name'])) {
-                $diretorioUploads = __DIR__ . '/../../public/uploads/galeria/';
+                // Diretório de upload, sem a pasta 'public'
+                $diretorioUploads = __DIR__ . '/../../uploads/galeria/';
 
                 // Certifica-se de que o diretório existe
                 if (!is_dir($diretorioUploads)) {
@@ -323,11 +338,12 @@ class GaleriaController extends Controller
 
                 // Move a imagem para o diretório
                 if (move_uploaded_file($_FILES['foto_galeria']['tmp_name'], $caminhoCompleto)) {
+                    // Atualiza o caminho da imagem para salvar no banco
                     $novoCaminhoImagem = 'galeria/' . $nomeArquivo;
 
                     // Remove a imagem antiga, se existir
-                    if (!empty($caminhoAntigoImagem) && file_exists(__DIR__ . '/../../public/uploads/' . $caminhoAntigoImagem)) {
-                        unlink(__DIR__ . '/../../public/uploads/' . $caminhoAntigoImagem);
+                    if (!empty($caminhoAntigoImagem) && file_exists(__DIR__ . '/../../uploads/' . $caminhoAntigoImagem)) {
+                        unlink(__DIR__ . '/../../uploads/' . $caminhoAntigoImagem);
                     }
                 } else {
                     $_SESSION['erro'] = "Erro ao fazer upload da imagem.";
@@ -335,6 +351,9 @@ class GaleriaController extends Controller
                     exit();
                 }
             }
+
+            // Código para atualizar o banco de dados com $novoCaminhoImagem
+
 
             // Atualiza os dados no banco
             $dados = [
@@ -356,7 +375,8 @@ class GaleriaController extends Controller
     }
 
 
-    public function atualizar_qualidade(){
+    public function atualizar_qualidade()
+    {
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -377,11 +397,12 @@ class GaleriaController extends Controller
 
             // Verifica se uma nova imagem foi enviada
             if (!empty($_FILES['foto_galeria']['name'])) {
-                $diretorioUploads = __DIR__ . '/../../public/uploads/galeria/';
+                // Define o diretório de upload sem a pasta 'public'
+                $diretorioUploads = __DIR__ . '/../../uploads/galeria/';  // Caminho atualizado
 
                 // Certifica-se de que o diretório existe
                 if (!is_dir($diretorioUploads)) {
-                    mkdir($diretorioUploads, 0755, true);
+                    mkdir($diretorioUploads, 0755, true);  // Cria o diretório caso não exista
                 }
 
                 // Gera um nome único para a nova imagem
@@ -390,18 +411,22 @@ class GaleriaController extends Controller
 
                 // Move a imagem para o diretório
                 if (move_uploaded_file($_FILES['foto_galeria']['tmp_name'], $caminhoCompleto)) {
+                    // Atualiza o caminho da imagem para salvar no banco
                     $novoCaminhoImagem = 'galeria/' . $nomeArquivo;
 
                     // Remove a imagem antiga, se existir
-                    if (!empty($caminhoAntigoImagem) && file_exists(__DIR__ . '/../../public/uploads/' . $caminhoAntigoImagem)) {
-                        unlink(__DIR__ . '/../../public/uploads/' . $caminhoAntigoImagem);
+                    if (!empty($caminhoAntigoImagem) && file_exists(__DIR__ . '/../../uploads/' . $caminhoAntigoImagem)) {
+                        unlink(__DIR__ . '/../../uploads/' . $caminhoAntigoImagem);  // Remove a imagem antiga
                     }
                 } else {
+                    // Se ocorrer algum erro ao mover o arquivo
                     $_SESSION['erro'] = "Erro ao fazer upload da imagem.";
-                    header('Location: ' . BASE_URL . 'galeria/editarQ/' . $id);
+                    header('Location: ' . BASE_URL . 'galeria/editarQ/' . $id);  // Redireciona para a página de edição
                     exit();
                 }
             }
+
+            // Aqui você deve atualizar o banco de dados com o novo caminho da imagem: $novoCaminhoImagem
 
             // Dados para atualizar
             $dados = [
@@ -423,7 +448,8 @@ class GaleriaController extends Controller
     }
 
 
-    public function atualizar_sobre_home(){
+    public function atualizar_sobre_home()
+    {
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -444,7 +470,8 @@ class GaleriaController extends Controller
 
             // Verifica se uma nova imagem foi enviada
             if (!empty($_FILES['foto_galeria']['name'])) {
-                $diretorioUploads = __DIR__ . '/../../public/uploads/galeria/';
+                // Define o diretório de upload
+                $diretorioUploads = __DIR__ . '/../../uploads/galeria/';  // Atualizado para não usar a pasta 'public'
 
                 // Certifica-se de que o diretório existe
                 if (!is_dir($diretorioUploads)) {
@@ -457,11 +484,12 @@ class GaleriaController extends Controller
 
                 // Move a imagem para o diretório
                 if (move_uploaded_file($_FILES['foto_galeria']['tmp_name'], $caminhoCompleto)) {
+                    // Atualiza o caminho da imagem para salvar no banco
                     $novoCaminhoImagem = 'galeria/' . $nomeArquivo;
 
                     // Remove a imagem antiga, se existir
-                    if (!empty($caminhoAntigoImagem) && file_exists(__DIR__ . '/../../public/uploads/' . $caminhoAntigoImagem)) {
-                        unlink(__DIR__ . '/../../public/uploads/' . $caminhoAntigoImagem);
+                    if (!empty($caminhoAntigoImagem) && file_exists(__DIR__ . '/../../uploads/' . $caminhoAntigoImagem)) {
+                        unlink(__DIR__ . '/../../uploads/' . $caminhoAntigoImagem);
                     }
                 } else {
                     $_SESSION['erro'] = "Erro ao fazer upload da imagem.";
@@ -469,6 +497,9 @@ class GaleriaController extends Controller
                     exit();
                 }
             }
+
+            // Aqui você deve atualizar o banco de dados com $novoCaminhoImagem
+
 
             // Dados para atualizar
             $dados = [
@@ -491,7 +522,8 @@ class GaleriaController extends Controller
 
 
 
-    public function galeria_pg_galeria(){
+    public function galeria_pg_galeria()
+    {
 
 
 

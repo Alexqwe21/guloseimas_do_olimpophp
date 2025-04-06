@@ -1,5 +1,3 @@
-
-
 <style>
   button {
     border: none;
@@ -32,29 +30,27 @@
     <?php foreach ($listarServico as $linha): ?>
       <tr>
         <th scope="row"><?php echo $linha['id_banner']; ?></th>
-        <td><img src="<?php echo BASE_URL . 'uploads/' . $linha['foto_banner']; ?>" alt="<?php echo $linha['alt_foto_banner']; ?>" class="pg_produto"></td>
+        <td><img src="/uploads/<?php echo $linha['foto_banner']; ?>" alt="<?php echo $linha['alt_foto_banner']; ?>" class="pg_produto"></td>
         <td><?php echo htmlspecialchars($linha['nome_banner']); ?></td>
         <td><?php echo htmlspecialchars($linha['alt_foto_banner']); ?></td>
         <td><?php echo htmlspecialchars($linha['status_banner']); ?></td>
 
-
-        </td>
-
         <td>
-          <a href="<?php echo BASE_URL . 'produtos/editarB/' . $linha['id_banner']; ?>">
+          <a href="/produtos/editarB/<?php echo $linha['id_banner']; ?>">
             <button><i class="bi bi-pencil-fill"></i></button>
           </a>
-          
         </td>
 
         <td>
-        <a href="<?php echo BASE_URL . 'produtos/statusB/' . $linha['id_banner']; ?>">
+          <a href="/produtos/statusB/<?php echo $linha['id_banner']; ?>">
             <button><i class="bi bi-trash-fill"></i></button>
           </a>
         </td>
       </tr>
     <?php endforeach; ?>
+
   </tbody>
 </table>
-<script src="http://localhost/guloseimas_do_olimpophp/public/vendors/dash/js/adminlte.js"></script>
+<script src="/vendors/dash/js/adminlte.js"></script>
+
 </html>

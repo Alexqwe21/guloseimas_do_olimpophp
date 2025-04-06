@@ -91,7 +91,8 @@ margin-top: 10px;
                     <input type="hidden" name="foto_produto_antiga" value="<?php echo htmlspecialchars($produto['foto_produto']); ?>">
                     <button type="submit" class="btn btn-primary">Salvar alterações</button>
                     <input type="hidden" name="id_produto" value="<?php echo $produto['id_produto']; ?>">
-                    <a href="<?php echo BASE_URL . 'produtos/listar'; ?>" class="btn btn-secondary">Cancelar</a>
+                    <a href="/produtos/listar" class="btn btn-secondary">Cancelar</a>
+
                 </form>
             </div>
         <?php else: ?>

@@ -111,8 +111,8 @@
                 </div>
 
                 <div>
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 2.svg" alt="brigadeiros">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 3.svg" alt="brigadeiros">
+                    <img src="/assets/img/BRIGADEIRO 2.svg" alt="brigadeiros">
+                    <img src="/assets/img/BRIGADEIRO 3.svg" alt="brigadeiros">
                 </div>
             </article>
         </section>
@@ -142,7 +142,7 @@
                             </div>
                         </form>
 
-                        <a href="<?= BASE_URL ?>entrar">Voltar ao Login</a>
+                        <a href="/<?= BASE_URL ?>entrar">Voltar ao Login</a>
                     </div>
                 </div>
             </article>
@@ -156,8 +156,8 @@
                 </div>
 
                 <div>
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 4.svg" alt="brigadeiros">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 5.svg" alt="brigadeiros">
+                    <img src="/assets/img/BRIGADEIRO 4.svg" alt="brigadeiros">
+                    <img src="/assets/img/BRIGADEIRO 5.svg" alt="brigadeiros">
                 </div>
             </article>
         </section>

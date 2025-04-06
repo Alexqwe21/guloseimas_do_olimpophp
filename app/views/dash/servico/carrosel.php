@@ -1,5 +1,3 @@
-
-
 <style>
   button {
     border: none;
@@ -34,7 +32,7 @@
       <th scope="col">Status</th>
       <th scope="col">Editar</th>
       <th scope="col">Desativar</th>
-     
+
 
 
     </tr>
@@ -44,7 +42,8 @@
 
       <tr>
         <th scope="row"><?php echo $linha['id_produto'] ?></th>
-        <td><img src="<?php echo BASE_URL . 'uploads/' . $linha['foto_produto'] ?>" alt="<?php echo $linha['alt_foto_produto'] ?>" class="pg_produto"></td>
+        <td><img src="/uploads/<?php echo $linha['foto_produto']; ?>" alt="<?php echo $linha['alt_foto_produto']; ?>" class="pg_produto"></td>
+
 
         <td><?php echo $linha['nome_produto'] ?></td>
 
@@ -54,22 +53,21 @@
 
 
         <td>
-          <a href="<?php echo BASE_URL . 'produtos/editar/' . $linha['id_produto']; ?>">
+          <a href="/produtos/editar/<?php echo $linha['id_produto']; ?>">
             <button><i class="bi bi-pencil-fill"></i></button>
           </a>
-
-
-         
         </td>
 
         <td>
-        <a href="<?php echo BASE_URL . 'home/statusC/' . $linha['id_produto']; ?>">
-        <button><i class="bi bi-trash-fill"></i></button>
+          <a href="/home/statusC/<?php echo $linha['id_produto']; ?>">
+            <button><i class="bi bi-trash-fill"></i></button>
+          </a>
         </td>
 
-      
 
-        
+
+
+
 
 
 
@@ -82,6 +80,6 @@
 
   </tbody>
 </table>
-<script src="http://localhost/guloseimas_do_olimpophp/public/vendors/dash/js/adminlte.js"></script>
+<script src="/vendors/dash/js/adminlte.js"></script>
 
 </html>

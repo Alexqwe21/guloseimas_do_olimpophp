@@ -1,5 +1,3 @@
-
-
 <style>
   button {
     border: none;
@@ -18,7 +16,28 @@
 
 
 
-<a href="<?php echo BASE_URL . 'produtos/adicionar/'  ?>" class="btn btn-primary mb-3" >ADICIONAR</a>
+<a href="<?php echo BASE_URL . 'produtos/adicionar/'  ?>" class="btn btn-primary mb-3">ADICIONAR</a>
+<form method="GET" class="mb-3 row g-2">
+  <div class="col-md-3">
+    <label for="status" class="form-label">Filtrar por status:</label>
+    <select name="status" id="status" class="form-select" onchange="this.form.submit()">
+      <option value="">Todos</option>
+      <option value="Ativo" <?php echo (isset($_GET['status']) && $_GET['status'] == 'Ativo') ? 'selected' : ''; ?>>Ativo</option>
+      <option value="Inativo" <?php echo (isset($_GET['status']) && $_GET['status'] == 'Inativo') ? 'selected' : ''; ?>>Inativo</option>
+    </select>
+  </div>
+
+  <div class="col-md-3">
+    <label for="busca" class="form-label">Buscar por nome ou ID:</label>
+    <input type="text" name="busca" id="busca" class="form-control" placeholder="Ex: 10 ou Chocolate"
+      value="<?php echo isset($_GET['busca']) ? htmlspecialchars($_GET['busca']) : ''; ?>">
+  </div>
+
+  <div class="col-md-2 d-flex align-items-end">
+    <button type="submit" class="btn btn-success w-100">Buscar</button>
+  </div>
+</form>
+
 
 
 <table class="table table-hover">
@@ -33,7 +52,7 @@
       <!-- <th scope="col">Especialidade</th> -->
       <th scope="col">Editar</th>
       <th scope="col">Desativar/Ativar</th>
-     
+
 
     </tr>
   </thead>
@@ -57,20 +76,20 @@
             <button><i class="bi bi-pencil-fill"></i></button>
           </a>
 
-          <a href="<?php echo BASE_URL . 'produtos/status/' . $linha['id_produto']; ?>">
+          <a href="/<?php echo BASE_URL . 'produtos/status/' . $linha['id_produto']; ?>">
             <button><i class=""></i></button>
           </a>
-       
+
         <td>
 
 
 
-      
+
           <a href="<?php echo BASE_URL . 'produtos/status/' . $linha['id_produto']; ?>">
             <button><i class="bi bi-trash-fill"></i></button>
           </a>
-       
-        
+
+
       </tr>
 
 
@@ -80,5 +99,6 @@
 
   </tbody>
 </table>
-<script src="http://localhost/guloseimas_do_olimpophp/public/vendors/dash/js/adminlte.js"></script>
+<script src="/vendors/dash/js/adminlte.js"></script>
+
 </html>

@@ -14,10 +14,12 @@
 
                     <div class="box">
                         <div class="img_01">
-                            <a href="<?php echo BASE_URL . 'produtos/detalhe/' . $item['link_produto'];?>"><img
-                                    src="<?php echo BASE_URL . 'uploads/' . $item['foto_produto']; ?>"
-                                    alt="<?php echo $item['alt_foto_produto']; ?>" class="destaque_img"></a>
+                            <a href="<?php echo BASE_URL . 'produtos/detalhe/' . $item['link_produto']; ?>">
+                                <img src="<?php echo BASE_URL . 'uploads/' . $item['foto_produto']; ?>"
+                                    alt="<?php echo htmlspecialchars($item['alt_foto_produto'], ENT_QUOTES, 'UTF-8'); ?>" class="destaque_img">
+                            </a>
                         </div>
+
                         <div>
                             <h3><?php echo htmlspecialchars($item['nome_produto'], ENT_QUOTES, 'UTF-8'); ?>
                             </h3>

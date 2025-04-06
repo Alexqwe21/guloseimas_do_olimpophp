@@ -120,7 +120,8 @@ margin-top: 10px;
                     <input type="hidden" name="foto_produto_antiga" value="<?php echo htmlspecialchars($info_produto['foto_info_produto']); ?>">
                     <button type="submit" class="btn btn-primary">Salvar alterações</button>
                     <input type="hidden" name="id_info_produtos" value="<?php echo $info_produto['id_info_produtos']; ?>">
-                    <a href="<?php echo BASE_URL . 'info_produtos/info_produtos'; ?>" class="btn btn-secondary">Cancelar</a>
+                    <a href="/info_produtos/info_produtos" class="btn btn-secondary">Cancelar</a>
+
                 </form>
             </div>
         <?php else: ?>

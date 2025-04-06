@@ -29,7 +29,7 @@
             <article class="site">
                 <div class="lado_a_lado">
                     <div>
-                        <a href="http://localhost/guloseimas_do_olimpophp/public/produtos"><img src="<?php echo BASE_URL . 'uploads/' . $detalheServico['foto_produto']; ?>" alt="<?php echo htmlspecialchars($detalheServico['info_alt_foto_produto']); ?>" class="img_info"></a>
+                        <a href="/produtos"><img src="<?php echo BASE_URL . 'uploads/' . $detalheServico['foto_produto']; ?>" alt="<?php echo htmlspecialchars($detalheServico['info_alt_foto_produto']); ?>" class="img_info"></a>
                     </div>
                     <div class="inf_produto">
                         <div class="reserva_title">
@@ -72,10 +72,11 @@
                                         <i class="fa-solid fa-cart-shopping"></i>
                                     </div>
                                     <div>
-                                        <a href="<?php echo BASE_URL . 'info_produtos/adicionarReserva/' . $detalheServico['id_produto']; ?>">
+                                        <a href="<?php echo BASE_URL . 'Info_produtos/adicionarReserva/'. $detalheServico['id_produto']; ?>">
                                             <p>RESERVE AGORA</p>
                                         </a>
                                     </div>
+
                                 </div>
                                 <div class="fav_produto">
                                     <div>
@@ -169,7 +170,7 @@
                         <p>Você precisa estar logado para adicionar produtos aos favoritos. Clique no botão abaixo para fazer login.</p>
                     </div>
                     <div class="modal-footer">
-                        <a href="<?php echo BASE_URL; ?>login" class="btn btn-primary">Fazer Login</a>
+                        <a href="/login" class="btn btn-primary">Fazer Login</a>
 
                     </div>
                 </div>

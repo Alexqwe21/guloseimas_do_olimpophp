@@ -18,7 +18,8 @@ class ClienteController extends Controller
     {
         // Verifica se o usuário está logado
         if (!isset($_SESSION['userEmail'])) {
-            header('Location: ' . BASE_URL . 'login');
+       header('Location: /login');
+
             exit;
         }
 
@@ -27,7 +28,8 @@ class ClienteController extends Controller
         $cliente = $clienteModel->buscarCliente($email); // Busca no banco os dados do cliente
 
         if (!$cliente) {
-            header('Location: ' . BASE_URL . 'login');
+       header('Location: /login');
+
             exit;
         }
 
@@ -60,7 +62,8 @@ class ClienteController extends Controller
     {
         // Verifica se o usuário está logado
         if (!isset($_SESSION['userEmail'])) {
-            header('Location: ' . BASE_URL . 'login');
+       header('Location: /login');
+
             exit;
         }
 
@@ -70,7 +73,8 @@ class ClienteController extends Controller
 
 
         if (!$cliente) {
-            header('Location: ' . BASE_URL . 'login');
+       header('Location: /login');
+
             exit;
         }
 
@@ -94,7 +98,8 @@ class ClienteController extends Controller
     {
         // Verifica se o usuário está logado
         if (!isset($_SESSION['userEmail'])) {
-            header('Location: ' . BASE_URL . 'login');
+       header('Location: /login');
+
             exit;
         }
 
@@ -104,7 +109,8 @@ class ClienteController extends Controller
 
 
         if (!$cliente) {
-            header('Location: ' . BASE_URL . 'login');
+       header('Location: /login');
+
             exit;
         }
 
@@ -121,7 +127,8 @@ class ClienteController extends Controller
     {
         // Verifica se o usuário está logado
         if (!isset($_SESSION['userEmail'])) {
-            header('Location: ' . BASE_URL . 'login');
+       header('Location: /login');
+
             exit;
         }
     
@@ -129,7 +136,8 @@ class ClienteController extends Controller
         $cliente = $this->clienteModel->buscarCliente($email); // Busca no banco os dados do cliente
     
         if (!$cliente) {
-            header('Location: ' . BASE_URL . 'login');
+       header('Location: /login');
+
             exit;
         }
     
@@ -158,7 +166,8 @@ class ClienteController extends Controller
     {
         // Verifica se o usuário está logado
         if (!isset($_SESSION['userEmail'])) {
-            header('Location: ' . BASE_URL . 'login');
+       header('Location: /login');
+
             exit;
         }
 
@@ -174,7 +183,7 @@ class ClienteController extends Controller
             // Validação básica
             if (empty($nome) || empty($cpf) || empty($telefone)) {
                 $_SESSION['erro'] = 'Todos os campos são obrigatórios!';
-                header('Location: ' . BASE_URL . 'editar_cliente');
+             header('Location: /editar_cliente');
                 exit;
             }
 
@@ -188,7 +197,7 @@ class ClienteController extends Controller
                 $_SESSION['erro'] = 'Erro ao atualizar os dados!';
             }
 
-            header('Location: ' . BASE_URL . 'cliente');
+          header('Location: /cliente');
             exit;
         }
     }
@@ -196,7 +205,8 @@ class ClienteController extends Controller
     public function salvarEdicaoSenhaCliente()
     {
         if (!isset($_SESSION['userEmail'])) {
-            header('Location: ' . BASE_URL . 'login');
+       header('Location: /login');
+
             exit;
         }
 
@@ -205,7 +215,8 @@ class ClienteController extends Controller
         $cliente = $clienteModel->buscarCliente($email);
 
         if (!$cliente) {
-            header('Location: ' . BASE_URL . 'login');
+       header('Location: /login');
+
             exit;
         }
 
@@ -271,8 +282,8 @@ class ClienteController extends Controller
                     $_SESSION['userEmail'] = $email;
                     $_SESSION['userTipo'] = 'Funcionario';
 
-                    header('Location: ' . BASE_URL . 'entrar');
-                    exit;
+                    header('Location: /entrar');
+                    exit(); 
                 }
 
                 // Se não encontrar no modelo de Funcionário, verifica no modelo de Cliente
@@ -283,7 +294,7 @@ class ClienteController extends Controller
                     // Se o email for encontrado como cliente, redireciona para a página de "entrar"
                     $_SESSION['userEmail'] = $email;
                     $_SESSION['userTipo'] = 'Cliente';
-                    header('Location: ' . BASE_URL . 'entrar');
+                     header('Location: /entrar');
                     exit;
                 }
 

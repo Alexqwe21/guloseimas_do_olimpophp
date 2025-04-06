@@ -193,7 +193,8 @@ class SobreController extends Controller
     }
 
 
-    public function status_S_S($id){
+    public function status_S_S($id)
+    {
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -203,7 +204,7 @@ class SobreController extends Controller
         // Busca os dados da galeria
         $galeria_pg = $this->servicos->getServicoPorId($id);
 
-       
+
 
         // Prepara os dados para a view
         $dados = [
@@ -217,7 +218,8 @@ class SobreController extends Controller
 
 
 
-    public function atualizarstatus_S_S(){
+    public function atualizarstatus_S_S()
+    {
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -244,7 +246,8 @@ class SobreController extends Controller
     }
 
 
-    public function atualizarImagem_servico(){
+    public function atualizarImagem_servico()
+    {
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -262,15 +265,16 @@ class SobreController extends Controller
 
 
             // Define o caminho padrão como a imagem antiga
-            $novoCaminhoImagem = $caminhoAntigoImagem;
+            $novoCaminhoImagem = $caminhoAntigoImagem; // Caminho antigo por padrão
 
             // Verifica se uma nova imagem foi enviada
             if (!empty($_FILES['foto_servico']['name'])) {
-                $diretorioUploads = __DIR__ . '/../../public/uploads/servico/';
+                // Define o diretório de upload sem a pasta 'public'
+                $diretorioUploads = __DIR__ . '/../../uploads/servico/';  // Caminho atualizado
 
                 // Certifica-se de que o diretório existe
                 if (!is_dir($diretorioUploads)) {
-                    mkdir($diretorioUploads, 0755, true);
+                    mkdir($diretorioUploads, 0755, true);  // Cria o diretório caso não exista
                 }
 
                 // Gera um nome único para a nova imagem
@@ -279,18 +283,23 @@ class SobreController extends Controller
 
                 // Move a imagem para o diretório
                 if (move_uploaded_file($_FILES['foto_servico']['tmp_name'], $caminhoCompleto)) {
+                    // Atualiza o caminho da imagem para salvar no banco
                     $novoCaminhoImagem = 'servico/' . $nomeArquivo;
 
                     // Remove a imagem antiga, se existir
-                    if (!empty($caminhoAntigoImagem) && file_exists(__DIR__ . '/../../public/uploads/' . $caminhoAntigoImagem)) {
-                        unlink(__DIR__ . '/../../public/uploads/' . $caminhoAntigoImagem);
+                    if (!empty($caminhoAntigoImagem) && file_exists(__DIR__ . '/../../uploads/' . $caminhoAntigoImagem)) {
+                        unlink(__DIR__ . '/../../uploads/' . $caminhoAntigoImagem);
                     }
                 } else {
+                    // Caso ocorra erro no upload
                     $_SESSION['erro'] = "Erro ao fazer upload da imagem.";
-                    header('Location: ' . BASE_URL . 'galeria/editarS/' . $id);
+                    header('Location: ' . BASE_URL . 'galeria/editarS/' . $id);  // Redireciona para a página de edição
                     exit();
                 }
             }
+
+            // Aqui você pode atualizar o banco de dados com o novo caminho da imagem: $novoCaminhoImagem
+
 
             // Atualiza os dados no banco
             $dados = [

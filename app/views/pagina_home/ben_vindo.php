@@ -8,14 +8,16 @@
                 <h3>Reserve agora mesmo a nossa
                     deliciosa variedade de doces</h3>
 
-                <a href="http://localhost/guloseimas_do_olimpophp/public/galeria">Veja nossa galeria</a>
+                <a href="/galeria">Veja nossa galeria</a>
             </div>
             <div class="lado_a_lado_img">
                 <?php foreach ($galeria as $foto): ?>
                     <div class="img_01">
-                        <a href="http://localhost/guloseimas_do_olimpophp/public/galeria"><img src="<?php echo BASE_URL . 'uploads/' . $foto['foto_galeria']; ?>" class="ben_vindo_img"
-                                alt="<?php echo $foto['alt_foto_galeria']; ?>"></a>
+                        <a href="/galeria">
+                            <img src="/uploads/<?php echo $foto['foto_galeria']; ?>" class="ben_vindo_img" alt="<?php echo $foto['alt_foto_galeria']; ?>">
+                        </a>
                     </div>
+
                 <?php endforeach; ?>
 
             </div>

@@ -25,13 +25,15 @@
     }
 </style>
 
+<form action="<?php echo BASE_URL; ?>produtos/adicionar" method="POST" enctype="multipart/form-data">
 
-<form action="http://localhost/guloseimas_do_olimpophp/public/produtos/adicionar" method="POST" enctype="multipart/form-data">
+
+
 
     <div class="lado">
         <!-- Seção de Imagem -->
         <div class="col-md-3 text-center">
-            <img id="preview-img" src="http://localhost/guloseimas_do_olimpophp/public/uploads/selecione_foto/selecione a foto.svg" alt="imagem do Serviço"
+            <img id="preview-img" src="/uploads/selecione_a_foto.svg" alt="imagem do Serviço"
                 style="width: 100%; cursor:pointer;" title="Clique na imagem para selecionar uma foto do serviço">
             <input type="file" name="foto_produto" id="foto_produto" style="display: none;">
         </div>
@@ -116,7 +118,7 @@
 </form>
 
 
-<script src="http://localhost/guloseimas_do_olimpophp/public/vendors/dash/js/adminlte.js"></script>
+<script src="/vendors/dash/js/adminlte.js"></script>
 
 
 <script>

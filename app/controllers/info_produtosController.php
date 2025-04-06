@@ -1,6 +1,6 @@
 <?php
 
-class info_produtosController extends Controller
+class Info_produtosController extends Controller
 {
 
 
@@ -9,7 +9,8 @@ class info_produtosController extends Controller
 
 
 
-    public function __construct(){
+    public function __construct()
+    {
 
 
 
@@ -26,7 +27,8 @@ class info_produtosController extends Controller
 
 
 
-    public function index(){
+    public function index()
+    {
 
 
 
@@ -40,31 +42,36 @@ class info_produtosController extends Controller
 
         $this->carregarViews('info_produtos', $dados);
     }
-
-
-    public function info_produtos($id = null){
+    public function info_produtos($id = null)
+    {
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
             exit;
         }
-
+    
         $dados = array();
-
-        if ($id) {
-            // Busca o produto pelo ID, caso ele seja fornecido
-            $dados['listarServico'] = $this->info_produtos->getTodosServicos($id);
+    
+        // Verifica se foi passado um filtro de busca via GET (por exemplo, 'busca')
+        $busca = $_GET['busca'] ?? ''; // Obtém o valor do parâmetro 'busca'
+    
+        if ($busca) {
+            // Se uma busca for fornecida, realiza a busca por nome
+            $dados['listarServico'] = $this->info_produtos->getInfoProdutosPorBusca($busca);
         } else {
-            // Busca todos os produtos caso o ID não seja fornecido
+            // Caso contrário, busca todos os produtos
             $dados['listarServico'] = $this->info_produtos->getTodosServicos();
         }
-
+    
         $dados['conteudo'] = 'dash/info_produtos/info_produtos';
-
+    
+        // Carrega a view com os dados
         $this->carregarViews('dash/dashboard', $dados);
     }
+    
 
 
-    public function editarI($id){
+    public function editarI($id)
+    {
         // Verifica se o usuário está logado e tem permissão para editar
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -91,7 +98,8 @@ class info_produtosController extends Controller
 
 
 
-    public function atualizar_info(){
+    public function atualizar_info()
+    {
         // Verifica se o usuário tem permissão
         if (!isset($_SESSION['userTipo']) || $_SESSION['userTipo'] !== 'Funcionario') {
             header('Location: ' . BASE_URL);
@@ -103,9 +111,10 @@ class info_produtosController extends Controller
 
             // Verifica se uma nova imagem foi enviada
             $novoCaminhoImagem = $_POST['foto_produto_antiga']; // Caminho antigo por padrão
+
             if (!empty($_FILES['foto_info_produto']['name'])) {
-                // Diretório de upload
-                $diretorioUploads = __DIR__ . '/../../public/uploads/produto/';
+                // Diretório de upload, sem a pasta 'public'
+                $diretorioUploads = __DIR__ . '/../../uploads/produto/';
 
                 // Certifica-se de que o diretório existe
                 if (!is_dir($diretorioUploads)) {
@@ -126,6 +135,9 @@ class info_produtosController extends Controller
                     exit();
                 }
             }
+
+            // Código para atualizar o banco de dados com $novoCaminhoImagem
+
 
             // Atualiza os dados do produto
             $dados = [
@@ -152,30 +164,32 @@ class info_produtosController extends Controller
     }
 
 
-    public function adicionarReserva($idProduto) {
+    public function adicionarReserva($idProduto)
+    {
         // Verifica se o cliente está logado
+
+
         if (!isset($_SESSION['userId'])) {
             $_SESSION['erro'] = 'Faça login para reservar.';
-            header('Location: ' . BASE_URL . 'login');
+            header('Location: /login');
+
             exit();
         }
-    
+
         // Obtém o id do cliente a partir da sessão
         $id_cliente = $_SESSION['userId'];
-    
+
         // **Zera o carrinho completamente**
         $_SESSION['carrinho'] = [];  // Garante que o carrinho esteja vazio
-    
+
         // Cria uma instância do modelo Produto
         $produtoModel = new Produto();
-    
+
         // Chama o método adicionar do modelo Produto para fazer a reserva
         $produtoModel->adicionar($idProduto, $id_cliente);
-    
+
         // Redireciona o usuário para a página de reservas
         header('Location: ' . BASE_URL . 'reservas');
         exit();
     }
-    
-    
 }

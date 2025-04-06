@@ -16,7 +16,7 @@
         <?php
         // loader
         require('template/loader.php');
-        
+
         // Inclui o cabeçalho
         require('template/header.php');
         ?>
@@ -41,8 +41,8 @@
                 </div>
 
                 <div>
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 2.svg" alt="brigadeiros">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 3.svg" alt="brigadeiros">
+                    <img src="assets/img/BRIGADEIRO 2.svg" alt="brigadeiros">
+                    <img src="assets/img/BRIGADEIRO 3.svg" alt="brigadeiros">
                 </div>
             </article>
         </section>
@@ -56,32 +56,27 @@
 
 
                     <div class="forms_contato">
-                        <form method="POST" action="http://localhost/guloseimas_do_olimpophp/public/login/login">
+                        <form method="POST" action="login/login">
                             <div style="display: flex; align-items: center; justify-content: center;" class="email">
                                 <label for="email">
-                                    <img class="email_svg" src="http://localhost/guloseimas_do_olimpophp/public/assets/img/email_forms.svg"
-                                        alt="telefone"></label>
-                                <input type="email" name="email" id="email" placeholder="Endereço de email" required>
+                                    <img class="email_svg" src="assets/img/email_forms.svg" alt="telefone">
+                                </label>
+                                <input type="email" name="email" id="email"
+                                    value="<?= isset($dados['email']) ? htmlspecialchars($dados['email']) : ''; ?>"
+                                    placeholder="Endereço de email" required>
                             </div>
-
-                            <!--   <div class="tipo_usuario">
-                                <label for="tipo_usuario">Tipo de Usuário:</label>
-                               <select name="tipo_usuario" id="tipo_usuario" required>
-                                <option value="Selecione" disabled selected>Selecione</option>
-
-                                    <option value="Funcionario">Funcionário</option>
-                                    Outros tipos de usuários, se necessário 
-                                </select> 
-                            </div> -->
 
                             <div class="button_forms">
                                 <button type="submit">CONTINUAR</button>
                             </div>
                         </form>
 
-
-
+                        <?php if (isset($_SESSION['login-erro'])): ?>
+                            <p style="color: red;"><?= $_SESSION['login-erro']; ?></p>
+                            <?php unset($_SESSION['login-erro']); ?>
+                        <?php endif; ?>
                     </div>
+
                 </div>
             </article>
         </section>
@@ -94,8 +89,8 @@
                 </div>
 
                 <div>
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 4.svg" alt="brigadeiros">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 5.svg" alt="brigadeiros">
+                    <img src="assets/img/BRIGADEIRO 4.svg" alt="brigadeiros">
+                    <img src="assets/img/BRIGADEIRO 5.svg" alt="brigadeiros">
                 </div>
             </article>
         </section>
@@ -117,18 +112,18 @@
     ?>
 
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    let links = document.querySelectorAll(".nav-link");
-    let currentUrl = window.location.href;
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let links = document.querySelectorAll(".nav-link");
+            let currentUrl = window.location.href;
 
-    links.forEach(link => {
-        if (link.href === currentUrl) {
-            link.classList.add("ativo");
-        }
-    });
-});
-</script>
+            links.forEach(link => {
+                if (link.href === currentUrl) {
+                    link.classList.add("ativo");
+                }
+            });
+        });
+    </script>
 </body>
 
 

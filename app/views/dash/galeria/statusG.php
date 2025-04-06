@@ -73,7 +73,8 @@ margin-top: 10px;
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Salvar alterações</button>
-                <a href="<?php echo BASE_URL . 'galeria/galeria_pg_galeria'; ?>" class="btn btn-secondary">Cancelar</a>
+                <a href="/galeria/galeria_pg_galeria" class="btn btn-secondary">Cancelar</a>
+
             </div>
         </form>
     </main>

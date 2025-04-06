@@ -3,7 +3,7 @@
 
 <head>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <?php
     // Inclui o head
     require('head_geral/head.php');
@@ -46,10 +46,10 @@
 
 
                         <div class="redes_contato">
-                            <a href="https://www.instagram.com/guloseimas_olimpo?igsh=MTZsZjV1aXU0MWQxNQ==" target="_blank"> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/instagram_contato.svg" alt="img"></a> <!-- instagram -->
+                            <a href="https://www.instagram.com/guloseimas_olimpo?igsh=MTZsZjV1aXU0MWQxNQ==" target="_blank"> <img src="/assets/img/instagram_contato.svg" alt="img"></a> <!-- instagram -->
 
-                            <!-- <a href="#" target="_blank"> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/ifood_footer.svg" alt="img"></a> ifood  -->
-                            <!-- <a href="#" target="_blank"> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/twiter.svg" alt="img"></a> -->
+                            <!-- <a href="/#" target="_blank"> <img src="/assets/img/ifood_footer.svg" alt="img"></a> ifood  -->
+                            <!-- <a href="/#" target="_blank"> <img src="/assets/img/twiter.svg" alt="img"></a> -->
 
                         </div>
 
@@ -58,11 +58,11 @@
                     <div class="forms_contato">
                         <form id="formContato" action="contato/enviarEmail" method="post">
                             <div class="nome">
-                                <label for="nome"> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/user_forms.svg" alt="user"></label>
+                                <label for="nome"> <img src="/assets/img/user_forms.svg" alt="user"></label>
                                 <input type="tex" name="nome" id="nome" placeholder="NOME" required>
 
                                 <div class="email">
-                                    <label for="email"> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/email_forms.svg"
+                                    <label for="email"> <img src="/assets/img/email_forms.svg"
                                             alt="telefone"></label>
                                     <input type="email" name="email" id="email" placeholder="EMAIL" required>
                                 </div>
@@ -70,13 +70,13 @@
                             </div>
 
                             <div class="telefone">
-                                <label for="tel"> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/telefone_forms.svg"
+                                <label for="tel"> <img src="/assets/img/telefone_forms.svg"
                                         alt="telefone"></label>
                                 <input type="tel" name="tel" id="tel" placeholder="TELEFONE" required>
 
 
                                 <div class="assunto">
-                                    <label for="assunto"> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/assunto_forms.svg"
+                                    <label for="assunto"> <img src="/assets/img/assunto_forms.svg"
                                             alt="assunto"></label>
                                     <input type="text" name="assunto" id="assunto" placeholder="ASSUNTO" required>
 
@@ -87,7 +87,7 @@
                             <div class="textarea_forms">
                                 <label for="ajudar"></label>
                                 <div class="como_ajudar">
-                                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/lapis_forms.svg" alt="lapis">
+                                    <img src="/assets/img/lapis_forms.svg" alt="lapis">
                                     <p>Como podemos ajudar voce ? Sinta-se a vontade para entrar em contato!</p>
                                 </div>
                                 <textarea name="ajudar" id="ajudar" cols="30" rows="10">
@@ -99,7 +99,7 @@
 
                             <div class="button_forms">
 
-                                <button type="submit"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/enviar_froms.svg" alt="enviar">Entre
+                                <button type="submit"><img src="/assets/img/enviar_froms.svg" alt="enviar">Entre
                                     em contato</button>
                             </div>
 
@@ -132,31 +132,31 @@
         </section>
 
         <section class="localizacao_contato">
-            <article>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14639.048435535533!2d-46.41369613373925!3d-23.469044011811558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce63ab23be7d87%3A0xfac34fc6598d3ab9!2sItaim%20Paulista%20-%20Pimentas%2C%20Guarulhos%20-%20SP%2C%2007263-010!5e0!3m2!1spt-BR!2sbr!4v1739802271123!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <article>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14639.048435535533!2d-46.41369613373925!3d-23.469044011811558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce63ab23be7d87%3A0xfac34fc6598d3ab9!2sItaim%20Paulista%20-%20Pimentas%2C%20Guarulhos%20-%20SP%2C%2007263-010!5e0!3m2!1spt-BR!2sbr!4v1739802271123!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </article>
+</section>
 
-            </article>
-        </section>
 
 
         <!-- <section class="fotos_contato">
             <article class="site">
 
                 <div class="produtos_contato">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/Produto_contato.svg" alt="foto">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/Produto_contato.svg" alt="foto">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/Produto_contato.svg" alt="foto">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/Produto_contato.svg" alt="foto">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/Produto_contato.svg" alt="foto">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/Produto_contato.svg" alt="foto">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/Produto_contato.svg" alt="foto">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/Produto_contato.svg" alt="foto">
+                    <img src="/assets/img/Produto_contato.svg" alt="foto">
+                    <img src="/assets/img/Produto_contato.svg" alt="foto">
+                    <img src="/assets/img/Produto_contato.svg" alt="foto">
+                    <img src="/assets/img/Produto_contato.svg" alt="foto">
+                    <img src="/assets/img/Produto_contato.svg" alt="foto">
+                    <img src="/assets/img/Produto_contato.svg" alt="foto">
+                    <img src="/assets/img/Produto_contato.svg" alt="foto">
+                    <img src="/assets/img/Produto_contato.svg" alt="foto">
 
 
 
 
                     <div class="instagram_contato">
-                        <a href="#"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/instagram_contato_.svg" alt="instagram"></a>
+                        <a href="/#"><img src="/assets/img/instagram_contato_.svg" alt="instagram"></a>
                     </div>
 
 
@@ -195,7 +195,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

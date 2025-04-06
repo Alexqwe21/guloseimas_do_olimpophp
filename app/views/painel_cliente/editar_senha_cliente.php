@@ -21,8 +21,8 @@
                     <h2>Alterar senha</h2>
                 </div>
                 <div>
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 2.svg" alt="brigadeiros">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 3.svg" alt="brigadeiros">
+                    <img src="/assets/img/BRIGADEIRO 2.svg" alt="brigadeiros">
+                    <img src="/assets/img/BRIGADEIRO 3.svg" alt="brigadeiros">
                 </div>
             </article>
         </section>
@@ -31,7 +31,8 @@
             <article class="site">
                 <div class="lado_a_lado">
                     <div class="forms_contato">
-                        <form method="POST" action="<?php echo BASE_URL; ?>cliente/salvarEdicaoSenhaCliente" id="formEditarSenha">
+                        <form method="POST" action="cliente/salvarEdicaoSenhaCliente" id="formEditarSenha">
+
                             <div class="senha_entrar">
 
                                 <div class="email_entrar">
@@ -53,7 +54,7 @@
                                 </div>
 
                             </div>
-                            <div class="voltar_salvar" >
+                            <div class="voltar_salvar">
                                 <div class="button_forms">
                                     <button type="submit" id="btnSalvarSenha" class="btn btn-primary">Alterar Senha</button>
 
@@ -74,8 +75,8 @@
             <article class="site">
                 <div></div>
                 <div>
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 4.svg" alt="brigadeiros">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 5.svg" alt="brigadeiros">
+                    <img src="/assets/img/BRIGADEIRO 4.svg" alt="brigadeiros">
+                    <img src="/assets/img/BRIGADEIRO 5.svg" alt="brigadeiros">
                 </div>
             </article>
         </section>
@@ -129,10 +130,11 @@
 
             let formData = new FormData(this); // Captura os dados do formulário
 
-            fetch('<?php echo BASE_URL; ?>cliente/salvarEdicaoSenhaCliente', {
+            fetch('/cliente/salvarEdicaoSenhaCliente', {
                     method: 'POST',
                     body: formData
                 })
+
                 .then(response => response.json()) // Recebe a resposta do servidor em JSON
                 .then(data => {
                     if (data.sucesso) {

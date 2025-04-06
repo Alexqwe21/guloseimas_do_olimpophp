@@ -71,7 +71,8 @@ margin-top: 10px;
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Salvar alterações</button>
-                <a href="<?php echo BASE_URL . 'sobre/servicos'; ?>" class="btn btn-secondary">Cancelar</a>
+                <a href="/sobre/servicos" class="btn btn-secondary">Cancelar</a>
+
             </div>
         </form>
     </main>

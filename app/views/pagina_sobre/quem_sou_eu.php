@@ -4,7 +4,7 @@
             <h3>QUEM</h3>
         </div>
         <div class="lado_a_lado">
-            <div class="foto_quem" style="background-image: url('<?php echo BASE_URL . 'uploads/' . htmlspecialchars($quem_sou_eu['foto_galeria'], ENT_QUOTES, 'UTF-8'); ?>');">
+            <div class="foto_quem" style="background-image: url('/uploads/<?php echo htmlspecialchars($quem_sou_eu['foto_galeria'], ENT_QUOTES, 'UTF-8'); ?>');">
 
             </div>
 

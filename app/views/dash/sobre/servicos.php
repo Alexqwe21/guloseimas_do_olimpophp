@@ -1,5 +1,3 @@
-
-
 <style>
   button {
     border: none;
@@ -33,7 +31,8 @@
       <?php foreach ($servicos as $linha): ?>
         <tr>
           <th scope="row"><?php echo $linha['id_servico']; ?></th>
-          <td><img src="<?php echo BASE_URL . 'uploads/' . $linha['foto_servico']; ?>" alt="<?php echo $linha['alt_foto_servico']; ?>" class="pg_produto"></td>
+          <td><img src="/uploads/<?php echo $linha['foto_servico']; ?>" alt="<?php echo $linha['alt_foto_servico']; ?>" class="pg_produto"></td>
+
           <td><?php echo htmlspecialchars($linha['nome_servico']); ?></td>
           <td><?php echo htmlspecialchars($linha['alt_foto_servico']); ?></td>
           <td><?php echo htmlspecialchars($linha['descricao_servico']); ?></td>
@@ -41,18 +40,16 @@
             <?php echo ($linha['status_servico'] == 'Ativo') ? 'Ativo' : 'Inativo'; ?>
           </td>
           <td>
-
-            <a href="<?php echo BASE_URL . 'sobre/editarS/' . $linha['id_servico']; ?>">
+            <a href="/sobre/editarS/<?php echo $linha['id_servico']; ?>">
               <button><i class="bi bi-pencil-fill"></i></button>
             </a>
-
-
           </td>
           <td>
-            <a href="<?php echo BASE_URL . 'sobre/status_S_S/' . $linha['id_servico']; ?>">
+            <a href="/sobre/status_S_S/<?php echo $linha['id_servico']; ?>">
               <button><i class="bi bi-trash-fill"></i></button>
             </a>
           </td>
+
         </tr>
       <?php endforeach; ?>
     <?php else: ?>
@@ -62,5 +59,6 @@
     <?php endif; ?>
   </tbody>
 </table>
-<script src="http://localhost/guloseimas_do_olimpophp/public/vendors/dash/js/adminlte.js"></script>
+<script src="/vendors/dash/js/adminlte.js"></script>
+
 </html>

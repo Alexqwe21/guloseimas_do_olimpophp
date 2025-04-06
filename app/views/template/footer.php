@@ -4,32 +4,32 @@
 
         </div>
         <div class="logo_footer">
-            <a href="index.php"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/logo_header.svg"
+            <a href="/index.php"><img src="/assets/img/logo_header.svg"
                     alt="logo Guloseimas do Olimpo"></a>
         </div>
         <div class="contato">
             <h2>CONTATO</h2>
 
-            <h3>Localização: Itaim Paulista – SP <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/localizacao.svg"
+            <h3>Localização: Itaim Paulista – SP <img src="/assets/img/localizacao.svg"
                     alt="localizacao">
             </h3>
 
             <h3>Email: guloseimasolimpo@gmail.com
-                <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/email.svg" alt="email">
+                <img src="/assets/img/email.svg" alt="email">
             </h3>
 
-            <h3>WhatsApp: (11)98056-3192 <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/telefone.svg" alt="telefone">
+            <h3>WhatsApp: (11)98056-3192 <img src="/assets/img/telefone.svg" alt="telefone">
             </h3>
         </div>
         <nav class="nav_footer">
             <h2>MENU</h2>
             <ul>
-                <li><a href="http://localhost/guloseimas_do_olimpophp/public/home">HOME</a></li>
-                <li><a href="http://localhost/guloseimas_do_olimpophp/public/sobre">SOBRE</a></li>
-                <li><a href="http://localhost/guloseimas_do_olimpophp/public/produtos">PRODUTOS</a></li>
-                <li><a href="http://localhost/guloseimas_do_olimpophp/public/compras">RESERVA</a></li>
-                <li><a href="http://localhost/guloseimas_do_olimpophp/public/galeria">GALERIA</a></li>
-                <li><a href="http://localhost/guloseimas_do_olimpophp/public/contato">CONTATO</a></li>
+                <li><a href="/home">HOME</a></li>
+                <li><a href="/sobre">SOBRE</a></li>
+                <li><a href="/produtos">PRODUTOS</a></li>
+                <li><a href="/compras">RESERVA</a></li>
+                <li><a href="/galeria">GALERIA</a></li>
+                <li><a href="/contato">CONTATO</a></li>
             </ul>
         </nav>
 
@@ -71,28 +71,28 @@
     </div>
     <div class="redes_footer">
         <div>
-            <a href="https://www.instagram.com/guloseimas_olimpo?igsh=MTZsZjV1aXU0MWQxNQ==" target="_blank"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/instagram_footer.svg" alt="instagram"></a>
+            <a href="https://www.instagram.com/guloseimas_olimpo?igsh=MTZsZjV1aXU0MWQxNQ==" target="_blank"><img src="/assets/img/instagram_footer.svg" alt="instagram"></a>
         </div>
         <div>
-            <a href="https://www.ifood.com.br/delivery/sao-paulo-sp/guloseimas-do-olimpo---trufas-brownies-e-bolos-jardim-camargo-novo/a2723d73-19f8-4a51-baec-cf38223b122f?utm_medium=share" target="_blank"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/ifood_footer.svg" alt="ifood"></a>
+            <a href="https://www.ifood.com.br/delivery/sao-paulo-sp/guloseimas-do-olimpo---trufas-brownies-e-bolos-jardim-camargo-novo/a2723d73-19f8-4a51-baec-cf38223b122f?utm_medium=share" target="_blank"><img src="/assets/img/ifood_footer.svg" alt="ifood"></a>
         </div>
         <div>
-            <!-- <a href="#"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/youtube_footer.svg" alt="youtube"></a> -->
+            <!-- <a href="/#"><img src="/assets/img/youtube_footer.svg" alt="youtube"></a> -->
         </div>
 
         <div>
-            <a href="https://w.app/ladvkq" target="_blank"><img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/wpp_footer.svg" alt="whatsapp"></a>
+            <a href="https://w.app/ladvkq" target="_blank"><img src="/assets/img/wpp_footer.svg" alt="whatsapp"></a>
         </div>
     </div>
 
     <div class="hr_footer">
         <hr>
-        <h2>© 2025 Senacria. Todos os direitos reservados.</h2>
+        <h2>© 2025 Alex Sandro. Todos os direitos reservados.</h2>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

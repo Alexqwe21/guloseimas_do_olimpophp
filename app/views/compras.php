@@ -142,15 +142,11 @@
 
                                 <div class="compras_box">
                                     <div>
-                                        <a href="#">
-
-                                            <img src="<?php echo BASE_URL . 'uploads/' . $produto['foto']; ?>" alt="<?php echo $produto['nome']; ?>">
-
-
-
-
+                                        <a href="/#">
+                                            <img src="/uploads/<?php echo $produto['foto']; ?>" alt="<?php echo htmlspecialchars($produto['nome'], ENT_QUOTES, 'UTF-8'); ?>">
                                         </a>
                                     </div>
+
                                     <div class="desc_compras">
                                         <p><?php echo $produto['nome']; ?></p>
                                         <p>500g</p>
@@ -205,7 +201,7 @@
                                     <p>R$<?php echo number_format($total, 2, ',', '.'); ?></p>
                                 </div>
                                 <div class="finalizar">
-                                    <a href="javascript:void(0);" onclick="abrirWhatsApp(event)">Reservar Pedido</a>
+                                    <a href="/javascript:void(0);" onclick="abrirWhatsApp(event)">Reservar Pedido</a>
                                 </div>
 
 
@@ -217,7 +213,7 @@
                                 <button type="submit" name="esvaziar_carrinho" class="esvaziar-btn">Esvaziar Carrinho</button>
                             </form>
                             <div>
-                                <a href="http://localhost/guloseimas_do_olimpophp/public/produtos">Continuar Comprando</a>
+                                <a href="/produtos">Continuar Comprando</a>
                             </div>
                         </div>
                     </article>
@@ -233,8 +229,9 @@
                 <article class="site">
                     <div class="carrinho-vazio">
                         <h3>Seu carrinho está vazio</h3>
-                        <p>Que tal dar uma olhada nos nossos <a href="<?php echo BASE_URL; ?>produtos">produtos?</a></p>
+                        <p>Que tal dar uma olhada nos nossos <a href="/produtos">produtos?</a></p>
                     </div>
+
                 </article>
             </section>
 
@@ -345,7 +342,7 @@
             window.open(linkWhatsApp, '_blank');
 
 
-            fetch('http://localhost/guloseimas_do_olimpophp/public/cliente/limpar_carrinho', {
+            fetch('/cliente/limpar_carrinho', {
                     method: 'POST',
                 })
                 .then(response => response.json())
@@ -364,18 +361,20 @@
                 sessionStorage.removeItem('carrinho');
 
                 document.querySelector('.compras').innerHTML = `  
-            <div class="carrinho-vazio">
-                <h3>Seu carrinho está vazio</h3>
-                <p>Que tal dar uma olhada nos nossos <a href="${BASE_URL}produtos">produtos?</a></p>
-            </div>
+          <div class="carrinho-vazio">
+    <h3>Seu carrinho está vazio</h3>
+    <p>Que tal dar uma olhada nos nossos <a href="/produtos">produtos?</a></p>
+</div>
+
         `;
             }, 500);
 
 
             // Aguarda um tempo e redireciona para a página de histórico
             setTimeout(() => {
-                window.location.href = "http://localhost/guloseimas_do_olimpophp/public/Cliente/historico_reserva?pedido=sucesso";
+                window.location.href = "/Cliente/historico_reserva?pedido=sucesso";
             }, 2000); // Redireciona após 2 segundos
+
 
             // Exibe a mensagem de pedido confirmado
             const mensagemConfirmacao = document.createElement('div');

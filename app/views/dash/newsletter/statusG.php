@@ -36,7 +36,8 @@
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Salvar alterações</button>
-                <a href="<?php echo BASE_URL . 'produtos/listar'; ?>" class="btn btn-secondary">Cancelar</a>
+                <a href="/produtos/listar" class="btn btn-secondary">Cancelar</a>
+
             </div>
         </form>
     </main>

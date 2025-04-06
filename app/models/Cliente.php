@@ -24,7 +24,7 @@ class Cliente extends Model
     }
 
 
-    public function salvarCliente($nome, $email, $cpf, $data_nasc, $telefone, $endereco, $bairro, $cidade, $sigla_estado, $senha)
+    public function salvarCliente($nome, $email, $cpf, $data_nasc, $telefone, $endereco, $bairro, $cidade, $sigla_estado, $senha, $cep)
     {
         // Buscar o ID do estado com base na sigla fornecida
         $sqlEstado = "SELECT id_uf FROM tbl_estado WHERE sigla_uf= :sigla_estado LIMIT 1";
@@ -38,10 +38,10 @@ class Cliente extends Model
             throw new Exception("Estado inválido: $sigla_estado");
         }
 
-        // Inserir os dados do cliente, incluindo status_cliente como 'Ativo'
+        // Inserir os dados do cliente, incluindo status_cliente como 'Ativo' e o novo campo 'cep_cliente'
         $sql = "INSERT INTO tbl_cliente 
-            (nome_cliente, cpf_cliente, data_nasc_cliente, email_cliente, senha_cliente, telefone_cliente, endereco_cliente, bairro_cliente, cidade_cliente, id_uf, status_cliente) 
-            VALUES (:nome, :cpf, :data_nasc, :email, :senha, :telefone, :endereco, :bairro, :cidade, :id_uf, 'Ativo')";
+            (nome_cliente, cpf_cliente, data_nasc_cliente, email_cliente, senha_cliente, telefone_cliente, endereco_cliente, bairro_cliente, cidade_cliente, id_uf, status_cliente, cep_cliente) 
+            VALUES (:nome, :cpf, :data_nasc, :email, :senha, :telefone, :endereco, :bairro, :cidade, :id_uf, 'Ativo', :cep)";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':nome', $nome);
@@ -54,6 +54,7 @@ class Cliente extends Model
         $stmt->bindValue(':cidade', $cidade);
         $stmt->bindValue(':id_uf', $idEstado);
         $stmt->bindValue(':senha', $senha);
+        $stmt->bindValue(':cep', $cep); // Bind do campo 'cep'
 
         return $stmt->execute();
     }
@@ -97,10 +98,7 @@ class Cliente extends Model
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':senha', $nova_senha);
         $stmt->bindParam(':email', $email);
-    
+
         return $stmt->execute();
     }
-
-
-    
 }

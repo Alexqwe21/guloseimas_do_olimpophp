@@ -1,5 +1,3 @@
-
-
 <style>
   button {
     border: none;
@@ -30,17 +28,19 @@
     <?php if ($qualidade): ?>
       <tr>
         <th scope="row"><?php echo $qualidade['id_galeira']; ?></th>
-        <td><img src="<?php echo BASE_URL . 'uploads/' . $qualidade['foto_galeria']; ?>" alt="<?php echo $qualidade['alt_foto_galeria']; ?>" class="pg_produto"></td>
+        <td><img src="/uploads/<?php echo $qualidade['foto_galeria']; ?>" alt="<?php echo $qualidade['alt_foto_galeria']; ?>" class="pg_produto"></td>
+
         <td><?php echo htmlspecialchars($qualidade['nome_galeria']); ?></td>
         <td><?php echo htmlspecialchars($qualidade['alt_foto_galeria']); ?></td>
         <td>
           <?php echo ($qualidade['status_galeria'] == 'Ativo') ? 'Ativo' : 'Inativo'; ?>
         </td>
         <td>
-          <a href="<?php echo BASE_URL . 'galeria/editarG/' . $qualidade['id_galeira']; ?>">
+          <a href="/galeria/editarG/<?php echo $qualidade['id_galeira']; ?>">
             <button><i class="bi bi-pencil-fill"></i></button>
           </a>
-         
+
+
         </td>
       </tr>
     <?php else: ?>
@@ -50,5 +50,6 @@
     <?php endif; ?>
   </tbody>
 </table>
-<script src="http://localhost/guloseimas_do_olimpophp/public/vendors/dash/js/adminlte.js"></script>
+<script src="/vendors/dash/js/adminlte.js"></script>
+
 </html>

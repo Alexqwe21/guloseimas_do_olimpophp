@@ -19,7 +19,7 @@
 
 
         <?php
-   // Inclui o cabeçalho
+        // Inclui o cabeçalho
         require(__DIR__ . '/../template/header.php')
         ?>
     </header>
@@ -36,8 +36,9 @@
                     <div class="perfil_cliente">
                         <div class="perfil_editar">
                             <h2>Perfil</h2>
-                            <a href="http://localhost/guloseimas_do_olimpophp/public/Cliente/editar_cliente/">Editar</a>
+                            <a href="/Cliente/editar_cliente/">Editar</a>
                         </div>
+
 
                         <div class="perfil_informaçoes">
 
@@ -65,16 +66,16 @@
                             </div>
 
                             <div class="informacoes_sair">
-
-                                <a href="http://localhost/guloseimas_do_olimpophp/public/login/sair">Sair</a>
+                                <a href="/login/sair">Sair</a>
                             </div>
-                            <div class="informacoes">
+
+                            <div class="informacoes_hr">
                                 <h4>-------------------------------------------------------------------</h4>
                             </div>
 
                             <div class="perfil_editar">
                                 <h2>Senha</h2>
-                                <a href="http://localhost/guloseimas_do_olimpophp/public/Cliente/editar_senha_cliente/">Editar</a>
+                                <a href="/Cliente/editar_senha_cliente/">Editar</a>
                             </div>
 
                             <div class="informacoes">
@@ -107,13 +108,14 @@
                                     <?php foreach ($favoritos as $favorito): ?>
                                         <div class="favorito-item">
                                             <!-- Envolvendo todo o item com o link para a página de detalhes -->
-                                            <a  class="link_favorito" href="<?php echo BASE_URL . 'produtos/detalhe/' . $favorito['link_produto']; ?>">
-                                                <img src="<?php echo BASE_URL . 'uploads/' . $favorito['foto_produto']; ?>" alt="<?php echo htmlspecialchars($favorito['alt_foto_produto'], ENT_QUOTES, 'UTF-8'); ?>" class="pg_produto">
+                                            <a class="link_favorito" href="/produtos/detalhe/<?php echo $favorito['link_produto']; ?>">
+                                                <img src="/uploads/<?php echo $favorito['foto_produto']; ?>" alt="<?php echo htmlspecialchars($favorito['alt_foto_produto'], ENT_QUOTES, 'UTF-8'); ?>" class="pg_produto">
                                                 <h3><?php echo htmlspecialchars($favorito['nome_produto'], ENT_QUOTES, 'UTF-8'); ?></h3>
                                                 <p>Preço: R$ <?php echo number_format($favorito['preco_produto'], 2, ',', '.'); ?></p>
                                             </a>
                                             <button class="remover-favorito" data-produto-id="<?php echo $favorito['id_produto']; ?>">Remover</button>
                                         </div>
+
                                     <?php endforeach; ?>
                                 </ul>
                             <?php else: ?>
@@ -130,17 +132,19 @@
 
 
                         <div class="perfil_favoritos">
-                            <div class="perfil_produtos_favortios">
-                                <h2>Historico de reserva</h2>
-                                <a href="http://localhost/guloseimas_do_olimpophp/public/Cliente/historico_reserva/">Visualizar</a>
+                            <div class="perfil_produtos_favoritos" style="display:flex; justify-content: space-around;  margin-top: 10px;">
+                                <h2>Histórico de reserva</h2>
+                                <a href="/Cliente/historico_reserva/">Visualizar</a>
                             </div>
-
-                          
-
                         </div>
 
 
+
+
                     </div>
+
+
+                </div>
                 </div>
             </article>
         </section>

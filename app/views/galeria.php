@@ -31,21 +31,22 @@
 
         <!-- Seção da galeria de fotos -->
         <section class="fotos_galeria">
-            <article class="site">
-                <div class="lado_a_lado_galeria">
-                    <?php foreach ($pg_galeria as $galeria_pg): ?>
-                        <?php if ($galeria_pg['status_galeria'] === 'Ativo'): ?>
-                            <div class="galeria_pd">
-                                <a href="#">
-                                    <img src="<?php echo BASE_URL . 'uploads/' . $galeria_pg['foto_galeria']; ?>" alt="<?php echo htmlspecialchars($galeria_pg['alt_foto_galeria'], ENT_QUOTES, 'UTF-8'); ?>" class="img_pg_galeria">
-                                </a>
-                                <h3><?php echo htmlspecialchars($galeria_pg['nome_galeria'], ENT_QUOTES, 'UTF-8'); ?></h3>
-                            </div>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </div>
-            </article>
-        </section>
+    <article class="site">
+        <div class="lado_a_lado_galeria">
+            <?php foreach ($pg_galeria as $galeria_pg): ?>
+                <?php if ($galeria_pg['status_galeria'] === 'Ativo'): ?>
+                    <div class="galeria_pd">
+                        <a href="/#">
+                            <img src="/uploads/<?php echo $galeria_pg['foto_galeria']; ?>" alt="<?php echo htmlspecialchars($galeria_pg['alt_foto_galeria'], ENT_QUOTES, 'UTF-8'); ?>" class="img_pg_galeria">
+                        </a>
+                        <h3><?php echo htmlspecialchars($galeria_pg['nome_galeria'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    </article>
+</section>
+
     </main>
 
     <footer>

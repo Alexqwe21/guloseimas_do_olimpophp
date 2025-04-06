@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous"><!--end::Fonts--><!--begin::Third Party Plugin(OverlayScrollbars)-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/styles/overlayscrollbars.min.css" integrity="sha256-dSokZseQNT08wYEWiz5iLI8QPlKxG+TswNRD8k35cpg=" crossorigin="anonymous"><!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Third Party Plugin(Bootstrap Icons)-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css" integrity="sha256-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous"><!--end::Third Party Plugin(Bootstrap Icons)--><!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="http://localhost/guloseimas_do_olimpophp/public/vendors/css/adminlte.css"><!--end::Required Plugin(AdminLTE)--><!-- apexcharts -->
+    <link rel="stylesheet" href="/vendors/css/adminlte.css">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous"><!-- jsvectormap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
 </head> <!--end::Head--> <!--begin::Body-->
@@ -23,8 +24,8 @@
         <nav class="app-header navbar navbar-expand bg-body"> <!--begin::Container-->
             <div class="container-fluid"> <!--begin::Start Navbar Links-->
                 <ul class="navbar-nav">
-                    <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i  style="color: #0B3222 !important;"class="bi bi-list"></i> </a> </li>
-                    <li class="nav-item d-none d-md-block"> <a href="http://localhost/guloseimas_do_olimpophp/public/dashboard" class="nav-link">SITE GULOSEIMAS DO OLIMPO</a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i style="color: #0B3222 !important;" class="bi bi-list"></i> </a> </li>
+                    <li class="nav-item d-none d-md-block"> <a href="/dashboard" class="nav-link">SITE GULOSEIMAS DO OLIMPO</a> </li>
 
                 </ul> <!--end::Start Navbar Links--> <!--begin::End Navbar Links-->
                 <?php if (!empty($_SESSION['mensagem'])): ?>
@@ -45,7 +46,7 @@
 
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <a href="#" class="dropdown-item"> <!--begin::Message-->
                             <div class="d-flex">
-                                <div class="flex-shrink-0"> <img src="http://localhost/Kioficina/public/vendors/assets/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
+                                <div class="flex-shrink-0"> <img src="vendors/assets/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
                                 <div class="flex-grow-1">
                                     <h3 class="dropdown-item-title">
                                         Brad Diesel
@@ -59,7 +60,7 @@
                         </a>
                         <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <!--begin::Message-->
                             <div class="d-flex">
-                                <div class="flex-shrink-0"> <img src="http://localhost/Kioficina/public/vendors/assets/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
+                                <div class="flex-shrink-0"> <img src="vendors/assets/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
                                 <div class="flex-grow-1">
                                     <h3 class="dropdown-item-title">
                                         John Pierce
@@ -73,7 +74,7 @@
                         </a>
                         <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <!--begin::Message-->
                             <div class="d-flex">
-                                <div class="flex-shrink-0"> <img src="http://localhost/Kioficina/public/vendors/assets/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
+                                <div class="flex-shrink-0"> <img src="vendors/assets/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
                                 <div class="flex-grow-1">
                                     <h3 class="dropdown-item-title">
                                         Nora Silvester
@@ -110,7 +111,7 @@
                                     alt="User Image">
                             </li> -->
 
-                            <li  style="background-color: #0B3222 !important; display: flex; align-items: center; justify-content: center;"class="user-header text-bg-primary">
+                            <li style="background-color: #0B3222 !important; display: flex; align-items: center; justify-content: center;" class="user-header text-bg-primary">
                                 <img
                                     src="<?= htmlspecialchars(BASE_URL . 'uploads/' . $_SESSION['userFoto'], ENT_QUOTES, 'UTF-8'); ?>"
                                     alt="User Image">
@@ -123,20 +124,20 @@
 
                     </li> <!--end::User Image--> <!--begin::Menu Body-->
 
-                     <li  class="user-footer">  <a href="http://localhost/guloseimas_do_olimpophp/public/login/sair" class="btn btn-default btn-flat float-end">Sair</a> </li>
-                      <!-- end::Menu Footer  -->
-                     <!-- <a style="display: none  ; " href="#" class="btn btn-default btn-flat">Perfil</a> -->
+                    <li class="user-footer"> <a href="/login/sair" class="btn btn-default btn-flat float-end">Sair</a> </li>
+                    <!-- end::Menu Footer  -->
+                    <!-- <a style="display: none  ; " href="#" class="btn btn-default btn-flat">Perfil</a> -->
                 </ul>
                 </li> <!--end::User Menu Dropdown-->
                 </ul> <!--end::End Navbar Links-->
             </div> <!--end::Container-->
         </nav> <!--end::Header--> <!--begin::Sidebar-->
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> <!--begin::Sidebar Brand-->
-            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="http://localhost/guloseimas_do_olimpophp/public/dashboard" class="brand-link"> <!--begin::Brand Image--> <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/logo_dash.svg" alt="LOGO_SITE"> <!--end::Brand Image--> <!--begin::Brand Text--> <span class="brand-text fw-light"></span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
+            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="/dashboard" class="brand-link"> <!--begin::Brand Image--> <img src="/assets/img/logo_dash.svg" alt="LOGO_SITE"> <!--end::Brand Image--> <!--begin::Brand Text--> <span class="brand-text fw-light"></span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
             <div class="sidebar-wrapper">
                 <nav class="mt-2"> <!--begin::Sidebar Menu-->
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item menu-open"> <a href="http://localhost/guloseimas_do_olimpophp/public/dashboard" class="nav-link active"> <i class="bi bi-speedometer2"></i>
+                        <li class="nav-item menu-open"> <a href="dashboard" class="nav-link active"> <i class="bi bi-speedometer2"></i>
                                 <p>
                                     Dashboard
 
@@ -155,24 +156,24 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/home/ben_vindo" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="/home/ben_vindo" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Fotos (Ben vindo HOME)</p>
                                     </a> </li>
 
-                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/home/destaque" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="/home/destaque" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Fotos (Destaques HOME)</p>
                                     </a> </li>
 
 
-                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/home/qualidade" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="/home/qualidade" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Fotos (qualidade HOME)</p>
                                     </a> </li>
 
-                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/home/sobre_ceo" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="/home/sobre_ceo" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Fotos (sobre HOME)</p>
                                     </a> </li>
 
-                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/home/carrosel" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="/home/carrosel" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Carrosel (Home)</p>
                                     </a> </li>
 
@@ -187,22 +188,22 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/sobre/quem_sou_eu" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="/sobre/quem_sou_eu" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Fotos ( quem sou eu )</p>
                                     </a> </li>
 
-                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/sobre/minha_historia" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="/sobre/minha_historia" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Fotos ( minha historia )</p>
                                     </a> </li>
 
-                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/sobre/carrosel_sobre" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="/sobre/carrosel_sobre" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Fotos ( carrosel sobre )</p>
                                     </a> </li>
 
-                                <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/sobre/servicos" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="/sobre/servicos" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Fotos (especialidades )</p>
                                     </a> </li>
-
+/
                             </ul>
                         </li>
 
@@ -246,7 +247,7 @@
 
                         <li class="nav-header">SITE (FOTOS)</li>
 
-                        <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/produtos/listar" class="nav-link"> <i class="bi bi-cart-dash"></i>
+                        <li class="nav-item"> <a href="/produtos/listar" class="nav-link"> <i class="bi bi-cart-dash"></i>
 
 
                                 <p>Produtos</p>
@@ -255,84 +256,29 @@
 
 
 
-                        <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/produtos/banner_produto" class="nav-link"> <i class="bi bi-card-image"></i>
+                        <li class="nav-item"> <a href="/produtos/banner_produto" class="nav-link"> <i class="bi bi-card-image"></i>
                                 <p>Banners</p>
                             </a> </li>
-                        <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/contato/contato" class="nav-link"> <i class="bi bi-envelope"></i>
+                        <li class="nav-item"> <a href="/contato/contato" class="nav-link"> <i class="bi bi-envelope"></i>
                                 <p>Contato</p>
                             </a> </li>
 
-                        <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/newsletter/contato_Newsletter" class="nav-link"> <i class="bi bi-envelope-check"></i>
+                        <li class="nav-item"> <a href="/newsletter/contato_Newsletter" class="nav-link"> <i class="bi bi-envelope-check"></i>
                                 <p>Newsletter</p>
                             </a> </li>
 
 
-                        <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/galeria/galeria_pg_galeria" class="nav-link"> <i class="bi bi-aspect-ratio"></i>
+                        <li class="nav-item"> <a href="/galeria/galeria_pg_galeria" class="nav-link"> <i class="bi bi-aspect-ratio"></i>
                                 <p>Galeria</p>
                             </a> </li>
-                        <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/info_produtos/info_produtos" class="nav-link"> <i class="bi bi-bag"></i>
+                        <li class="nav-item"> <a href="/info_produtos/info_produtos" class="nav-link"> <i class="bi bi-bag"></i>
                                 <p>Informações produtos</p>
                             </a> </li>
 
-                            <li class="nav-item"> <a href="http://localhost/guloseimas_do_olimpophp/public/produtos/listar_categoria" class="nav-link"> <i class="bi bi-bookmark-check"></i>
+                        <li class="nav-item"> <a href="/produtos/listar_categoria" class="nav-link"> <i class="bi bi-bookmark-check"></i>
                                 <p>Categorias</p>
                             </a> </li>
-                        <!-- <li class="nav-item"> <a href="./docs/faq.html" class="nav-link"> <i class="nav-icon bi bi-question-circle-fill"></i>
-                                <p>FAQ</p>
-                            </a> </li>
-                        <li class="nav-item"> <a href="./docs/license.html" class="nav-link"> <i class="nav-icon bi bi-patch-check-fill"></i>
-                                <p>License</p>
-                            </a> </li>
-                        <li class="nav-header">MULTI LEVEL EXAMPLE</li>
-                        <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-circle-fill"></i>
-                                <p>Level 1</p>
-                            </a> </li>
-                        <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-circle-fill"></i>
-                                <p>
-                                    Level 1
-                                    <i class="nav-arrow bi bi-chevron-right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Level 2</p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>
-                                            Level 2
-                                            <i class="nav-arrow bi bi-chevron-right"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-record-circle-fill"></i>
-                                                <p>Level 3</p>
-                                            </a> </li>
-                                        <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-record-circle-fill"></i>
-                                                <p>Level 3</p>
-                                            </a> </li>
-                                        <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-record-circle-fill"></i>
-                                                <p>Level 3</p>
-                                            </a> </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Level 2</p>
-                                    </a> </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-circle-fill"></i>
-                                <p>Level 1</p>
-                            </a> </li>
-                        <li class="nav-header">LABELS</li>
-                        <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-circle text-danger"></i>
-                                <p class="text">Important</p>
-                            </a> </li>
-                        <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-circle text-warning"></i>
-                                <p>Warning</p>
-                            </a> </li>
-                        <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-circle text-info"></i>
-                                <p>Informational</p>
-                            </a> </li> -->
+                      
                     </ul> <!--end::Sidebar Menu-->
                 </nav>
             </div> <!--end::Sidebar Wrapper-->
@@ -349,7 +295,7 @@
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-end">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                               
                                 <li class="breadcrumb-item active" aria-current="page">
                                     Dashboard
                                 </li>
@@ -433,9 +379,9 @@
     </main> <!--end::App Main--> <!--begin::Footer-->
 
 
-   <footer>
+    <footer>
 
-   </footer>
+    </footer>
 
     </div> <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
 

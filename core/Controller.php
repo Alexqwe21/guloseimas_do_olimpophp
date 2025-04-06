@@ -15,7 +15,7 @@ extract($dados);
 
 
 
-require '../app/views/' . $view . '.php';
+require 'app/views/' . $view . '.php';
 
 
 }

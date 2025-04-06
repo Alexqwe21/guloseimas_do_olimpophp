@@ -11,21 +11,26 @@ class Produto extends Model
 
     public function getProduto()
     {
+        // Array com os IDs dos produtos desejados
+        $ids = [111, 112, 113, 114, 115, 116];
 
+        // Construir uma string de placeholders para a cláusula IN
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
 
+        // Consulta SQL utilizando a cláusula IN com placeholders
+        $sql = "SELECT id_produto, foto_produto, alt_foto_produto, nome_produto, preco_produto, status_pedido, link_produto
+                FROM tbl_produtos
+                WHERE id_produto IN ($placeholders)";
 
-        $sql = " SELECT id_produto, foto_produto, alt_foto_produto, nome_produto, preco_produto, status_pedido , link_produto
-       FROM tbl_produtos
-       WHERE id_produto NOT IN (1, 2, 3 , 4 , 5)
-       LIMIT 10
-       ";
-
-
+        // Preparar a consulta
         $stmt = $this->db->prepare($sql);
-        $stmt->execute();
+
+        // Executar a consulta com os valores dos IDs
+        $stmt->execute($ids);
+
+        // Retornar os resultados
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
 
     public function getPg_produtos($categoria = null, $status = null)
     {
@@ -62,7 +67,7 @@ class Produto extends Model
 
     public function getServicoPorlink($link)
     {
-       
+
         $sql = "SELECT * 
    FROM tbl_info_produtos AS ip
      INNER JOIN tbl_produtos AS p ON ip.id_produto = p.id_produto WHERE status_pedido = 'Ativo' AND link_produto = :link  AND status_info_produtos = 'Ativo'";
@@ -128,9 +133,9 @@ class Produto extends Model
         // Depuração: Exibe a query e os dados antes da execução
         echo '<pre>';
         echo 'Query SQL antes da execução: ';
-       
+
         echo 'Dados a serem vinculados: ';
-      
+
         echo '</pre>';
 
         // Prepara a query
@@ -247,7 +252,8 @@ class Produto extends Model
         // Verifica se o cliente está logado
         if (!isset($_SESSION['userId'])) {
             $_SESSION['erro'] = 'Faça login para continuar.';
-            header('Location: ' . BASE_URL . 'login');
+            header('Location: /login');
+
             exit();
         }
 
@@ -355,7 +361,8 @@ class Produto extends Model
         // Verifica se o cliente está logado
         if (!isset($_SESSION['userId'])) {
             $_SESSION['erro'] = 'Faça login para continuar.';
-            header('Location: ' . BASE_URL . 'login');
+            header('Location: /login');
+
             exit();
         }
 
@@ -457,19 +464,19 @@ class Produto extends Model
 
 
     public function getVerMaisProdutos($limite, $offset)
-{
-    $sql = "SELECT * FROM tbl_produtos 
+    {
+        $sql = "SELECT * FROM tbl_produtos 
             WHERE status_pedido = 'Ativo' 
             ORDER BY id_produto ASC 
             LIMIT :limite OFFSET :offset";
 
-    $stmt = $this->db->prepare($sql);
-    $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-    $stmt->execute();
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 
 
@@ -518,4 +525,97 @@ class Produto extends Model
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+    public function getProdutosPorStatus($status)
+    {
+        $sql = "SELECT * FROM tbl_produtos WHERE status_pedido = :status ORDER BY id_produto DESC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':status', $status);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function filtrarProdutos($status, $busca)
+{
+    $sql = "SELECT * FROM tbl_produtos WHERE 1=1";
+    $params = [];
+
+    if (!empty($status)) {
+        $sql .= " AND status_pedido = :status";
+        $params[':status'] = $status;
+    }
+
+    if (!empty($busca)) {
+        if (is_numeric($busca)) {
+            $sql .= " AND id_produto = :id";
+            $params[':id'] = $busca;
+        } else {
+            $sql .= " AND nome_produto LIKE :nome";
+            $params[':nome'] = '%' . $busca . '%';
+        }
+    }
+
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function getProdutosPorStatusEBusca($status, $busca)
+{
+    $query = "SELECT * FROM tbl_produtos WHERE status = :status AND (nome_produto LIKE :busca OR id_produto = :id)";
+    $stmt = $this->db->prepare($query);
+    $stmt->bindValue(':status', $status);
+    $stmt->bindValue(':busca', '%' . $busca . '%');
+    $stmt->bindValue(':id', $busca);  // Aqui adicionamos o filtro para id_produto
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+public function getProdutosPorBusca($busca)
+{
+    // Prepara a consulta SQL para buscar produtos na tabela tbl_produtos
+    $query = "SELECT * FROM tbl_produtos WHERE nome_produto LIKE :busca OR id_produto = :id";
+    
+    // Prepara a execução da query
+    $stmt = $this->db->prepare($query);
+    
+    // Vincula o valor de busca com os '%' para permitir buscas parciais (exemplo: 'doc' encontra 'doces')
+    $stmt->bindValue(':busca', '%' . $busca . '%');
+    $stmt->bindValue(':id', $busca);  // Aqui também vinculamos o valor do id_produto
+    
+    // Executa a consulta
+    $stmt->execute();
+    
+    // Retorna os resultados como um array associativo
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function getInfoProdutosPorBusca($busca)
+{
+    $query = "
+        SELECT ip.*, p.nome_produto
+        FROM tbl_info_produtos ip
+        INNER JOIN tbl_produtos p ON ip.id_produto = p.id_produto
+        WHERE p.nome_produto LIKE :busca
+    ";
+
+    $stmt = $this->db->prepare($query);
+    $stmt->bindValue(':busca', '%' . $busca . '%');
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
+
+
+
+
+
+
+
 }

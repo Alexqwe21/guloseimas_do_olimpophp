@@ -93,7 +93,8 @@
                     </div>
 
                     <button type="submit" class="btn btn-success">Salvar Alterações</button>
-                    <a href="<?php echo BASE_URL . 'produtos/listar_categoria'; ?>" class="btn btn-danger">Cancelar</a>
+                    <a href="/produtos/listar_categoria" class="btn btn-danger">Cancelar</a>
+
                 </form>
 
             <?php else: ?>

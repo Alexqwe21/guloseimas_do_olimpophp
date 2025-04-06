@@ -1,5 +1,3 @@
-
-
 <style>
   button {
     border: none;
@@ -32,7 +30,8 @@
     <?php foreach ($listarDestaque as $linha): ?>
       <tr>
         <th scope="row"><?php echo $linha['id_galeira']; ?></th>
-        <td><img src="<?php echo BASE_URL . 'uploads/' . $linha['foto_galeria']; ?>" alt="<?php echo $linha['alt_foto_galeria']; ?>" class="pg_produto"></td>
+        <td><img src="/uploads/<?php echo $linha['foto_galeria']; ?>" alt="<?php echo $linha['alt_foto_galeria']; ?>" class="pg_produto"></td>
+
         <td><?php echo htmlspecialchars($linha['nome_galeria']); ?></td>
         <td><?php echo htmlspecialchars($linha['alt_foto_galeria']); ?></td>
         <td>
@@ -40,19 +39,21 @@
         </td>
 
         <td>
-          <a href="<?php echo BASE_URL . 'galeria/editarG/' . $linha['id_galeira']; ?>">
+          <a href="/galeria/editarG/<?php echo $linha['id_galeira']; ?>">
             <button><i class="bi bi-pencil-fill"></i></button>
-          
+          </a>
         </td>
 
         <td>
-        <a href="<?php echo BASE_URL . 'galeria/statusG/' . $linha['id_galeira']; ?>">
-              <button><i class="bi bi-trash-fill"></i></button>
-            </a>
+          <a href="/galeria/statusG/<?php echo $linha['id_galeira']; ?>">
+            <button><i class="bi bi-trash-fill"></i></button>
+          </a>
         </td>
+
       </tr>
     <?php endforeach; ?>
   </tbody>
 </table>
-<script src="http://localhost/guloseimas_do_olimpophp/public/vendors/dash/js/adminlte.js"></script>
+<script src="/vendors/dash/js/adminlte.js"></script>
+
 </html>

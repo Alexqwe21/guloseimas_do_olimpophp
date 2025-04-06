@@ -5,6 +5,7 @@ if (isset($_GET['pedido']) && $_GET['pedido'] === 'sucesso') {
     echo '';
 }
 ?>
+
 <head>
     <?php require(__DIR__ . '/../head_geral/head.php'); ?>
 </head>
@@ -36,10 +37,10 @@ if (isset($_GET['pedido']) && $_GET['pedido'] === 'sucesso') {
 
                                 <div class="colum">
                                     <span>Produto</span>
-                                    <img src="<?php echo BASE_URL . 'uploads/' . $reserva['foto_produto']; ?>" alt="<?php echo htmlspecialchars($reserva['nome_produto']); ?>">
-
+                                    <img src="/uploads/<?php echo $reserva['foto_produto']; ?>" alt="<?php echo htmlspecialchars($reserva['nome_produto']); ?>">
                                 </div>
-<!-- 
+
+                                <!-- 
                                 <div class="colum">
                                     <span>Pedido feito em</span>
                                     <span><?php echo isset($_SESSION['data_pedido']) ? date('d/m/Y', strtotime($_SESSION['data_pedido'])) : 'Data não disponível'; ?></span>
@@ -86,23 +87,23 @@ if (isset($_GET['pedido']) && $_GET['pedido'] === 'sucesso') {
 
 
     <!-- Modal Bootstrap -->
-<div class="modal fade" id="pedidoModal" tabindex="-1" aria-labelledby="pedidoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="pedidoModalLabel">Pedido Confirmado</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Pedido realizado com sucesso! Obrigado por comprar conosco.
-            </div>
-            <div class="modal-footer">
-                <a href="http://localhost/guloseimas_do_olimpophp/public/Cliente/historico_reserva/" class="btn btn-success">Ver Histórico</a>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+    <div class="modal fade" id="pedidoModal" tabindex="-1" aria-labelledby="pedidoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pedidoModalLabel">Pedido Confirmado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Pedido realizado com sucesso! Obrigado por comprar conosco.
+                </div>
+                <div class="modal-footer">
+                    <a href="/Cliente/historico_reserva/" class="btn btn-success">Ver Histórico</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
     <footer>
@@ -115,7 +116,7 @@ if (isset($_GET['pedido']) && $_GET['pedido'] === 'sucesso') {
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get("pedido") === "sucesso") {
             var pedidoModal = new bootstrap.Modal(document.getElementById("pedidoModal"));

@@ -34,11 +34,13 @@
             <article class="site">
                 <div>
                     <h2>Criar conta</h2>
+
+
                 </div>
 
                 <div>
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 2.svg" alt="brigadeiros">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 3.svg" alt="brigadeiros">
+                    <img src="/assets/img/BRIGADEIRO 2.svg" alt="brigadeiros">
+                    <img src="/assets/img/BRIGADEIRO 3.svg" alt="brigadeiros">
                 </div>
             </article>
         </section>
@@ -52,16 +54,15 @@
 
                                 <div class="email_entrar">
                                     <div class="entrar_email">
-                                        <label for="email">
-                                        </label>
-                                        <!-- Preenche o campo de email com o valor armazenado na sessão ou passado pela URL -->
+                                        <label for="email"></label>
+                                        <!-- Preenche o campo de email com o valor armazenado na sessão -->
                                         <input type="email" name="email" id="email" placeholder="Endereço de email"
-                                            value=""
+                                            value="<?= isset($_SESSION['emailTemp']) ? htmlspecialchars($_SESSION['emailTemp']) : ''; ?>"
                                             required autocomplete="off">
                                     </div>
                                 </div>
 
-                                <div class="entrar_email">
+                                <div class="email_entrar">
                                     <label for="nome"></label>
                                     <input type="text" name="nome" id="nome" placeholder="NOME" required>
                                 </div>
@@ -73,13 +74,19 @@
 
                                 <div class="email_entrar">
                                     <label for="data_nascimento"></label>
-                                    <input style="text-transform: uppercase;" type="date" id="data_nascimento" name="data_nascimento" required placeholder="DATA DE NASCIMENTO">
+                                    <input type="text" id="data_nascimento" name="data_nascimento" required placeholder="DD/MM/AAAA" maxlength="10" inputmode="numeric" autocomplete="off" onfocus="this.removeAttribute('readonly');" readonly>
                                 </div>
 
                                 <div class="email_entrar">
                                     <label for="telefone"></label>
                                     <input type="tel" id="telefone" name="telefone" required placeholder="TELEFONE">
                                 </div>
+
+                                <div class="email_entrar">
+                                    <label for="cep"></label>
+                                    <input type="text" id="cep" name="cep" required placeholder="CEP" maxlength="9" onblur="buscarEnderecoPorCEP()" autocomplete="off">
+                                </div>
+
 
                                 <div class="email_entrar">
                                     <label for="endereco"></label>
@@ -106,7 +113,6 @@
                                     </select>
                                 </div>
 
-
                                 <div class="email_entrar">
                                     <label for="senha"></label>
                                     <input type="password" id="senha" name="senha" required placeholder="SENHA" autocomplete="off">
@@ -119,8 +125,11 @@
 
                             </div>
 
+
                             <div class="button_forms">
                                 <button type="submit">Criar Conta</button>
+
+
                             </div>
                         </form>
                     </div>
@@ -133,8 +142,8 @@
                 <div></div>
 
                 <div>
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 4.svg" alt="brigadeiros">
-                    <img src="http://localhost/guloseimas_do_olimpophp/public/assets/img/BRIGADEIRO 5.svg" alt="brigadeiros">
+                    <img src="/assets/img/BRIGADEIRO 4.svg" alt="brigadeiros">
+                    <img src="/assets/img/BRIGADEIRO 5.svg" alt="brigadeiros">
                 </div>
             </article>
         </section>
@@ -261,6 +270,47 @@
             });
         });
     </script>
+
+
+    <script>
+        document.getElementById('data_nascimento').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não for número
+            if (value.length > 2) value = value.slice(0, 2) + '/' + value.slice(2);
+            if (value.length > 5) value = value.slice(0, 5) + '/' + value.slice(5, 10);
+            e.target.value = value;
+        });
+    </script>
+
+
+    <script>
+        function buscarEnderecoPorCEP() {
+            var cep = document.getElementById('cep').value.replace(/\D/g, ''); // Remove caracteres não numéricos
+            if (cep.length === 8) { // Verifica se o CEP tem 8 dígitos
+                var url = `https://viacep.com.br/ws/${cep}/json/`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            // Preenche os campos com os dados obtidos
+                            document.getElementById('endereco').value = data.logradouro;
+                            document.getElementById('bairro').value = data.bairro;
+                            document.getElementById('cidade').value = data.localidade;
+                            document.getElementById('estado').value = data.uf;
+                        } else {
+                            alert('CEP não encontrado.');
+                        }
+                    })
+                    .catch(error => {
+                        alert('Erro ao buscar o endereço.');
+                        console.error('Erro:', error);
+                    });
+            } else {
+                alert('CEP inválido. Certifique-se de que possui 8 dígitos.');
+            }
+        }
+    </script>
+
 </body>
 
 

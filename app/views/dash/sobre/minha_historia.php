@@ -1,5 +1,3 @@
-
-
 <style>
   button {
     border: none;
@@ -30,18 +28,19 @@
     <?php if ($minha_historia): ?>
       <tr>
         <th scope="row"><?php echo $minha_historia['id_galeira']; ?></th>
-        <td><img src="<?php echo BASE_URL . 'uploads/' . $minha_historia['foto_galeria']; ?>" alt="<?php echo $minha_historia['alt_foto_galeria']; ?>" class="pg_produto"></td>
+        <td><img src="/uploads/<?php echo $minha_historia['foto_galeria']; ?>" alt="<?php echo $minha_historia['alt_foto_galeria']; ?>" class="pg_produto"></td>
+
         <td><?php echo htmlspecialchars($minha_historia['nome_galeria']); ?></td>
         <td><?php echo htmlspecialchars($minha_historia['alt_foto_galeria']); ?></td>
         <td>
           <?php echo ($minha_historia['status_galeria'] == 'Ativo') ? 'Ativo' : 'Inativo'; ?>
         </td>
         <td>
-          <a href="<?php echo BASE_URL . 'galeria/editarG/' . $minha_historia['id_galeira']; ?>">
+          <a href="/galeria/editarG/<?php echo $minha_historia['id_galeira']; ?>">
             <button><i class="bi bi-pencil-fill"></i></button>
           </a>
-      
         </td>
+
       </tr>
     <?php else: ?>
       <tr>
@@ -50,5 +49,6 @@
     <?php endif; ?>
   </tbody>
 </table>
-<script src="http://localhost/guloseimas_do_olimpophp/public/vendors/dash/js/adminlte.js"></script>
+<script src="/vendors/dash/js/adminlte.js"></script>
+
 </html>
